@@ -27,7 +27,7 @@ class LoginFormBody extends StatelessWidget {
             textInputAction: TextInputAction.next,
           ),
           SizedBox(height: size.height * 0.035),
-          CustomButton(label: 'Login'),
+          CustomButton(label: 'Login', onPressed: () {  },),
           SizedBox(height: size.height * 0.03),
           CustomRedirectText(text: "Don't have an account?", textButton: 'Register', onPressed: () { Navigator.popAndPushNamed(context, RegisterView.id); },)
         ],

@@ -46,7 +46,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         onTapOutside: (_) {
           FocusScope.of(context).unfocus();
         },
-        autovalidateMode: AutovalidateMode.onUserInteraction,
+        autovalidateMode: AutovalidateMode.onUnfocus,
         controller: widget.controller,
         validator: widget.validator,
         textInputAction: widget.textInputAction,

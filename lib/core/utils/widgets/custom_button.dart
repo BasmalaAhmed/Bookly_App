@@ -2,9 +2,10 @@ import 'package:bookly_app/constants.dart';
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
-  const CustomButton({super.key, required this.label});
+  const CustomButton({super.key, required this.label, required this.onPressed});
 
   final String label;
+  final Function() onPressed;
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -12,7 +13,7 @@ class CustomButton extends StatelessWidget {
       width: size.width * 0.7,
       height: size.height * 0.06,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: kButtonColor,
           foregroundColor: Colors.white,
