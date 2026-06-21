@@ -1,3 +1,4 @@
+import 'package:bookly_app/core/utils/validators.dart';
 import 'package:bookly_app/core/utils/widgets/custom_button.dart';
 import 'package:bookly_app/core/utils/widgets/custom_text_form_field.dart';
 import 'package:bookly_app/features/register/presentation/views/register_view.dart';
@@ -41,31 +42,15 @@ class _LoginFormBodyState extends State<LoginFormBody> {
               keyboardType: TextInputType.emailAddress,
               textInputAction: TextInputAction.next,
               controller: emailController,
-              validator: (value) {
-                if (value == null || value.trim().isEmpty) {
-                  return 'Email is required';
-                }
-                if (!value.contains('@')) {
-                  return 'Enter a valid email';
-                }
-                return null;
-              },
+              validator: Validators.validateEmail,
             ),
             CustomTextFormField(
               hintText: 'Password',
               prefixIcon: Icons.lock_outlined,
               isPassword: true,
-              textInputAction: TextInputAction.next,
+              textInputAction: TextInputAction.done,
               controller: passwordController,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Password is required';
-                }
-                if (value.length < 6) {
-                  return 'Password must be at least 6 characters';
-                }
-                return null;
-              },
+              validator: Validators.validatePassword,
             ),
             SizedBox(height: size.height * 0.035),
             CustomButton(
@@ -81,7 +66,7 @@ class _LoginFormBodyState extends State<LoginFormBody> {
               text: "Don't have an account?",
               textButton: 'Register',
               onPressed: () {
-                Navigator.popAndPushNamed(context, RegisterView.id);
+                Navigator.pushReplacementNamed(context, RegisterView.id);
               },
             ),
           ],

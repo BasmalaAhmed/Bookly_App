@@ -1,3 +1,4 @@
+import 'package:bookly_app/core/utils/validators.dart';
 import 'package:bookly_app/core/utils/widgets/custom_button.dart';
 import 'package:bookly_app/core/utils/widgets/custom_text_form_field.dart';
 import 'package:bookly_app/features/login/presentation/views/login_view.dart';
@@ -45,12 +46,7 @@ class _RegisterFormBodyState extends State<RegisterFormBody> {
               prefixIcon: Icons.person_2_outlined,
               textInputAction: TextInputAction.next,
               controller: usernameController,
-              validator: (value) {
-                if(value == null || value.trim().isEmpty){
-                  return 'Username is required';
-                }
-                return null;
-              },
+              validator: Validators.validateUsername,
             ),
             CustomTextFormField(
               hintText: 'Email',
@@ -58,17 +54,7 @@ class _RegisterFormBodyState extends State<RegisterFormBody> {
               keyboardType: TextInputType.emailAddress,
               textInputAction: TextInputAction.next,
               controller: emailController,
-              validator: (value){
-                if(value == null || value.trim().isEmpty){
-                  return 'Email is required';
-                }
-
-                if(!value.contains('@')){
-                  return 'Enter a valid email';
-                }
-
-                return null;
-              },
+              validator: Validators.validateEmail,
             ),
             CustomTextFormField(
               hintText: 'Password',
@@ -76,15 +62,7 @@ class _RegisterFormBodyState extends State<RegisterFormBody> {
               isPassword: true,
               textInputAction: TextInputAction.next,
               controller: passwordController,
-              validator: (value){
-                if(value == null || value.isEmpty){
-                  return 'Password is required';
-                }
-                if(value.length < 6){
-                  return 'Password must be at least 6 characters';
-                }
-                return null;
-              },
+              validator: Validators.validatePassword,
             ),
             CustomTextFormField(
               hintText: 'Confirm Password',
@@ -93,13 +71,7 @@ class _RegisterFormBodyState extends State<RegisterFormBody> {
               textInputAction: TextInputAction.done,
               controller: confirmPasswordController,
               validator: (value){
-                if(value == null || value.isEmpty){
-                  return 'Confirm your password';
-                }
-                if(value != passwordController.text){
-                  return'Passwords does not match';
-                }
-                return null;
+                return Validators.validateConfirmPassword(value, passwordController.text);
               },
             ),
             SizedBox(height: size.height * 0.035),
@@ -116,7 +88,7 @@ class _RegisterFormBodyState extends State<RegisterFormBody> {
               text: 'Already have an account?',
               textButton: 'Login',
               onPressed: () {
-                Navigator.popAndPushNamed(context, LoginView.id);
+                Navigator.pushReplacementNamed(context, LoginView.id);
               },
             ),
           ],
