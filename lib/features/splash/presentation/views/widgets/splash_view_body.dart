@@ -1,4 +1,5 @@
 import 'package:bookly_app/core/utils/assets.dart';
+import 'package:bookly_app/features/register/presentation/views/register_view.dart';
 import 'package:bookly_app/features/splash/presentation/views/widgets/sliding_text.dart';
 import 'package:flutter/material.dart';
 
@@ -18,14 +19,17 @@ class _SplashViewBodyState extends State<SplashViewBody>
   void initState() {
     super.initState();
     initSlidingAnimation();
+    Future.delayed(Duration(seconds: 2), (){
+      Navigator.popAndPushNamed(context, RegisterView.id);
+    });
   }
 
   
 
   @override
   void dispose() {
-    super.dispose();
     animationController.dispose();
+    super.dispose();
   }
 
   @override

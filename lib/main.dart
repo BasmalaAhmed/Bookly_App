@@ -1,3 +1,5 @@
+import 'package:bookly_app/constants.dart';
+import 'package:bookly_app/features/register/presentation/views/register_view.dart';
 import 'package:bookly_app/features/splash/presentation/views/splash_view.dart';
 import 'package:flutter/material.dart';
 
@@ -13,8 +15,11 @@ class BooklyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: Color(0XFF150526),
+        scaffoldBackgroundColor: kBackgroundColor,
       ),
+      routes: {
+        'RegisterView' : (context) => RegisterView(),
+      },
       home: const SplashView(),
     );
   }
