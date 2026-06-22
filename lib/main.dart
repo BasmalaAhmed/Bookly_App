@@ -1,4 +1,5 @@
 import 'package:bookly_app/constants.dart';
+import 'package:bookly_app/features/forgot_password/presentation/views/forgot_password_view.dart';
 import 'package:bookly_app/features/login/presentation/views/login_view.dart';
 import 'package:bookly_app/features/register/presentation/views/register_view.dart';
 import 'package:bookly_app/features/splash/presentation/views/splash_view.dart';
@@ -21,6 +22,7 @@ class BooklyApp extends StatelessWidget {
       routes: {
         'RegisterView' : (context) => RegisterView(),
         'LoginView' : (context) => LoginView(),
+        'ForgotPasswordView' : (context) => ForgotPasswordView(),
       },
       home: const SplashView(),
     );

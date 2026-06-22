@@ -1,6 +1,8 @@
+import 'package:bookly_app/constants.dart';
 import 'package:bookly_app/core/utils/validators.dart';
 import 'package:bookly_app/core/utils/widgets/custom_button.dart';
 import 'package:bookly_app/core/utils/widgets/custom_text_form_field.dart';
+import 'package:bookly_app/features/forgot_password/presentation/views/forgot_password_view.dart';
 import 'package:bookly_app/features/register/presentation/views/register_view.dart';
 import 'package:bookly_app/features/register/presentation/views/widgets/custom_redirect_text.dart';
 import 'package:flutter/material.dart';
@@ -51,6 +53,25 @@ class _LoginFormBodyState extends State<LoginFormBody> {
               textInputAction: TextInputAction.done,
               controller: passwordController,
               validator: Validators.validatePassword,
+            ),
+            Align(
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.pushNamed(
+                      context,
+                      ForgotPasswordView.id,
+                    );
+                  },
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: size.width * 0.02,
+                    ),
+                    minimumSize: Size.zero,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    foregroundColor: kHintTextColor,
+                  ),
+                  child: Text('Forgot Password?'),
+                ),
             ),
             SizedBox(height: size.height * 0.035),
             CustomButton(
