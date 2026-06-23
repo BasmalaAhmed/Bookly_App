@@ -4,7 +4,7 @@ import 'package:bookly_app/core/utils/widgets/custom_button.dart';
 import 'package:bookly_app/core/utils/widgets/custom_text_form_field.dart';
 import 'package:bookly_app/features/forgot_password/presentation/views/forgot_password_view.dart';
 import 'package:bookly_app/features/register/presentation/views/register_view.dart';
-import 'package:bookly_app/features/register/presentation/views/widgets/custom_redirect_text.dart';
+import 'package:bookly_app/core/utils/widgets/custom_redirect_text.dart';
 import 'package:flutter/material.dart';
 
 class LoginFormBody extends StatefulWidget {

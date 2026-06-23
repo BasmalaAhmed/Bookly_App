@@ -2,7 +2,8 @@ import 'package:bookly_app/core/utils/validators.dart';
 import 'package:bookly_app/core/utils/widgets/custom_button.dart';
 import 'package:bookly_app/core/utils/widgets/custom_text_form_field.dart';
 import 'package:bookly_app/features/login/presentation/views/login_view.dart';
-import 'package:bookly_app/features/register/presentation/views/widgets/custom_redirect_text.dart';
+import 'package:bookly_app/core/utils/widgets/custom_redirect_text.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class RegisterFormBody extends StatefulWidget {
@@ -77,10 +78,20 @@ class _RegisterFormBodyState extends State<RegisterFormBody> {
             SizedBox(height: size.height * 0.035),
             CustomButton(
               label: 'Register',
-              onPressed: () {
+              onPressed: () async{
                 if (formKey.currentState!.validate()) {
-                  print('Valid Form');
-                }
+  try {
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: emailController.text.trim(),
+      password: passwordController.text,
+    );
+
+    print('User Created Successfully');
+    Navigator.pushReplacementNamed(context,LoginView.id,);
+  } on FirebaseAuthException catch (e) {
+    print(e.code);
+  }
+}
               },
             ),
             SizedBox(height: size.height * 0.03),
