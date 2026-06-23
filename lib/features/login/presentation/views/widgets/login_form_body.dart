@@ -5,6 +5,7 @@ import 'package:bookly_app/core/utils/widgets/custom_text_form_field.dart';
 import 'package:bookly_app/features/forgot_password/presentation/views/forgot_password_view.dart';
 import 'package:bookly_app/features/register/presentation/views/register_view.dart';
 import 'package:bookly_app/core/utils/widgets/custom_redirect_text.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginFormBody extends StatefulWidget {
@@ -55,6 +56,7 @@ class _LoginFormBodyState extends State<LoginFormBody> {
               validator: Validators.validatePassword,
             ),
             Align(
+              alignment: Alignment.centerLeft,
                 child: TextButton(
                   onPressed: () {
                     Navigator.pushNamed(
@@ -76,9 +78,18 @@ class _LoginFormBodyState extends State<LoginFormBody> {
             SizedBox(height: size.height * 0.035),
             CustomButton(
               label: 'Login',
-              onPressed: () {
+              onPressed: () async {
                 if (formKey.currentState!.validate()) {
-                  print('Login Form Valid');
+                  try {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: emailController.text.trim(),
+      password: passwordController.text,
+    );
+
+    print('User Logged In Successfully');
+  } on FirebaseAuthException catch (e) {
+    print(e.code);
+  }
                 }
               },
             ),
