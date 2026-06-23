@@ -3,6 +3,7 @@ import 'package:bookly_app/core/utils/widgets/custom_button.dart';
 import 'package:bookly_app/core/utils/widgets/custom_text_form_field.dart';
 import 'package:bookly_app/features/login/presentation/views/login_view.dart';
 import 'package:bookly_app/core/utils/widgets/custom_redirect_text.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ForgotPasswordFormBody extends StatefulWidget {
@@ -45,10 +46,18 @@ class _ForgotPasswordFormBodyState extends State<ForgotPasswordFormBody> {
             SizedBox(height: size.height * 0.03),
             CustomButton(
               label: 'Send Reset Link',
-              onPressed: () {
+              onPressed: () async {
                 if (formKey.currentState!.validate()) {
-    print('Send Reset Link');
-  }
+                  try {
+                    await FirebaseAuth.instance.sendPasswordResetEmail(
+                      email: emailController.text.trim(),
+                    );
+
+                    print('Password reset email sent');
+                  } on FirebaseAuthException catch (e) {
+                    print(e.code);
+                  }
+                }
               },
             ),
             SizedBox(height: size.height * 0.03),
