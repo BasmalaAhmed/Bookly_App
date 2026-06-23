@@ -53,9 +53,13 @@ class _ForgotPasswordFormBodyState extends State<ForgotPasswordFormBody> {
                       email: emailController.text.trim(),
                     );
 
-                    print('Password reset email sent');
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Password Reset Email Sent')),
+                    );
                   } on FirebaseAuthException catch (e) {
-                    print(e.code);
+                    ScaffoldMessenger.of(
+                      context,
+                    ).showSnackBar(SnackBar(content: Text(e.code)));
                   }
                 }
               },
@@ -74,3 +78,8 @@ class _ForgotPasswordFormBodyState extends State<ForgotPasswordFormBody> {
     );
   }
 }
+
+
+// ScaffoldMessenger.of(
+//                       context,
+//                     ).showSnackBar(SnackBar(content: Text(state.message)));

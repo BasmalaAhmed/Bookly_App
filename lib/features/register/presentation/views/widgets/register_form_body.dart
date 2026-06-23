@@ -71,27 +71,35 @@ class _RegisterFormBodyState extends State<RegisterFormBody> {
               isPassword: true,
               textInputAction: TextInputAction.done,
               controller: confirmPasswordController,
-              validator: (value){
-                return Validators.validateConfirmPassword(value, passwordController.text);
+              validator: (value) {
+                return Validators.validateConfirmPassword(
+                  value,
+                  passwordController.text,
+                );
               },
             ),
             SizedBox(height: size.height * 0.035),
             CustomButton(
               label: 'Register',
-              onPressed: () async{
+              onPressed: () async {
                 if (formKey.currentState!.validate()) {
-  try {
-    await FirebaseAuth.instance.createUserWithEmailAndPassword(
-      email: emailController.text.trim(),
-      password: passwordController.text,
-    );
+                  try {
+                    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                      email: emailController.text.trim(),
+                      password: passwordController.text,
+                    );
 
-    print('User Created Successfully');
-    Navigator.pushReplacementNamed(context,LoginView.id,);
-  } on FirebaseAuthException catch (e) {
-    print(e.code);
-  }
-}
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('User Created Successfully')),
+                    );
+                    Future.delayed(Duration(seconds: 2));
+                    Navigator.pushReplacementNamed(context, LoginView.id);
+                  } on FirebaseAuthException catch (e) {
+                    ScaffoldMessenger.of(
+                      context,
+                    ).showSnackBar(SnackBar(content: Text(e.code)));
+                  }
+                }
               },
             ),
             SizedBox(height: size.height * 0.03),

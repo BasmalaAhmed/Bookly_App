@@ -86,9 +86,14 @@ class _LoginFormBodyState extends State<LoginFormBody> {
       password: passwordController.text,
     );
 
-    print('User Logged In Successfully');
+    ScaffoldMessenger.of(
+                      context,
+                    ).showSnackBar(SnackBar(content: Text('User Logged In Successfully')));
+                    Future.delayed(Duration(seconds: 2));
   } on FirebaseAuthException catch (e) {
-    print(e.code);
+    ScaffoldMessenger.of(
+                      context,
+                    ).showSnackBar(SnackBar(content: Text(e.code)));
   }
                 }
               },
