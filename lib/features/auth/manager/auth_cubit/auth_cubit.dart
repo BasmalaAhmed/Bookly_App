@@ -1,9 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:bookly_app/features/auth/manager/auth_cubit/auth_state.dart';
+import 'package:bookly_app/features/auth/data/repos/auth_repo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  AuthCubit() : super(AuthInitial());
+  final AuthRepo authRepo;
+  AuthCubit(this.authRepo) : super(AuthInitial());
 
   Future<void> registerUser({
     required String email,
@@ -11,10 +13,7 @@ class AuthCubit extends Cubit<AuthState> {
   }) async {
     emit(AuthLoading());
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      await authRepo.registerUser(email: email, password: password);
       emit(RegisterSuccess());
     } on FirebaseAuthException catch (ex) {
       if (ex.code == 'weak-password') {
@@ -36,10 +35,7 @@ class AuthCubit extends Cubit<AuthState> {
   }) async {
     emit(AuthLoading());
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      await authRepo.loginUser(email: email, password: password);
       emit(LoginSuccess());
     } on FirebaseAuthException catch (ex) {
       if (ex.code == 'user-not-found') {
@@ -61,9 +57,7 @@ class AuthCubit extends Cubit<AuthState> {
   }) async {
     emit(AuthLoading());
     try {
-      await FirebaseAuth.instance.sendPasswordResetEmail(
-        email: email,
-      );
+      await authRepo.resetPassword(email: email);
       emit(ResetPasswordSuccess());
     } on FirebaseAuthException catch (ex) {
       if (ex.code == 'user-not-found') {

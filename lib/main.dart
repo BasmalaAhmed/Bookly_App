@@ -1,5 +1,6 @@
 import 'package:bookly_app/constants.dart';
 import 'package:bookly_app/features/auth/manager/auth_cubit/auth_cubit.dart';
+import 'package:bookly_app/features/auth/data/repos/auth_repo_impl.dart';
 import 'package:bookly_app/features/auth/presentation/views/forgot_password_view.dart';
 import 'package:bookly_app/features/auth/presentation/views/login_view.dart';
 import 'package:bookly_app/features/auth/presentation/views/register_view.dart';
@@ -22,7 +23,7 @@ class BooklyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers : [
-        BlocProvider(create: (context) => AuthCubit()),
+        BlocProvider(create: (context) => AuthCubit(AuthRepoImpl())),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
