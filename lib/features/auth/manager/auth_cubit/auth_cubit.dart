@@ -55,4 +55,27 @@ class AuthCubit extends Cubit<AuthState> {
       emit(AuthFailure("Something went wrong!"));
     }
   }
+
+  Future<void> resetPassword({
+    required String email,
+  }) async {
+    emit(AuthLoading());
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(
+        email: email,
+      );
+      emit(ResetPasswordSuccess());
+    } on FirebaseAuthException catch (ex) {
+      if (ex.code == 'user-not-found') {
+        emit(AuthFailure("No user found matching this email!"));
+      } else if ( ex.code == 'invalid-email') {
+        emit(AuthFailure("Invalid email address!"));
+      }
+      else {
+    emit(AuthFailure(ex.message ?? "Authentication failed!"));
+  }
+    } catch (e) {
+      emit(AuthFailure("Something went wrong!"));
+    }
+  }
 }
