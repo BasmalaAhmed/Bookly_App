@@ -1,6 +1,7 @@
 import 'package:bookly_app/core/utils/validators.dart';
 import 'package:bookly_app/core/utils/widgets/custom_button.dart';
 import 'package:bookly_app/core/utils/widgets/custom_text_form_field.dart';
+import 'package:bookly_app/core/utils/widgets/loading_indicator.dart';
 import 'package:bookly_app/features/login/presentation/views/login_view.dart';
 import 'package:bookly_app/core/utils/widgets/custom_redirect_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,6 +15,7 @@ class RegisterFormBody extends StatefulWidget {
 }
 
 class _RegisterFormBodyState extends State<RegisterFormBody> {
+  bool isLoading = false;
   final formKey = GlobalKey<FormState>();
 
   final usernameController = TextEditingController();
@@ -80,9 +82,11 @@ class _RegisterFormBodyState extends State<RegisterFormBody> {
             ),
             SizedBox(height: size.height * 0.035),
             CustomButton(
-              label: 'Register',
-              onPressed: () async {
+              onPressed: isLoading ? null : () async {
                 if (formKey.currentState!.validate()) {
+                  setState(() {
+  isLoading = true;
+});
                   try {
                     await FirebaseAuth.instance.createUserWithEmailAndPassword(
                       email: emailController.text.trim(),
@@ -92,15 +96,22 @@ class _RegisterFormBodyState extends State<RegisterFormBody> {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text('User Created Successfully')),
                     );
-                    Future.delayed(Duration(seconds: 2));
                     Navigator.pushReplacementNamed(context, LoginView.id);
                   } on FirebaseAuthException catch (e) {
                     ScaffoldMessenger.of(
                       context,
                     ).showSnackBar(SnackBar(content: Text(e.code)));
                   }
+                  finally{
+                     if (mounted) {
+    setState(() {
+      isLoading = false;
+    });
+  }
+                  }
                 }
               },
+              child: isLoading? const LoadingIndicator() : const Text('Register'),
             ),
             SizedBox(height: size.height * 0.03),
             CustomRedirectText(
@@ -116,3 +127,5 @@ class _RegisterFormBodyState extends State<RegisterFormBody> {
     );
   }
 }
+
+

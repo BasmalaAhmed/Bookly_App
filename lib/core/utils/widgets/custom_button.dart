@@ -2,10 +2,11 @@ import 'package:bookly_app/constants.dart';
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
-  const CustomButton({super.key, required this.label, required this.onPressed});
+  const CustomButton({super.key, required this.onPressed, required this.child});
 
-  final String label;
-  final Function() onPressed;
+
+  final Widget child;
+  final VoidCallback? onPressed;
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -21,7 +22,7 @@ class CustomButton extends StatelessWidget {
           elevation: 4,
           textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
         ),
-        child: Text(label),
+        child: child,
       ),
     );
   }
