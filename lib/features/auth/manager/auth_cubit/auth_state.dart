@@ -1,0 +1,17 @@
+abstract class AuthState {}
+
+final class AuthInitial extends AuthState {}
+
+final class AuthLoading extends AuthState {}
+
+final class RegisterSuccess extends AuthState {}
+
+final class LoginSuccess extends AuthState {}
+
+final class ResetPasswordSuccess extends AuthState {}
+
+final class AuthFailure extends AuthState {
+  final String errMessage;
+
+  AuthFailure(this.errMessage);
+}
