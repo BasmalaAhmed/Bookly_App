@@ -1,5 +1,5 @@
 import 'package:bookly_app/core/utils/assets.dart';
-import 'package:bookly_app/features/register/presentation/views/register_view.dart';
+import 'package:bookly_app/features/auth/presentation/views/register_view.dart';
 import 'package:bookly_app/features/splash/presentation/views/widgets/sliding_text.dart';
 import 'package:flutter/material.dart';
 

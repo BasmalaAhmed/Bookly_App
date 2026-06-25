@@ -1,4 +1,4 @@
-import 'package:bookly_app/features/forgot_password/presentation/views/widgets/forgot_password_view_body.dart';
+import 'package:bookly_app/features/auth/presentation/widgets/forgot_password_view_body.dart';
 import 'package:flutter/material.dart';
 
 class ForgotPasswordView extends StatelessWidget {

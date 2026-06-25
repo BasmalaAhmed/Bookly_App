@@ -1,10 +1,10 @@
 import 'package:bookly_app/core/utils/assets.dart';
-import 'package:bookly_app/features/login/presentation/views/widgets/login_form_body.dart';
+import 'package:bookly_app/features/auth/presentation/widgets/register_form_body.dart';
 import 'package:flutter/material.dart';
 import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
 
-class LoginViewBody extends StatelessWidget {
-  const LoginViewBody({super.key});
+class RegisterViewBody extends StatelessWidget {
+  const RegisterViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class LoginViewBody extends StatelessWidget {
                   LiquidGlassLayer(
                     child: LiquidGlass(
                       shape: LiquidRoundedRectangle(borderRadius: 12),
-                      child: LoginFormBody(),
+                      child: RegisterFormBody(),
                     ),
                   ),
                 ],

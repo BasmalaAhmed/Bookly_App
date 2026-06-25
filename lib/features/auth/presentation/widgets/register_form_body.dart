@@ -2,7 +2,7 @@ import 'package:bookly_app/core/utils/validators.dart';
 import 'package:bookly_app/core/utils/widgets/custom_button.dart';
 import 'package:bookly_app/core/utils/widgets/custom_text_form_field.dart';
 import 'package:bookly_app/core/utils/widgets/loading_indicator.dart';
-import 'package:bookly_app/features/login/presentation/views/login_view.dart';
+import 'package:bookly_app/features/auth/presentation/views/login_view.dart';
 import 'package:bookly_app/core/utils/widgets/custom_redirect_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
