@@ -6,6 +6,7 @@ import 'package:bookly_app/features/auth/manager/auth_cubit/auth_cubit.dart';
 import 'package:bookly_app/features/auth/manager/auth_cubit/auth_state.dart';
 import 'package:bookly_app/features/auth/presentation/views/login_view.dart';
 import 'package:bookly_app/core/utils/widgets/custom_redirect_text.dart';
+import 'package:bookly_app/features/home/presentation/views/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -47,7 +48,7 @@ class _RegisterFormBodyState extends State<RegisterFormBody> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text('User Created Successfully')),
             );
-            Navigator.pushReplacementNamed(context, LoginView.id);
+            Navigator.pushReplacementNamed(context, HomeView.id);
           }
           if (state is AuthFailure) {
             ScaffoldMessenger.of(

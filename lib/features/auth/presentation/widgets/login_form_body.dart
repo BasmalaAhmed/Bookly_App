@@ -8,6 +8,7 @@ import 'package:bookly_app/features/auth/manager/auth_cubit/auth_state.dart';
 import 'package:bookly_app/features/auth/presentation/views/forgot_password_view.dart';
 import 'package:bookly_app/features/auth/presentation/views/register_view.dart';
 import 'package:bookly_app/core/utils/widgets/custom_redirect_text.dart';
+import 'package:bookly_app/features/home/presentation/views/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -44,6 +45,7 @@ class _LoginFormBodyState extends State<LoginFormBody> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text('User Logged In Successfully')),
             );
+            Navigator.pushReplacementNamed(context, HomeView.id);
           }
           if (state is AuthFailure) {
             ScaffoldMessenger.of(
