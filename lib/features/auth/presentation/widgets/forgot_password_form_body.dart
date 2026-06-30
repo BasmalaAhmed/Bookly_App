@@ -1,13 +1,14 @@
+import 'package:bookly_app/core/utils/app_router.dart';
 import 'package:bookly_app/core/utils/validators.dart';
 import 'package:bookly_app/core/utils/widgets/custom_button.dart';
 import 'package:bookly_app/core/utils/widgets/custom_text_form_field.dart';
 import 'package:bookly_app/core/utils/widgets/loading_indicator.dart';
 import 'package:bookly_app/features/auth/manager/auth_cubit/auth_cubit.dart';
 import 'package:bookly_app/features/auth/manager/auth_cubit/auth_state.dart';
-import 'package:bookly_app/features/auth/presentation/views/login_view.dart';
 import 'package:bookly_app/core/utils/widgets/custom_redirect_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class ForgotPasswordFormBody extends StatefulWidget {
   const ForgotPasswordFormBody({super.key});
@@ -80,7 +81,7 @@ class _ForgotPasswordFormBodyState extends State<ForgotPasswordFormBody> {
                   text: "Back To",
                   textButton: 'Login',
                   onPressed: () {
-                    Navigator.pushReplacementNamed(context, LoginView.id);
+                    GoRouter.of(context).push(AppRouter.kLoginView);
                   },
                 ),
               ],

@@ -1,7 +1,9 @@
+import 'package:bookly_app/core/utils/app_router.dart';
 import 'package:bookly_app/core/utils/assets.dart';
-import 'package:bookly_app/features/auth/presentation/views/register_view.dart';
 import 'package:bookly_app/features/splash/presentation/views/widgets/sliding_text.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class SplashViewBody extends StatefulWidget {
   const SplashViewBody({super.key});
@@ -20,7 +22,15 @@ class _SplashViewBodyState extends State<SplashViewBody>
     super.initState();
     initSlidingAnimation();
     Future.delayed(Duration(seconds: 2), (){
-      Navigator.popAndPushNamed(context, RegisterView.id);
+      if (!mounted) return;
+      final user = FirebaseAuth.instance.currentUser;
+
+if (user != null) {
+  GoRouter.of(context).go(AppRouter.kHomeView);
+} else {
+  GoRouter.of(context).go(AppRouter.kLoginView);
+}
+      
     });
   }
 

@@ -1,14 +1,14 @@
+import 'package:bookly_app/core/utils/app_router.dart';
 import 'package:bookly_app/core/utils/validators.dart';
 import 'package:bookly_app/core/utils/widgets/custom_button.dart';
 import 'package:bookly_app/core/utils/widgets/custom_text_form_field.dart';
 import 'package:bookly_app/core/utils/widgets/loading_indicator.dart';
 import 'package:bookly_app/features/auth/manager/auth_cubit/auth_cubit.dart';
 import 'package:bookly_app/features/auth/manager/auth_cubit/auth_state.dart';
-import 'package:bookly_app/features/auth/presentation/views/login_view.dart';
 import 'package:bookly_app/core/utils/widgets/custom_redirect_text.dart';
-import 'package:bookly_app/features/home/presentation/views/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class RegisterFormBody extends StatefulWidget {
   const RegisterFormBody({super.key});
@@ -48,7 +48,7 @@ class _RegisterFormBodyState extends State<RegisterFormBody> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text('User Created Successfully')),
             );
-            Navigator.pushReplacementNamed(context, HomeView.id);
+            GoRouter.of(context).push(AppRouter.kHomeView);
           }
           if (state is AuthFailure) {
             ScaffoldMessenger.of(
@@ -118,7 +118,7 @@ class _RegisterFormBodyState extends State<RegisterFormBody> {
                   text: 'Already have an account?',
                   textButton: 'Login',
                   onPressed: () {
-                    Navigator.pushReplacementNamed(context, LoginView.id);
+                    GoRouter.of(context).push(AppRouter.kLoginView);
                   },
                 ),
               ],
