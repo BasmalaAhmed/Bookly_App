@@ -9,9 +9,8 @@ class HomeViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: size.width * 0.04),
+      padding: EdgeInsets.symmetric(horizontal: 16),
       child: CustomScrollView(
         physics: BouncingScrollPhysics(),
         slivers: [
@@ -19,19 +18,17 @@ class HomeViewBody extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: size.height * 0.025),
-                  child: CustomAppBar(),
-                ),
-                FeaturedBooksListView(),
-                SizedBox(height: size.height * 0.04),
+                CustomAppBar(),
+                const SizedBox(height: 18,),
+                const FeaturedBooksListView(),
+                const SizedBox(height: 42,),
                 Text('Best Seller' , style: Styles.textStyle18,),
               ],
             ),
           ),
       
           SliverFillRemaining(
-            child: BestSellerListView(),
+            child: const BestSellerListView(),
           )
         ],
       ),

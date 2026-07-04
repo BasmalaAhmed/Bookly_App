@@ -13,10 +13,10 @@ class BookDetailsSection extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: size.width * 0.24),
+          padding: EdgeInsets.symmetric(horizontal: size.width * 0.28),
           child: const CustomBookImage(),
         ),
-        const SizedBox(height: 36),
+        const SizedBox(height: 32),
         Text(
           'The Jungle Book',
           style: Styles.textStyle30.copyWith(fontWeight: FontWeight.bold),
@@ -32,9 +32,9 @@ class BookDetailsSection extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 6),
         const BookRating(mainAxisAlignment: MainAxisAlignment.center),
-        const SizedBox(height: 35),
+        const SizedBox(height: 30),
         const BooksAction(),
       ],
     );
