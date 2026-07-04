@@ -32,7 +32,6 @@ class AuthCubit extends Cubit<AuthState> {
       await authRepo.loginUser(email: email, password: password);
       emit(LoginSuccess());
     } on FirebaseAuthException catch (ex) {
-      print('Firebase Error Code: ${ex.code}');
       emit(AuthFailure(FirebaseFailure.fromFirebaseAuthException(ex).message));
     } catch (e) {
       emit(AuthFailure("Something went wrong!"));

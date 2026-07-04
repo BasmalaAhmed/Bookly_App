@@ -3,24 +3,26 @@ import 'package:bookly_app/core/utils/styles.dart';
 import 'package:flutter/material.dart';
 
 class BookRating extends StatelessWidget {
-  const BookRating({super.key});
+  const BookRating({super.key, this.mainAxisAlignment = MainAxisAlignment.start});
+  final MainAxisAlignment mainAxisAlignment;
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Row(
+      mainAxisAlignment: mainAxisAlignment,
       children: [
-        Icon(Icons.star_rate_rounded, color: kRatingStar,),
+        Icon(Icons.star_rate_rounded, color: kRatingStar, size: 22,),
         SizedBox(
-                  width: size.width * 0.006,
+                  width: 3,
                 ),
         Text('4.8', style: Styles.textStyle16,),
         SizedBox(
-                  width: size.width * 0.012,
+                  width: 4,
                 ),
-        Text('(2456)', style: Styles.textStyle14.copyWith(
-          color: kRatingCount,
-        ),),
+        Opacity(
+          opacity: 0.5,
+          child: Text('(2456)', style: Styles.textStyle14),
+        ),
       ],
     );
   }
