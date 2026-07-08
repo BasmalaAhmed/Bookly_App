@@ -30,12 +30,18 @@ class ApiFailure extends Failure {
   }
 
   factory ApiFailure.fromResponse(int statusCode, dynamic response) {
+    print(statusCode);
+    print(response);
     if (statusCode == 400 || statusCode == 401 || statusCode == 403) {
       return ApiFailure(
         response['error']?['message'] ?? response['message'] ?? defaultMessage,
       );
     } else if (statusCode == 404) {
       return ApiFailure('Your request is not found, please try again later.');
+    } else if (statusCode == 503) {
+      return ApiFailure(
+        'The service is temporarily unavailable. Please try again in a moment.',
+      );
     } else if (statusCode >= 500) {
       return ApiFailure('Internal server error, please try again later.');
     } else {

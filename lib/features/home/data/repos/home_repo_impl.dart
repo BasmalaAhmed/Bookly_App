@@ -13,6 +13,7 @@ class HomeRepoImpl implements HomeRepo {
   HomeRepoImpl(this.apiService);
   @override
   Future<Either<ApiFailure, List<BookModel>>> fetchNewestBooks() async {
+    print('API Key: $apiKey');
     return _fetchBooks(
       'volumes?q=subject:programming&orderBy=newest&key=$apiKey',
     );
@@ -30,6 +31,7 @@ class HomeRepoImpl implements HomeRepo {
   ) async {
     try {
       var data = await apiService.fetchBooks(endpoint: endpoint);
+      print(endpoint);
       final List<BookModel> books = [];
 
       final items = data['items'] as List? ?? [];
