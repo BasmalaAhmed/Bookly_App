@@ -14,22 +14,18 @@ class NewestBooksListView extends StatelessWidget {
     return BlocBuilder<NewestBooksCubit, NewestBooksState>(
       builder: (context, state) {
         if (state is NewestBooksSuccess) {
-          return ListView.builder(
-            padding: EdgeInsets.zero,
-            physics: NeverScrollableScrollPhysics(),
-            itemCount: state.books.length,
-            itemBuilder: (context, index) {
+          return SliverList(
+            delegate: SliverChildBuilderDelegate((context, index) {
               return Padding(
                 padding: EdgeInsets.symmetric(vertical: 15),
-                child: BookListViewItem(bookModel: state.books[index],
-                ),
+                child: BookListViewItem(bookModel: state.books[index]),
               );
-            },
+            }, childCount: state.books.length),
           );
         } else if (state is NewestBooksFailure) {
-          return CustomErrorWidget(errMessage: state.errMessage);
+          return SliverFillRemaining(child: Center(child: CustomErrorWidget(errMessage: state.errMessage)));
         } else {
-          return LoadingIndicator();
+          return SliverFillRemaining(child: Center(child: LoadingIndicator()));
         }
       },
     );
