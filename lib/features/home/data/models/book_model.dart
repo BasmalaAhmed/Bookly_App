@@ -4,9 +4,10 @@ class BookModel {
   final String author;
   final double? price;
   final double? averageRating;
-  final int? ratingCount;
+  final num? ratingCount;
   final String? buyLink;
   final String? previewLink;
+  final List<String> category;
 
   BookModel({
     required this.thumbnail,
@@ -17,6 +18,7 @@ class BookModel {
     required this.ratingCount,
     required this.buyLink,
     required this.previewLink,
+    required this.category,
   });
 
   factory BookModel.fromJson(Map<String, dynamic> json) {
@@ -26,24 +28,25 @@ class BookModel {
       thumbnail: volumeInfo["imageLinks"]?["thumbnail"],
       title: volumeInfo["title"] ?? "Unknown Title",
       author: (volumeInfo["authors"] as List?)?.join(', ') ?? 'Unknown',
-      price: (saleInfo?["listPrice"]?["amount"] as num?)?.toDouble() ,
-      averageRating: (volumeInfo["averageRating"] as num?)?.toDouble() ,
+      price: (saleInfo?["listPrice"]?["amount"] as num?)?.toDouble(),
+      averageRating: (volumeInfo["averageRating"] as num?)?.toDouble(),
       ratingCount: volumeInfo["ratingsCount"] ?? 0,
       buyLink: saleInfo?["buyLink"],
       previewLink: volumeInfo?["previewLink"],
+      category: List<String>.from(volumeInfo?["categories"] ?? []),
     );
   }
   String get priceText {
-  if (price == null) {
-    return 'Free';
+    if (price == null) {
+      return 'Free';
+    }
+    return '\$${price!.toStringAsFixed(2)}';
   }
-  return '\$${price!.toStringAsFixed(2)}';
-}
-String get ratingText {
-  if (averageRating == null) {
-    return 'N/A';
-  }
-  return averageRating!.toStringAsFixed(2);
-}
 
+  String get ratingText {
+    if (averageRating == null) {
+      return 'N/A';
+    }
+    return averageRating!.toStringAsFixed(2);
+  }
 }

@@ -14,7 +14,7 @@ class HomeRepoImpl implements HomeRepo {
   @override
   Future<Either<ApiFailure, List<BookModel>>> fetchNewestBooks() async {
     return _fetchBooks(
-      'volumes?q=subject:flutter&orderBy=newest&key=$apiKey',
+      'volumes?q=subject:flutter&Sorting=newest&key=$apiKey',
     );
   }
 
@@ -22,6 +22,13 @@ class HomeRepoImpl implements HomeRepo {
   Future<Either<ApiFailure, List<BookModel>>> fetchFeaturedBooks() async {
     return _fetchBooks(
       'volumes?q=subject:programming&key=$apiKey',
+    );
+  }
+
+  @override
+  Future<Either<ApiFailure, List<BookModel>>> fetchSimilarBooks({required String category}) async {
+    return _fetchBooks(
+      'volumes?q=subject:programming&Sorting=relevance&key=$apiKey',
     );
   }
 

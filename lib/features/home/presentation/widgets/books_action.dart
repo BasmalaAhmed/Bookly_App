@@ -1,10 +1,13 @@
+import 'package:bookly_app/features/home/data/models/book_model.dart';
 import 'package:bookly_app/features/home/presentation/widgets/custom_book_button.dart';
 import 'package:flutter/material.dart';
 
 class BooksAction extends StatelessWidget {
   const BooksAction({
-    super.key,
+    super.key, required this.book,
   });
+
+  final BookModel book;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +25,7 @@ class BooksAction extends StatelessWidget {
                   bottomLeft: Radius.circular(12),
                 ),
                 backgroundColor: Colors.white,
-                textColor: Colors.black, text: r'19.99$',
+                textColor: Colors.black, text: book.priceText,
               ),
             ),
             Expanded(

@@ -1,10 +1,15 @@
+import 'package:bookly_app/core/utils/service_locator.dart';
 import 'package:bookly_app/features/auth/presentation/views/forgot_password_view.dart';
 import 'package:bookly_app/features/auth/presentation/views/login_view.dart';
 import 'package:bookly_app/features/auth/presentation/views/register_view.dart';
+import 'package:bookly_app/features/home/data/models/book_model.dart';
+import 'package:bookly_app/features/home/data/repos/home_repo.dart';
+import 'package:bookly_app/features/home/presentation/manager/similar_books_cubit/similar_books_cubit.dart';
 import 'package:bookly_app/features/home/presentation/views/book_details_view.dart';
 import 'package:bookly_app/features/home/presentation/views/home_view.dart';
 import 'package:bookly_app/features/search/presentation/views/search_view.dart';
 import 'package:bookly_app/features/splash/presentation/views/splash_view.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 abstract class AppRouter {
@@ -15,41 +20,29 @@ abstract class AppRouter {
   static const kBookDetailsView = '/bookDetailsView';
   static const kSearchView = '/searchView';
   static final router = GoRouter(
-  routes: [
-    GoRoute(
-      path: '/',
-      builder: (context, state) => SplashView(),
-    ),
+    routes: [
+      GoRoute(path: '/', builder: (context, state) => SplashView()),
 
-    GoRoute(
-      path: kRegisterView,
-      builder: (context, state) => RegisterView(),
-    ),
+      GoRoute(path: kRegisterView, builder: (context, state) => RegisterView()),
 
-    GoRoute(
-      path: kLoginView,
-      builder: (context, state) => LoginView(),
-    ),
+      GoRoute(path: kLoginView, builder: (context, state) => LoginView()),
 
-    GoRoute(
-      path: kForgotPasswordView,
-      builder: (context, state) => ForgotPasswordView(),
-    ),
+      GoRoute(
+        path: kForgotPasswordView,
+        builder: (context, state) => ForgotPasswordView(),
+      ),
 
-    GoRoute(
-      path: kHomeView,
-      builder: (context, state) => HomeView(),
-    ),
+      GoRoute(path: kHomeView, builder: (context, state) => HomeView()),
 
-    GoRoute(
-      path: kBookDetailsView,
-      builder: (context, state) => BookDetailsView(),
-    ),
+      GoRoute(
+        path: kBookDetailsView,
+        builder: (context, state) => BlocProvider(
+          create: (context) => SimilarBooksCubit(getIt<HomeRepo>()),
+          child: BookDetailsView(bookModel: state.extra as BookModel),
+        ),
+      ),
 
-    GoRoute(
-      path: kSearchView,
-      builder: (context, state) => SearchView(),
-    ),
-  ],
-);
+      GoRoute(path: kSearchView, builder: (context, state) => SearchView()),
+    ],
+  );
 }
