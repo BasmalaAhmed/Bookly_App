@@ -30,8 +30,6 @@ class ApiFailure extends Failure {
   }
 
   factory ApiFailure.fromResponse(int statusCode, dynamic response) {
-    print(statusCode);
-    print(response);
     if (statusCode == 400 || statusCode == 401 || statusCode == 403) {
       return ApiFailure(
         response['error']?['message'] ?? response['message'] ?? defaultMessage,

@@ -26,11 +26,24 @@ class BookModel {
       thumbnail: volumeInfo["imageLinks"]?["thumbnail"],
       title: volumeInfo["title"] ?? "Unknown Title",
       author: (volumeInfo["authors"] as List?)?.join(', ') ?? 'Unknown',
-      price: (saleInfo?["listPrice"]?["amount"] as num?)?.toDouble(),
-      averageRating: (volumeInfo["averageRating"] as num?)?.toDouble(),
+      price: (saleInfo?["listPrice"]?["amount"] as num?)?.toDouble() ,
+      averageRating: (volumeInfo["averageRating"] as num?)?.toDouble() ,
       ratingCount: volumeInfo["ratingsCount"] ?? 0,
       buyLink: saleInfo?["buyLink"],
       previewLink: volumeInfo?["previewLink"],
     );
   }
+  String get priceText {
+  if (price == null) {
+    return 'Free';
+  }
+  return '\$${price!.toStringAsFixed(2)}';
+}
+String get ratingText {
+  if (averageRating == null) {
+    return 'N/A';
+  }
+  return averageRating!.toStringAsFixed(2);
+}
+
 }
