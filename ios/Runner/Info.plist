@@ -66,5 +66,14 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+
+	<key>LSApplicationQueriesSchemes</key>
+<array>
+  <string>https</string>
+</array>
+<key>NSAppTransportSecurity</key>
+<dict>
+   <key>NSAllowArbitraryLoads</key>
+   <true/>
 </dict>
 </plist>

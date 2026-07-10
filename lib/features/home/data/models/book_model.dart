@@ -32,7 +32,7 @@ class BookModel {
       averageRating: (volumeInfo["averageRating"] as num?)?.toDouble(),
       ratingCount: volumeInfo["ratingsCount"] ?? 0,
       buyLink: saleInfo?["buyLink"],
-      previewLink: volumeInfo?["previewLink"],
+      previewLink: volumeInfo?["previewLink"] ?? "",
       category: List<String>.from(volumeInfo?["categories"] ?? []),
     );
   }

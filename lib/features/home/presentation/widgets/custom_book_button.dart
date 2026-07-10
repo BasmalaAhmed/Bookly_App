@@ -7,18 +7,19 @@ class CustomBookButton extends StatelessWidget {
     required this.borderRadius,
     required this.backgroundColor,
     required this.textColor,
-    required this.text,
+    required this.text, this.onPressed,
   });
 
   final BorderRadiusGeometry borderRadius;
   final Color backgroundColor;
   final Color textColor;
   final String text;
+  final void Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         backgroundColor: backgroundColor,
         shape: RoundedRectangleBorder(borderRadius: borderRadius),
