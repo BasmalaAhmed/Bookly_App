@@ -32,4 +32,10 @@ abstract class Styles{
     fontSize: 14,
     fontWeight: FontWeight.normal,
   );
+
+    static const textStyle12 = TextStyle(
+    color: Colors.white,
+    fontSize: 12,
+    fontWeight: FontWeight.normal,
+  );
 }

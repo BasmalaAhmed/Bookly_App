@@ -1,5 +1,7 @@
 import 'package:bookly_app/constants.dart';
 import 'package:bookly_app/core/utils/app_router.dart';
+import 'package:bookly_app/core/utils/helpers.dart';
+import 'package:bookly_app/core/utils/styles.dart';
 import 'package:bookly_app/core/utils/validators.dart';
 import 'package:bookly_app/core/utils/widgets/custom_button.dart';
 import 'package:bookly_app/core/utils/widgets/custom_text_form_field.dart';
@@ -32,24 +34,15 @@ class _LoginFormBodyState extends State<LoginFormBody> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: size.width * 0.03,
-        vertical: size.height * 0.02,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
       child: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is LoginSuccess) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('User Logged In Successfully')),
-            );
-            GoRouter.of(context).push(AppRouter.kHomeView);
-          }
-          if (state is AuthFailure) {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text(state.errMessage)));
+            showSnackBar(context, 'User Logged In Successfully');
+            context.go(AppRouter.kHomeView);
+          } else if (state is AuthFailure) {
+            showSnackBar(context, state.errMessage);
           }
         },
         builder: (context, state) {
@@ -65,6 +58,7 @@ class _LoginFormBodyState extends State<LoginFormBody> {
                   controller: emailController,
                   validator: Validators.validateEmail,
                 ),
+                const SizedBox(height: 16,),
                 CustomTextFormField(
                   hintText: 'Password',
                   prefixIcon: Icons.lock_outlined,
@@ -73,26 +67,31 @@ class _LoginFormBodyState extends State<LoginFormBody> {
                   controller: passwordController,
                   validator: Validators.validatePassword,
                 ),
+                const SizedBox(height: 12),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: TextButton(
                     onPressed: () {
-                      GoRouter.of(context).push(AppRouter.kForgotPasswordView);
+                      context.push(AppRouter.kForgotPasswordView);
                     },
                     style: TextButton.styleFrom(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: size.width * 0.02,
-                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
                       minimumSize: Size.zero,
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      foregroundColor: kHintTextColor,
                     ),
-                    child: Text('Forgot Password?'),
+                    child: Text(
+                      'Forgot Password?',
+                      style: Styles.textStyle14.copyWith(
+                        color: kHintTextColor,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ),
                 ),
-                SizedBox(height: size.height * 0.035),
+                const SizedBox(height: 45),
                 CustomButton(
-                  onPressed: state is AuthLoading ? null
+                  onPressed: state is AuthLoading
+                      ? null
                       : () {
                           if (formKey.currentState!.validate()) {
                             context.read<AuthCubit>().loginUser(
@@ -105,12 +104,12 @@ class _LoginFormBodyState extends State<LoginFormBody> {
                       ? const LoadingIndicator()
                       : const Text('Login'),
                 ),
-                SizedBox(height: size.height * 0.03),
+                const SizedBox(height: 14),
                 CustomRedirectText(
                   text: "Don't have an account?",
                   textButton: 'Register',
                   onPressed: () {
-                    GoRouter.of(context).push(AppRouter.kRegisterView);
+                    context.push(AppRouter.kRegisterView);
                   },
                 ),
               ],

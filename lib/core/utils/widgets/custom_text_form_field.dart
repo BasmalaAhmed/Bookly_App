@@ -1,4 +1,5 @@
 import 'package:bookly_app/constants.dart';
+import 'package:bookly_app/core/utils/styles.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatefulWidget {
@@ -27,68 +28,65 @@ class CustomTextFormField extends StatefulWidget {
 
 class _CustomTextFormFieldState extends State<CustomTextFormField> {
   late bool obscureText;
+  late final FocusNode _suffixFocusNode;
   @override
   void initState() {
     super.initState();
     obscureText = widget.isPassword;
+    _suffixFocusNode = FocusNode(skipTraversal: true);
+  }
+
+  @override
+  void dispose() {
+    _suffixFocusNode.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    return Padding(
-      padding: EdgeInsets.only(
-        bottom: size.height * 0.02,
-        left: size.width * 0.015,
-        right: size.width * 0.015,
-      ),
-      child: TextFormField(
-        onTapOutside: (_) {
-          FocusScope.of(context).unfocus();
-        },
-        autovalidateMode: AutovalidateMode.onUnfocus,
-        controller: widget.controller,
-        validator: widget.validator,
-        textInputAction: widget.textInputAction,
-        keyboardType: widget.keyboardType,
-        obscureText: widget.isPassword && obscureText,
-        style: const TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.w500,
-        ),
-        decoration: InputDecoration(
-          hintText: widget.hintText,
-          hintStyle: const TextStyle(color: kHintTextColor),
-          prefixIcon: Icon(widget.prefixIcon, color: kHintTextColor),
-          suffixIcon: (widget.isPassword)
-              ? IconButton(
-                  focusNode: FocusNode(skipTraversal: true),
-                  onPressed: () {
-                    setState(() {
-                      obscureText = !obscureText;
-                    });
-                  },
-                  icon: Icon(
-                    (obscureText)
-                        ? Icons.visibility_off_outlined
-                        : Icons.visibility_outlined,
-                    color: kHintTextColor,
-                  ),
-                )
-              : null,
-          border: customBorder(kEnabledBorderColor),
-          enabledBorder: customBorder(kEnabledBorderColor),
-          focusedBorder: customBorder(kFocusedBorderColor),
-          errorBorder: customBorder(kErrorBorderColor),
-          focusedErrorBorder: customBorder(kErrorBorderColor),
-        ),
+    return TextFormField(
+      onTapOutside: (_) {
+        FocusScope.of(context).unfocus();
+      },
+      autovalidateMode: AutovalidateMode.onUnfocus,
+      controller: widget.controller,
+      validator: widget.validator,
+      textInputAction: widget.textInputAction,
+      keyboardType: widget.keyboardType,
+      obscureText: widget.isPassword && obscureText,
+      style: Styles.textStyle16,
+      decoration: InputDecoration(
+        hintText: widget.hintText,
+        hintStyle: Styles.textStyle16.copyWith(color: kHintTextColor),
+        prefixIcon: Icon(widget.prefixIcon, color: kHintTextColor),
+        suffixIcon: widget.isPassword
+            ? IconButton(
+              focusNode: _suffixFocusNode,
+                onPressed: () {
+                  setState(() {
+                    obscureText = !obscureText;
+                  });
+                },
+                icon: Icon(
+                  (obscureText)
+                      ? Icons.visibility_off_outlined
+                      : Icons.visibility_outlined,
+                  color: kHintTextColor,
+                ),
+              )
+            : null,
+        border: _buildBorder(kEnabledBorderColor),
+        enabledBorder: _buildBorder(kEnabledBorderColor),
+        focusedBorder: _buildBorder(kFocusedBorderColor),
+        errorBorder: _buildBorder(kErrorBorderColor),
+        focusedErrorBorder: _buildBorder(kErrorBorderColor),
       ),
     );
   }
 
-  OutlineInputBorder customBorder(Color borderColor) {
+  OutlineInputBorder _buildBorder(Color borderColor) {
     return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(9),
+      borderRadius: BorderRadius.circular(12),
       borderSide: BorderSide(color: borderColor, width: 1.5),
     );
   }

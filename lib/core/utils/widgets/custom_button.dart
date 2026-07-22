@@ -1,4 +1,5 @@
 import 'package:bookly_app/constants.dart';
+import 'package:bookly_app/core/utils/styles.dart';
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
@@ -9,10 +10,9 @@ class CustomButton extends StatelessWidget {
   final VoidCallback? onPressed;
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return SizedBox(
-      width: size.width * 0.7,
-      height: size.height * 0.06,
+      width: double.infinity,
+      height: 50,
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
@@ -20,7 +20,7 @@ class CustomButton extends StatelessWidget {
           foregroundColor: Colors.white,
           shadowColor: kButtonColor,
           elevation: 4,
-          textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+          textStyle: Styles.textStyle18,
         ),
         child: child,
       ),
