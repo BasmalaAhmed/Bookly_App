@@ -1,4 +1,5 @@
 import 'package:bookly_app/core/utils/app_router.dart';
+import 'package:bookly_app/core/utils/helpers.dart';
 import 'package:bookly_app/core/utils/validators.dart';
 import 'package:bookly_app/core/utils/widgets/custom_button.dart';
 import 'package:bookly_app/core/utils/widgets/custom_text_form_field.dart';
@@ -36,24 +37,19 @@ class _RegisterFormBodyState extends State<RegisterFormBody> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: size.width * 0.03,
-        vertical: size.height * 0.02,
+      padding: const EdgeInsets.symmetric(
+        horizontal:12,
+        vertical: 16,
       ),
       child: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is RegisterSuccess) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('User Created Successfully')),
-            );
-            GoRouter.of(context).push(AppRouter.kHomeView);
+            showSnackBar(context, 'User Created Successfully');
+            context.go(AppRouter.kHomeView);
           }
-          if (state is AuthFailure) {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text(state.errMessage)));
+          else if (state is AuthFailure) {
+            showSnackBar(context, state.errMessage);
           }
         },
         builder: (context, state) {
@@ -68,6 +64,7 @@ class _RegisterFormBodyState extends State<RegisterFormBody> {
                   controller: usernameController,
                   validator: Validators.validateUsername,
                 ),
+                const SizedBox(height: 16,),
                 CustomTextFormField(
                   hintText: 'Email',
                   prefixIcon: Icons.mail_outlined,
@@ -76,6 +73,7 @@ class _RegisterFormBodyState extends State<RegisterFormBody> {
                   controller: emailController,
                   validator: Validators.validateEmail,
                 ),
+                const SizedBox(height: 16,),
                 CustomTextFormField(
                   hintText: 'Password',
                   prefixIcon: Icons.lock_outlined,
@@ -84,6 +82,7 @@ class _RegisterFormBodyState extends State<RegisterFormBody> {
                   controller: passwordController,
                   validator: Validators.validatePassword,
                 ),
+                const SizedBox(height: 16,),
                 CustomTextFormField(
                   hintText: 'Confirm Password',
                   prefixIcon: Icons.lock_outlined,
@@ -97,7 +96,7 @@ class _RegisterFormBodyState extends State<RegisterFormBody> {
                     );
                   },
                 ),
-                SizedBox(height: size.height * 0.035),
+                const SizedBox(height: 45,),
                 CustomButton(
                   onPressed: state is AuthLoading
                       ? null
@@ -113,12 +112,12 @@ class _RegisterFormBodyState extends State<RegisterFormBody> {
                       ? const LoadingIndicator()
                       : const Text('Register'),
                 ),
-                SizedBox(height: size.height * 0.03),
+                const SizedBox(height: 14),
                 CustomRedirectText(
                   text: 'Already have an account?',
                   textButton: 'Login',
                   onPressed: () {
-                    GoRouter.of(context).push(AppRouter.kLoginView);
+                    context.push(AppRouter.kLoginView);
                   },
                 ),
               ],

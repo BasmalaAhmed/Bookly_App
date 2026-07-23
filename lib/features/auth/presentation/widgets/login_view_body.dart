@@ -12,7 +12,7 @@ class LoginViewBody extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.height * 0.15,),
+          SizedBox(height: size.height * 0.15,),
           Image.asset(AssetsData.logo, scale: 1.1),
           SizedBox(
             height: size.height * 0.12,
