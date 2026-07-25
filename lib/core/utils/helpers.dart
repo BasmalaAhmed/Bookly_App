@@ -19,52 +19,50 @@ void showCustomDialog({
     context: context,
     barrierDismissible: false,
     builder: (dialogContext) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 218),
-        child: Dialog(
-          backgroundColor: kBackgroundColor.withValues(alpha: 0.6),
-          child: LiquidGlassLayer(
-            child: LiquidGlass(
-              shape: LiquidRoundedRectangle(borderRadius: 12),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 26,
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircleAvatar(
-                      radius: 34,
-                      backgroundColor: kButtonColor.withValues(alpha: .15),
-                      child: Icon(
-                        Icons.mark_email_read_rounded,
-                        color: kButtonColor,
-                        size: 38,
-                      ),
+      return Dialog(
+        insetPadding: const EdgeInsets.symmetric(horizontal: 50),
+        backgroundColor: kBackgroundColor.withValues(alpha: 0.6),
+        child: LiquidGlassLayer(
+          child: LiquidGlass(
+            shape: LiquidRoundedRectangle(borderRadius: 12),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 12,
+                vertical: 26,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CircleAvatar(
+                    radius: 36,
+                    backgroundColor: kButtonColor.withValues(alpha: .15),
+                    child: const Icon(
+                      Icons.mark_email_read_rounded,
+                      color: kButtonColor,
+                      size: 42,
                     ),
-                    const SizedBox(height: 12),
-                    Text(
-                      title,
-                      style: Styles.textStyle18,
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      message,
-                      style: Styles.textStyle14.copyWith(height: 1.5),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 14),
-                    CustomButton(
-                      onPressed: () {
-                        Navigator.pop(dialogContext);
-                        onPressed();
-                      },
-                      child: Text(buttonTitle, style: Styles.textStyle16),
-                    ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    title,
+                    style: Styles.textStyle20.copyWith(fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    message,
+                    style: Styles.textStyle14.copyWith(height: 1.5),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 18),
+                  CustomButton(
+                    onPressed: () {
+                      Navigator.pop(dialogContext);
+                      onPressed();
+                    },
+                    child: Text(buttonTitle, style: Styles.textStyle16),
+                  ),
+                ],
               ),
             ),
           ),
