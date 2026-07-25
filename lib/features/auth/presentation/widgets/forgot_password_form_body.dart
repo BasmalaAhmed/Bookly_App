@@ -35,7 +35,17 @@ class _ForgotPasswordFormBodyState extends State<ForgotPasswordFormBody> {
       child: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is ResetPasswordSuccess) {
-            showSnackBar(context, 'Password reset link sent to your email');
+            showCustomDialog(
+              context: context,
+              title: 'Reset Link Sent',
+              message:
+                  "We've sent a password reset link to your email.\n\n"
+                  "Please check your inbox (and spam folder if needed).",
+              buttonTitle: 'Back to Login',
+              onPressed: () {
+                context.go(AppRouter.kLoginView);
+              },
+            );
           } else if (state is AuthFailure) {
             showSnackBar(context, state.errMessage);
           }
