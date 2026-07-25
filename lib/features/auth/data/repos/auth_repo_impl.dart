@@ -7,10 +7,17 @@ class AuthRepoImpl implements AuthRepo {
     required String email,
     required String password,
   }) async {
+    final userCredential =
     await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: email,
       password: password,
     );
+    await userCredential.user?.reload();
+    final user = FirebaseAuth.instance.currentUser;
+    if(user != null && !user.emailVerified){
+      await FirebaseAuth.instance.signOut();
+      throw FirebaseAuthException(code: 'email-not-verified', message: 'Please verify your email before logging in.');
+    }
   }
 
   @override
@@ -18,10 +25,11 @@ class AuthRepoImpl implements AuthRepo {
     required String email,
     required String password,
   }) async {
-    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+    final userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: email,
       password: password,
     );
+    await userCredential.user?.sendEmailVerification();
   }
 
   @override

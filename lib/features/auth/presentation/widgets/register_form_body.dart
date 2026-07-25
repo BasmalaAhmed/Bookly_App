@@ -38,17 +38,22 @@ class _RegisterFormBodyState extends State<RegisterFormBody> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal:12,
-        vertical: 16,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
       child: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is RegisterSuccess) {
-            showSnackBar(context, 'User Created Successfully');
-            context.go(AppRouter.kHomeView);
-          }
-          else if (state is AuthFailure) {
+            showCustomDialog(
+              context: context,
+              title: 'Verify Your Email',
+              message:
+                  "We've sent a verification link to your email.\n\n"
+                  "Please verify your email before logging in.",
+              buttonTitle: "Back to Login",
+              onPressed: () {
+                context.go(AppRouter.kLoginView);
+              },
+            );
+          } else if (state is AuthFailure) {
             showSnackBar(context, state.errMessage);
           }
         },
@@ -64,7 +69,7 @@ class _RegisterFormBodyState extends State<RegisterFormBody> {
                   controller: usernameController,
                   validator: Validators.validateUsername,
                 ),
-                const SizedBox(height: 16,),
+                const SizedBox(height: 16),
                 CustomTextFormField(
                   hintText: 'Email',
                   prefixIcon: Icons.mail_outlined,
@@ -73,7 +78,7 @@ class _RegisterFormBodyState extends State<RegisterFormBody> {
                   controller: emailController,
                   validator: Validators.validateEmail,
                 ),
-                const SizedBox(height: 16,),
+                const SizedBox(height: 16),
                 CustomTextFormField(
                   hintText: 'Password',
                   prefixIcon: Icons.lock_outlined,
@@ -82,7 +87,7 @@ class _RegisterFormBodyState extends State<RegisterFormBody> {
                   controller: passwordController,
                   validator: Validators.validatePassword,
                 ),
-                const SizedBox(height: 16,),
+                const SizedBox(height: 16),
                 CustomTextFormField(
                   hintText: 'Confirm Password',
                   prefixIcon: Icons.lock_outlined,
@@ -96,7 +101,7 @@ class _RegisterFormBodyState extends State<RegisterFormBody> {
                     );
                   },
                 ),
-                const SizedBox(height: 45,),
+                const SizedBox(height: 45),
                 CustomButton(
                   onPressed: state is AuthLoading
                       ? null

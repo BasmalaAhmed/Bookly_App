@@ -21,6 +21,9 @@ class FirebaseFailure extends Failure {
       case 'invalid-email':
         return FirebaseFailure('Invalid email address!');
 
+      case 'email-not-verified':
+        return FirebaseFailure('Please verify your email before logging in.'); 
+
       default:
         return FirebaseFailure(ex.message ?? 'Authentication failed!');
     }
