@@ -1,5 +1,6 @@
 import 'package:bookly_app/constants.dart';
 import 'package:bookly_app/core/utils/assets.dart';
+import 'package:bookly_app/core/utils/styles.dart';
 import 'package:bookly_app/features/auth/presentation/widgets/forgot_password_form_body.dart';
 import 'package:flutter/material.dart';
 import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
@@ -10,56 +11,37 @@ class ForgotPasswordViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Padding(
-      padding: EdgeInsets.only(top: size.height * 0.15),
-      child: Center(
-        child: Column(
-          children: [
-            Image.asset(AssetsData.logo, scale: 2),
-            SizedBox(
-              height: size.height * 0.06,
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          SizedBox(height: size.height * 0.15),
+          Image.asset(AssetsData.logo, scale: 1.1),
+          SizedBox(height: size.height * 0.06),
+          Text(
+            'Forgot Password?',
+            style: Styles.textStyle30.copyWith(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 18),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Text(
+              "Enter your email address and we'll send you a password reset link.",
+              textAlign: TextAlign.center,
+              style: Styles.textStyle14.copyWith(color: kHintTextColor),
             ),
-            Text(
-      'Forgot Password?',
-      style: TextStyle(
-        color: Colors.white,
-        fontSize: 24,
-        fontWeight: FontWeight.bold,
-      ),
-    ),
-    SizedBox(
-              height: size.height * 0.02,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: size.width * 0.06),
-              child: Text(
-                      "Enter your email and we'll send you a password reset link.",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: kHintTextColor,
-                        fontSize: 14,
-                      ),
-                    ),
-            ),
-            SizedBox(
-              height: size.height * 0.04,
-            ),
+          ),
+          SizedBox(height: size.height * 0.04),
 
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: size.width * 0.06),
-              child: Stack(
-                children: [
-                  LiquidGlassLayer(
-                    child: LiquidGlass(
-                      shape: LiquidRoundedRectangle(borderRadius: 12),
-                      child: ForgotPasswordFormBody(),
-                    ),
-                  ),
-                ],
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: LiquidGlassLayer(
+              child: LiquidGlass(
+                shape: LiquidRoundedRectangle(borderRadius: 12),
+                child: const ForgotPasswordFormBody(),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

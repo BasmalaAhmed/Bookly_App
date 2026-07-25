@@ -1,4 +1,5 @@
 import 'package:bookly_app/core/utils/app_router.dart';
+import 'package:bookly_app/core/utils/helpers.dart';
 import 'package:bookly_app/core/utils/validators.dart';
 import 'package:bookly_app/core/utils/widgets/custom_button.dart';
 import 'package:bookly_app/core/utils/widgets/custom_text_form_field.dart';
@@ -29,23 +30,14 @@ class _ForgotPasswordFormBodyState extends State<ForgotPasswordFormBody> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: size.width * 0.03,
-        vertical: size.height * 0.03,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
       child: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is ResetPasswordSuccess) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Password reset link sent to your email')),
-            );
-          }
-          if (state is AuthFailure) {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text(state.errMessage)));
+            showSnackBar(context, 'Password reset link sent to your email');
+          } else if (state is AuthFailure) {
+            showSnackBar(context, state.errMessage);
           }
         },
         builder: (context, state) {
@@ -61,7 +53,7 @@ class _ForgotPasswordFormBodyState extends State<ForgotPasswordFormBody> {
                   controller: emailController,
                   validator: Validators.validateEmail,
                 ),
-                SizedBox(height: size.height * 0.03),
+                const SizedBox(height: 24),
                 CustomButton(
                   onPressed: state is AuthLoading
                       ? null
@@ -76,12 +68,12 @@ class _ForgotPasswordFormBodyState extends State<ForgotPasswordFormBody> {
                       ? const LoadingIndicator()
                       : const Text('Send Reset Link'),
                 ),
-                SizedBox(height: size.height * 0.03),
+                const SizedBox(height: 14),
                 CustomRedirectText(
                   text: "Back To",
                   textButton: 'Login',
                   onPressed: () {
-                    GoRouter.of(context).push(AppRouter.kLoginView);
+                    context.go(AppRouter.kLoginView);
                   },
                 ),
               ],
