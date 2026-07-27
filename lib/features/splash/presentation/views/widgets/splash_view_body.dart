@@ -20,21 +20,10 @@ class _SplashViewBodyState extends State<SplashViewBody>
   @override
   void initState() {
     super.initState();
-    initSlidingAnimation();
-    Future.delayed(Duration(seconds: 2), (){
-      if (!mounted) return;
-      final user = FirebaseAuth.instance.currentUser;
-
-if (user != null) {
-  GoRouter.of(context).go(AppRouter.kHomeView);
-} else {
-  GoRouter.of(context).go(AppRouter.kLoginView);
-}
-      
-    });
+    _startSlidingAnimation();
+    _navigateAfterSplash();
   }
 
-  
 
   @override
   void dispose() {
@@ -55,15 +44,30 @@ if (user != null) {
     );
   }
 
-  void initSlidingAnimation() {
+  void _startSlidingAnimation() {
     animationController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 1),
+      duration: const Duration(seconds: 1),
     );
-    
-    slidingAnimation = Tween<Offset>(begin: Offset(0 , 4), end: Offset.zero).animate(animationController);
+
+    slidingAnimation = Tween<Offset>(
+      begin: const Offset(0, 4),
+      end: Offset.zero,
+    ).animate(animationController);
     animationController.forward();
   }
+
+  Future<void> _navigateAfterSplash() async{
+    await Future.delayed(const Duration(seconds: 2));
+      if (!mounted) return;
+      await FirebaseAuth.instance.currentUser?.reload();
+      final user = FirebaseAuth.instance.currentUser;
+    
+      if (user != null && user.emailVerified) {
+        context.go(AppRouter.kHomeView);
+      } else {
+        context.go(AppRouter.kLoginView);
+      }
+
+  }
 }
-
-

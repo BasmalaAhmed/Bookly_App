@@ -6,10 +6,10 @@ class FirebaseFailure extends Failure {
   factory FirebaseFailure.fromFirebaseAuthException(FirebaseAuthException ex) {
     switch (ex.code) {
       case 'weak-password':
-        return FirebaseFailure('Weak Password!');
+        return FirebaseFailure('Password is too weak!');
 
       case 'email-already-in-use':
-        return FirebaseFailure('Email already exists!');
+        return FirebaseFailure('An account already exists with this email!');
 
       case 'user-not-found':
         return FirebaseFailure('No user found matching this email!');
