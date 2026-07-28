@@ -12,13 +12,13 @@ class BookDetailsViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 22),
+        padding: const EdgeInsets.symmetric(horizontal: 22),
         child: Column(
           children: [
-            CustomBookDetailsAppBar(),
+            const CustomBookDetailsAppBar(),
             BookDetailsSection(book: bookModel,),
             const SizedBox(height: 50),
-            SimilarBooksSection(),
+            const SimilarBooksSection(),
             const SizedBox(height: 30),
           ],
         ),

@@ -11,33 +11,43 @@ class BookDetailsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Column(
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: size.width * 0.28),
-          child: CustomBookImage(imageUrl: book.thumbnail,),
+          padding: EdgeInsets.symmetric(
+            horizontal: MediaQuery.sizeOf(context).width * 0.28,
+          ),
+          child: CustomBookImage(
+            imageUrl: book.thumbnail),
         ),
         const SizedBox(height: 32),
         Text(
           book.title,
-          style: Styles.textStyle30.copyWith(fontWeight: FontWeight.bold), textAlign: TextAlign.center,
+          style: Styles.textStyle30.copyWith(fontWeight: FontWeight.bold),
+          textAlign: TextAlign.center,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
         ),
         const SizedBox(height: 6),
-        Opacity(
-          opacity: 0.7,
-          child: Text(
-            book.author,
-            style: Styles.textStyle18.copyWith(
-              fontStyle: FontStyle.italic,
-              fontWeight: FontWeight.w500,
-            ),
+        Text(
+          book.author,
+          style: Styles.textStyle18.copyWith(
+            fontStyle: FontStyle.italic,
+            fontWeight: FontWeight.w500,
+            color: Colors.grey,
           ),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
         ),
         const SizedBox(height: 6),
-        BookRating(mainAxisAlignment: MainAxisAlignment.center, rating: book.ratingText, ratingCount: book.ratingCount,),
+        BookRating(
+          mainAxisAlignment: MainAxisAlignment.center,
+          rating: book.ratingText,
+          ratingCount: book.ratingCount,
+        ),
         const SizedBox(height: 30),
-        BooksAction(book: book,),
+        BooksAction(
+          book: book),
       ],
     );
   }

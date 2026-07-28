@@ -15,16 +15,19 @@ class BookDetailsView extends StatefulWidget {
 class _BookDetailsViewState extends State<BookDetailsView> {
   @override
   void initState() {
-    final category = widget.bookModel.category.isNotEmpty == true ? widget.bookModel.category.first.toString() : 'programming';
-      context.read<SimilarBooksCubit>().fetchSimilarBooks(
-        category: category,
-      );
-
     super.initState();
+    final category = widget.bookModel.category.isNotEmpty
+        ? widget.bookModel.category.first
+        : 'programming';
+    context.read<SimilarBooksCubit>().fetchSimilarBooks(category: category);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: SafeArea(child: BookDetailsViewBody(bookModel: widget.bookModel,)));
+    return Scaffold(
+      body: SafeArea(
+        child: BookDetailsViewBody(
+          bookModel: widget.bookModel)),
+    );
   }
 }
