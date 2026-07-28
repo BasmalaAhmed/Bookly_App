@@ -4,9 +4,9 @@ class BookModel {
   final String author;
   final double? price;
   final double? averageRating;
-  final num? ratingCount;
+  final int ratingCount;
   final String? buyLink;
-  final String? previewLink;
+  final String previewLink;
   final List<String> category;
 
   BookModel({
@@ -22,18 +22,18 @@ class BookModel {
   });
 
   factory BookModel.fromJson(Map<String, dynamic> json) {
-    final volumeInfo = json["volumeInfo"] ?? {};
-    final saleInfo = json["saleInfo"];
+    final Map<String, dynamic> volumeInfo = json["volumeInfo"] ?? {};
+    final Map<String, dynamic>? saleInfo = json["saleInfo"];
     return BookModel(
       thumbnail: volumeInfo["imageLinks"]?["thumbnail"],
       title: volumeInfo["title"] ?? "Unknown Title",
       author: (volumeInfo["authors"] as List?)?.join(', ') ?? 'Unknown',
       price: (saleInfo?["listPrice"]?["amount"] as num?)?.toDouble(),
       averageRating: (volumeInfo["averageRating"] as num?)?.toDouble(),
-      ratingCount: volumeInfo["ratingsCount"] ?? 0,
+      ratingCount: (volumeInfo["ratingsCount"] as num?)?.toInt() ?? 0,
       buyLink: saleInfo?["buyLink"],
-      previewLink: volumeInfo?["previewLink"] ?? "",
-      category: List<String>.from(volumeInfo?["categories"] ?? []),
+      previewLink: volumeInfo["previewLink"] ?? "",
+      category: List<String>.from(volumeInfo["categories"] ?? []),
     );
   }
   String get priceText {

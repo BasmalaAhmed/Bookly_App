@@ -34,7 +34,7 @@ class SimilarBookListView extends StatelessWidget {
           );
         } else if (state is SimilarBooksFailure) {
           return Center(
-            child: CustomErrorWidget(errMessage: state.errMessage),
+            child: CustomErrorMessage(errMessage: state.errMessage),
           );
         } else {
           return Center(child: LoadingIndicator());

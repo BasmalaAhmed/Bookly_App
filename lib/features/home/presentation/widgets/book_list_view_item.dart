@@ -3,26 +3,26 @@ import 'package:bookly_app/core/utils/app_router.dart';
 import 'package:bookly_app/core/utils/styles.dart';
 import 'package:bookly_app/core/utils/widgets/book_rating.dart';
 import 'package:bookly_app/features/home/data/models/book_model.dart';
-import 'package:bookly_app/features/home/presentation/widgets/newest_books_image.dart';
+import 'package:bookly_app/features/home/presentation/widgets/custom_book_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class BookListViewItem extends StatelessWidget {
-  const BookListViewItem({super.key, required this.bookModel,});
+  const BookListViewItem({super.key, required this.bookModel});
   final BookModel bookModel;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        GoRouter.of(context).push(AppRouter.kBookDetailsView , extra: bookModel);
+      onTap: () {
+        context.push(AppRouter.kBookDetailsView, extra: bookModel);
       },
       child: SizedBox(
         height: 140,
         child: Row(
           children: [
-            NewestBooksImage(imageUrl: bookModel.thumbnail),
-            SizedBox(width: 20),
+            CustomBookImage(imageUrl: bookModel.thumbnail, aspectRatio: 2.5 / 4,),
+            const SizedBox(width: 20),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,22 +35,24 @@ class BookListViewItem extends StatelessWidget {
                       fontFamily: kGTSectraFine,
                     ),
                   ),
-                  SizedBox(
-                    height: 3,
-                  ),
+                  const SizedBox(height: 3),
                   Text(bookModel.author, style: Styles.textStyle14),
-                  SizedBox(
-                    height: 3,
-                  ),
+                  const SizedBox(height: 3),
                   Row(
                     children: [
-                      Text(bookModel.priceText, style: Styles.textStyle20.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),),
-                      Spacer(),
-                      BookRating(rating: bookModel.ratingText, ratingCount: bookModel.ratingCount,),
+                      Text(
+                        bookModel.priceText,
+                        style: Styles.textStyle20.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const Spacer(),
+                      BookRating(
+                        rating: bookModel.ratingText,
+                        ratingCount: bookModel.ratingCount,
+                      ),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),

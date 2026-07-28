@@ -9,14 +9,19 @@ class CustomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Image.asset(AssetsData.logo, scale: 4),
+        const Spacer(),
         IconButton(
           onPressed: () {
-            GoRouter.of(context).push(AppRouter.kSearchView);
+            context.push(AppRouter.kSearchView);
           },
-          icon: Icon(Icons.search_outlined, size: 30, color: Colors.white),
+          tooltip: 'Search',
+          icon: const Icon(
+            Icons.search_outlined,
+            size: 30,
+            color: Colors.white,
+          ),
         ),
       ],
     );

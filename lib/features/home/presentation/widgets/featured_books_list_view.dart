@@ -25,14 +25,15 @@ class FeaturedBooksListView extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemCount: state.books.length,
               itemBuilder: (context, index) {
+                final book = state.books[index];
                 return Padding(
                   padding: const EdgeInsets.only(right: 16),
                   child: GestureDetector(
                     onTap: () {
-                      GoRouter.of(context).push(AppRouter.kBookDetailsView , extra: state.books[index]);
+                      context.push(AppRouter.kBookDetailsView , extra: book);
                     },
                     child: CustomBookImage(
-                      imageUrl: state.books[index].thumbnail,
+                      imageUrl: book.thumbnail,
                     ),
                   ),
                 );
@@ -40,9 +41,9 @@ class FeaturedBooksListView extends StatelessWidget {
             ),
           );
         } else if (state is FeaturedBooksFailure) {
-          return CustomErrorWidget(errMessage: state.errMessage);
+          return CustomErrorMessage(errMessage: state.errMessage);
         } else {
-          return Center(child: const LoadingIndicator());
+          return const Center(child: LoadingIndicator());
         }
       },
     );

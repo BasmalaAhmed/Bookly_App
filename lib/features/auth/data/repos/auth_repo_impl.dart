@@ -2,12 +2,12 @@ import 'package:bookly_app/features/auth/data/repos/auth_repo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthRepoImpl implements AuthRepo {
-  final auth = FirebaseAuth.instance;
   @override
   Future<void> loginUser({
     required String email,
     required String password,
   }) async {
+    final auth = FirebaseAuth.instance;
     final userCredential =
     await auth.signInWithEmailAndPassword(
       email: email,
@@ -26,6 +26,7 @@ class AuthRepoImpl implements AuthRepo {
     required String email,
     required String password,
   }) async {
+    final auth = FirebaseAuth.instance;
     final userCredential = await auth.createUserWithEmailAndPassword(
       email: email,
       password: password,
@@ -36,6 +37,7 @@ class AuthRepoImpl implements AuthRepo {
 
   @override
   Future<void> resetPassword({required String email}) async {
+    final auth = FirebaseAuth.instance;
     await auth.sendPasswordResetEmail(email: email);
   }
 }

@@ -10,7 +10,7 @@ class HomeViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: CustomScrollView(
         physics: const BouncingScrollPhysics(),
         slivers: [
@@ -18,7 +18,7 @@ class HomeViewBody extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomAppBar(),
+                const CustomAppBar(),
                 const SizedBox(height: 18,),
                 const FeaturedBooksListView(),
                 const SizedBox(height: 42,),
