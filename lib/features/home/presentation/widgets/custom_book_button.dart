@@ -10,11 +10,11 @@ class CustomBookButton extends StatelessWidget {
     required this.text, this.onPressed,
   });
 
-  final BorderRadiusGeometry borderRadius;
+  final BorderRadius borderRadius;
   final Color backgroundColor;
   final Color textColor;
   final String text;
-  final void Function()? onPressed;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {

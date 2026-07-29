@@ -19,10 +19,10 @@ class BooksAction extends StatelessWidget {
           children: [
             Expanded(
               child: CustomBookButton(
-                onPressed: (){
-                  laucnhCustomUrl(context, book.buyLink);
+                onPressed: () {
+                  launchCustomUrl(context, book.buyLink);
                 },
-                borderRadius: BorderRadiusGeometry.only(
+                borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(12),
                   bottomLeft: Radius.circular(12),
                 ),
@@ -34,15 +34,15 @@ class BooksAction extends StatelessWidget {
             Expanded(
               child: CustomBookButton(
                 onPressed: () {
-                  laucnhCustomUrl(context, book.previewLink);
+                  launchCustomUrl(context, book.previewLink);
                 },
-                borderRadius: BorderRadiusGeometry.only(
+                borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(12),
                   bottomRight: Radius.circular(12),
                 ),
-                backgroundColor: Color(0XFFEF8363),
+                backgroundColor: const Color(0XFFEF8363),
                 textColor: Colors.white,
-                text: getText(book),
+                text: _getPreviewButtonText(book),
               ),
             ),
           ],
@@ -50,13 +50,8 @@ class BooksAction extends StatelessWidget {
       ),
     );
   }
-  
-  String getText(BookModel book) {
-    if (book.previewLink == null){
-      return 'Not Available';
-    }
-    else{
-      return 'Preview';
-    }
+
+  String _getPreviewButtonText(BookModel book) {
+    return book.previewLink.isEmpty ? 'Not Available' : 'Preview';
   }
 }
