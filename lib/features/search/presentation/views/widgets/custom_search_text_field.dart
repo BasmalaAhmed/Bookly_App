@@ -1,4 +1,5 @@
 import 'package:bookly_app/constants.dart';
+import 'package:bookly_app/core/utils/styles.dart';
 import 'package:flutter/material.dart';
 
 class CustomSearchTextField extends StatelessWidget {
@@ -10,30 +11,30 @@ class CustomSearchTextField extends StatelessWidget {
       onTapOutside: (_) {
         FocusScope.of(context).unfocus();
       },
-      style: const TextStyle(
-        color: Colors.white,
-        fontWeight: FontWeight.w500,
-      ),
+      style: Styles.textStyle16,
       decoration: InputDecoration(
         hintText: 'Search',
-        hintStyle: const TextStyle(color: kHintTextColor),
+        hintStyle: Styles.textStyle16.copyWith(color: kHintTextColor),
         suffixIcon: IconButton(
-          focusNode: FocusNode(skipTraversal: true),
           onPressed: () {},
-          icon: Icon(Icons.search_outlined, size: 30, color: kHintTextColor),
+          icon: const Icon(
+            Icons.search_outlined,
+            size: 30,
+            color: kHintTextColor,
+          ),
         ),
-        border: customBorder(kEnabledBorderColor),
-        enabledBorder: customBorder(kEnabledBorderColor),
-        focusedBorder: customBorder(kFocusedBorderColor),
-        errorBorder: customBorder(kErrorBorderColor),
-        focusedErrorBorder: customBorder(kErrorBorderColor),
+        border: _customBorder(kEnabledBorderColor),
+        enabledBorder: _customBorder(kEnabledBorderColor),
+        focusedBorder: _customBorder(kFocusedBorderColor),
+        errorBorder: _customBorder(kErrorBorderColor),
+        focusedErrorBorder: _customBorder(kErrorBorderColor),
       ),
     );
   }
 
-  OutlineInputBorder customBorder(Color borderColor) {
+  static OutlineInputBorder _customBorder(Color borderColor) {
     return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(9),
+      borderRadius: BorderRadius.circular(12),
       borderSide: BorderSide(color: borderColor, width: 1.5),
     );
   }

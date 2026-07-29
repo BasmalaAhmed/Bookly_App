@@ -5,18 +5,16 @@ class SearchResultListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView.builder(
-        padding: EdgeInsets.zero,
-        itemCount: 10,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: EdgeInsets.symmetric(vertical: 14),
-            // child: BookListViewItem(),
-            child: Text('data'),
-          );
-        },
-      ),
+    return ListView.builder(
+      padding: EdgeInsets.zero,
+      itemCount: 10,
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 14),
+          // child: BookListViewItem(),
+          child: Text('data'),
+        );
+      },
     );
   }
 }
