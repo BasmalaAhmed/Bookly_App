@@ -1,6 +1,6 @@
 import 'package:bookly_app/features/home/data/models/book_model.dart';
 
-abstract class NewestBooksState {}
+sealed class NewestBooksState {}
 
 final class NewestBooksInitial extends NewestBooksState {}
 

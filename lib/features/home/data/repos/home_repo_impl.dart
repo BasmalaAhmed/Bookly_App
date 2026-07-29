@@ -8,38 +8,21 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class HomeRepoImpl implements HomeRepo {
   final ApiService apiService;
-  final apiKey = dotenv.env['GOOGLE_BOOKS_API_KEY'];
+  final String? apiKey = dotenv.env['GOOGLE_BOOKS_API_KEY'];
 
   HomeRepoImpl(this.apiService);
-  @override
-  Future<Either<ApiFailure, List<BookModel>>> fetchNewestBooks() async {
-    return _fetchBooks(
-      'volumes?q=subject:flutter&Sorting=newest&key=$apiKey',
-    );
-  }
-
-  @override
-  Future<Either<ApiFailure, List<BookModel>>> fetchFeaturedBooks() async {
-    return _fetchBooks(
-      'volumes?q=subject:programming&key=$apiKey',
-    );
-  }
-
-  @override
-  Future<Either<ApiFailure, List<BookModel>>> fetchSimilarBooks({required String category}) async {
-    return _fetchBooks(
-      'volumes?q=subject:programming&Sorting=relevance&key=$apiKey',
-    );
-  }
 
   Future<Either<ApiFailure, List<BookModel>>> _fetchBooks(
     String endpoint,
   ) async {
     try {
-      var data = await apiService.fetchBooks(endpoint: endpoint);
+      if (apiKey == null || apiKey!.isEmpty) {
+        return left(ApiFailure('API key is missing.'));
+      }
+      final response = await apiService.fetchBooks(endpoint: endpoint);
       final List<BookModel> books = [];
 
-      final items = data['items'] as List? ?? [];
+      final items = response['items'] as List? ?? [];
 
       for (var item in items) {
         books.add(BookModel.fromJson(item));
@@ -51,5 +34,24 @@ class HomeRepoImpl implements HomeRepo {
       }
       return left(ApiFailure(e.toString()));
     }
+  }
+
+  @override
+  Future<Either<ApiFailure, List<BookModel>>> fetchNewestBooks() async {
+    return _fetchBooks('volumes?q=subject:flutter&orderBy=newest&key=$apiKey');
+  }
+
+  @override
+  Future<Either<ApiFailure, List<BookModel>>> fetchFeaturedBooks() async {
+    return _fetchBooks('volumes?q=subject:programming&key=$apiKey');
+  }
+
+  @override
+  Future<Either<ApiFailure, List<BookModel>>> fetchSimilarBooks({
+    required String category,
+  }) async {
+    return _fetchBooks(
+      'volumes?q=subject:${Uri.encodeComponent(category)}&key=$apiKey',
+    );
   }
 }

@@ -16,7 +16,7 @@ class ApiFailure extends Failure {
         return ApiFailure('Receive timeout with server');
       case DioExceptionType.badResponse:
         final statusCode = dioException.response?.statusCode ?? 500;
-        final response = dioException.response?.data ?? {};
+        final response = dioException.response?.data;
         return ApiFailure.fromResponse(statusCode, response);
       case DioExceptionType.cancel:
         return ApiFailure('Request to server was cancelled');
@@ -31,9 +31,13 @@ class ApiFailure extends Failure {
 
   factory ApiFailure.fromResponse(int statusCode, dynamic response) {
     if (statusCode == 400 || statusCode == 401 || statusCode == 403) {
-      return ApiFailure(
-        response['error']?['message'] ?? response['message'] ?? defaultMessage,
-      );
+      if (response is Map<String, dynamic>) {
+        return ApiFailure(
+          response['error']?['message'] ??
+              response['message'] ??
+              defaultMessage,
+        );
+      } return ApiFailure(defaultMessage);
     } else if (statusCode == 404) {
       return ApiFailure('Your request is not found, please try again later.');
     } else if (statusCode == 503) {

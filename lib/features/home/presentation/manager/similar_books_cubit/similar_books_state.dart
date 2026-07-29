@@ -1,6 +1,6 @@
 import 'package:bookly_app/features/home/data/models/book_model.dart';
 
-abstract class SimilarBooksState {}
+sealed class SimilarBooksState {}
 
 final class SimilarBooksInitial extends SimilarBooksState {}
 
