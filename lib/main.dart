@@ -2,7 +2,7 @@ import 'package:bookly_app/constants.dart';
 import 'package:bookly_app/core/utils/app_router.dart';
 import 'package:bookly_app/core/utils/service_locator.dart';
 import 'package:bookly_app/features/auth/data/repos/auth_repo.dart';
-import 'package:bookly_app/features/auth/manager/auth_cubit/auth_cubit.dart';
+import 'package:bookly_app/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
 import 'package:bookly_app/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

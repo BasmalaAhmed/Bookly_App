@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:bookly_app/core/errors/firebase_failure.dart';
-import 'package:bookly_app/features/auth/manager/auth_cubit/auth_state.dart';
+import 'package:bookly_app/features/auth/presentation/manager/auth_cubit/auth_state.dart';
 import 'package:bookly_app/features/auth/data/repos/auth_repo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

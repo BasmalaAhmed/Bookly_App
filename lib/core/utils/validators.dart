@@ -3,15 +3,19 @@ abstract class Validators {
     if (value == null || value.trim().isEmpty) {
       return 'Username is required';
     }
+    if (value.trim().length < 3) {
+      return 'Username is too short';
+    }
     return null;
   }
 
   static String? validateEmail(String? value) {
+    final emailRegex = RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$');
     if (value == null || value.trim().isEmpty) {
       return 'Email is required';
     }
 
-    if (!value.contains('@')) {
+    if (!emailRegex.hasMatch(value.trim())) {
       return 'Enter a valid email';
     }
 
@@ -19,17 +23,17 @@ abstract class Validators {
   }
 
   static String? validatePassword(String? value) {
-    if (value == null || value.isEmpty) {
+    if (value == null || value.trim().isEmpty) {
       return 'Password is required';
     }
-    if (value.length < 6) {
+    if (value.trim().length < 6) {
       return 'Password must be at least 6 characters';
     }
     return null;
   }
 
   static String? validateConfirmPassword(String? value, String password) {
-    if (value == null || value.isEmpty) {
+    if (value == null || value.trim().isEmpty) {
       return 'Confirm your password';
     }
     if (value != password) {

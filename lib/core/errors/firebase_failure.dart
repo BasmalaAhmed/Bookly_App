@@ -22,7 +22,13 @@ class FirebaseFailure extends Failure {
         return FirebaseFailure('Invalid email address!');
 
       case 'email-not-verified':
-        return FirebaseFailure('Please verify your email before logging in.'); 
+        return FirebaseFailure('Please verify your email before logging in.');
+
+      case 'too-many-requests':
+        return FirebaseFailure('Too many attempts. Please try again later.');
+
+      case 'network-request-failed':
+        return FirebaseFailure('No internet connection. Please check your connection and try again.');
 
       default:
         return FirebaseFailure(ex.message ?? 'Authentication failed!');
