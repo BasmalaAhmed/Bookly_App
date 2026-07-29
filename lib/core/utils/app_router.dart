@@ -21,18 +21,18 @@ abstract class AppRouter {
   static const kSearchView = '/searchView';
   static final router = GoRouter(
     routes: [
-      GoRoute(path: '/', builder: (context, state) => SplashView()),
+      GoRoute(path: '/', builder: (context, state) => const SplashView()),
 
-      GoRoute(path: kRegisterView, builder: (context, state) => RegisterView()),
+      GoRoute(path: kRegisterView, builder: (context, state) => const RegisterView()),
 
-      GoRoute(path: kLoginView, builder: (context, state) => LoginView()),
+      GoRoute(path: kLoginView, builder: (context, state) => const LoginView()),
 
       GoRoute(
         path: kForgotPasswordView,
-        builder: (context, state) => ForgotPasswordView(),
+        builder: (context, state) => const ForgotPasswordView(),
       ),
 
-      GoRoute(path: kHomeView, builder: (context, state) => HomeView()),
+      GoRoute(path: kHomeView, builder: (context, state) => const HomeView()),
 
       GoRoute(
         path: kBookDetailsView,
@@ -42,7 +42,7 @@ abstract class AppRouter {
         ),
       ),
 
-      GoRoute(path: kSearchView, builder: (context, state) => SearchView()),
+      GoRoute(path: kSearchView, builder: (context, state) => const SearchView()),
     ],
   );
 }
