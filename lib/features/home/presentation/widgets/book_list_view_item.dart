@@ -36,7 +36,7 @@ class BookListViewItem extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 3),
-                  Text(bookModel.author, style: Styles.textStyle14),
+                  Text(bookModel.author, maxLines: 2, overflow: TextOverflow.ellipsis ,style: Styles.textStyle14),
                   const SizedBox(height: 3),
                   Row(
                     children: [

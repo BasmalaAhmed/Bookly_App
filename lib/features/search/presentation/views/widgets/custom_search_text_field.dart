@@ -3,7 +3,14 @@ import 'package:bookly_app/core/utils/styles.dart';
 import 'package:flutter/material.dart';
 
 class CustomSearchTextField extends StatelessWidget {
-  const CustomSearchTextField({super.key});
+  const CustomSearchTextField({
+    super.key,
+    required this.controller,
+    required this.onSearch,
+  });
+
+  final TextEditingController controller;
+  final VoidCallback onSearch;
 
   @override
   Widget build(BuildContext context) {
@@ -11,12 +18,17 @@ class CustomSearchTextField extends StatelessWidget {
       onTapOutside: (_) {
         FocusScope.of(context).unfocus();
       },
+      controller: controller,
+      onSubmitted: (_) {
+        FocusScope.of(context).unfocus();
+        onSearch();
+      },
       style: Styles.textStyle16,
       decoration: InputDecoration(
         hintText: 'Search',
         hintStyle: Styles.textStyle16.copyWith(color: kHintTextColor),
         suffixIcon: IconButton(
-          onPressed: () {},
+          onPressed: onSearch,
           icon: const Icon(
             Icons.search_outlined,
             size: 30,
