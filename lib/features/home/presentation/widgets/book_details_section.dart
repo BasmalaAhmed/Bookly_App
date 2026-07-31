@@ -1,5 +1,6 @@
 import 'package:bookly_app/core/utils/styles.dart';
 import 'package:bookly_app/core/utils/widgets/book_rating.dart';
+import 'package:bookly_app/features/favorites/presentation/widgets/favorite_button.dart';
 import 'package:bookly_app/features/home/data/models/book_model.dart';
 import 'package:bookly_app/features/home/presentation/widgets/books_action.dart';
 import 'package:bookly_app/features/home/presentation/widgets/custom_book_image.dart';
@@ -17,8 +18,17 @@ class BookDetailsSection extends StatelessWidget {
           padding: EdgeInsets.symmetric(
             horizontal: MediaQuery.sizeOf(context).width * 0.28,
           ),
-          child: CustomBookImage(
-            imageUrl: book.thumbnail),
+          child: Stack(
+            children: [
+              CustomBookImage(imageUrl: book.thumbnail),
+
+              Positioned(
+                top: 6,
+                right: 6,
+                child: FavoriteButton(book: book, width: 32, height: 32, size: 20,),
+              ),
+            ],
+          ),
         ),
         const SizedBox(height: 32),
         Text(
@@ -46,8 +56,7 @@ class BookDetailsSection extends StatelessWidget {
           ratingCount: book.ratingCount,
         ),
         const SizedBox(height: 30),
-        BooksAction(
-          book: book),
+        BooksAction(book: book),
       ],
     );
   }

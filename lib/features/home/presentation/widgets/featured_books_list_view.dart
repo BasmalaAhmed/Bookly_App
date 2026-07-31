@@ -1,6 +1,7 @@
 import 'package:bookly_app/core/utils/app_router.dart';
 import 'package:bookly_app/core/utils/widgets/custom_error_widget.dart';
 import 'package:bookly_app/core/utils/widgets/loading_indicator.dart';
+import 'package:bookly_app/features/favorites/presentation/widgets/favorite_button.dart';
 import 'package:bookly_app/features/home/presentation/manager/featured_books_cubit/featured_books_cubit.dart';
 import 'package:bookly_app/features/home/presentation/manager/featured_books_cubit/featured_books_state.dart';
 import 'package:bookly_app/features/home/presentation/widgets/custom_book_image.dart';
@@ -32,8 +33,17 @@ class FeaturedBooksListView extends StatelessWidget {
                     onTap: () {
                       context.push(AppRouter.kBookDetailsView , extra: book);
                     },
-                    child: CustomBookImage(
-                      imageUrl: book.thumbnail,
+                    child: Stack(
+                      children: [
+                        CustomBookImage(
+                          imageUrl: book.thumbnail,
+                        ),
+                        Positioned(
+                top: 6,
+                right: 6,
+                child: FavoriteButton(book: book, width: 38, height: 38, size: 18,),
+              ),
+                      ],
                     ),
                   ),
                 );

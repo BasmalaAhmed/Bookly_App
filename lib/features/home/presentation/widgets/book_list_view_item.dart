@@ -2,33 +2,43 @@ import 'package:bookly_app/constants.dart';
 import 'package:bookly_app/core/utils/app_router.dart';
 import 'package:bookly_app/core/utils/styles.dart';
 import 'package:bookly_app/core/utils/widgets/book_rating.dart';
+import 'package:bookly_app/features/favorites/presentation/widgets/favorite_button.dart';
 import 'package:bookly_app/features/home/data/models/book_model.dart';
 import 'package:bookly_app/features/home/presentation/widgets/custom_book_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class BookListViewItem extends StatelessWidget {
-  const BookListViewItem({super.key, required this.bookModel});
-  final BookModel bookModel;
+  const BookListViewItem({super.key, required this.book});
+  final BookModel book;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.push(AppRouter.kBookDetailsView, extra: bookModel);
+        context.push(AppRouter.kBookDetailsView, extra: book);
       },
       child: SizedBox(
         height: 140,
         child: Row(
           children: [
-            CustomBookImage(imageUrl: bookModel.thumbnail, aspectRatio: 2.5 / 4,),
+            Stack(
+              children: [
+                CustomBookImage(imageUrl: book.thumbnail, aspectRatio: 2.5 / 4,),
+                Positioned(
+                top: 6,
+                right: 6,
+                child: FavoriteButton(book: book, width: 26, height: 26, size: 14,),
+              ),
+              ],
+            ),
             const SizedBox(width: 20),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    bookModel.title,
+                    book.title,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: Styles.textStyle20.copyWith(
@@ -36,20 +46,20 @@ class BookListViewItem extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 3),
-                  Text(bookModel.author, maxLines: 2, overflow: TextOverflow.ellipsis ,style: Styles.textStyle14),
+                  Text(book.author, maxLines: 2, overflow: TextOverflow.ellipsis ,style: Styles.textStyle14),
                   const SizedBox(height: 3),
                   Row(
                     children: [
                       Text(
-                        bookModel.priceText,
+                        book.priceText,
                         style: Styles.textStyle20.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       const Spacer(),
                       BookRating(
-                        rating: bookModel.ratingText,
-                        ratingCount: bookModel.ratingCount,
+                        rating: book.ratingText,
+                        ratingCount: book.ratingCount,
                       ),
                     ],
                   ),

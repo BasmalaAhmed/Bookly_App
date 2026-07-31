@@ -1,4 +1,5 @@
 class BookModel {
+  final String id;
   final String? thumbnail;
   final String title;
   final String author;
@@ -10,6 +11,7 @@ class BookModel {
   final List<String> category;
 
   BookModel({
+    required this.id,
     required this.thumbnail,
     required this.title,
     required this.author,
@@ -25,6 +27,7 @@ class BookModel {
     final Map<String, dynamic> volumeInfo = json["volumeInfo"] ?? {};
     final Map<String, dynamic>? saleInfo = json["saleInfo"];
     return BookModel(
+      id: json["id"] ?? "",
       thumbnail: volumeInfo["imageLinks"]?["thumbnail"],
       title: volumeInfo["title"] ?? "Unknown Title",
       author: (volumeInfo["authors"] as List?)?.join(', ') ?? 'Unknown',
@@ -48,5 +51,35 @@ class BookModel {
       return 'N/A';
     }
     return averageRating!.toStringAsFixed(2);
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'thumbnail': thumbnail,
+      'title': title,
+      'author': author,
+      'price': price,
+      'averageRating': averageRating,
+      'ratingCount': ratingCount,
+      'buyLink': buyLink,
+      'previewLink': previewLink,
+      'category': category,
+    };
+  }
+
+  factory BookModel.fromMap(Map<String, dynamic> map) {
+    return BookModel(
+      id: map['id'] ?? '',
+      thumbnail: map['thumbnail'],
+      title: map['title'] ?? 'Unknown Title',
+      author: map['author'] ?? 'Unknown',
+      price: (map['price'] as num?)?.toDouble(),
+      averageRating: (map['averageRating'] as num?)?.toDouble(),
+      ratingCount: (map['ratingCount'] as num?)?.toInt() ?? 0,
+      buyLink: map['buyLink'],
+      previewLink: map['previewLink'] ?? '',
+      category: List<String>.from(map['category'] ?? []),
+    );
   }
 }

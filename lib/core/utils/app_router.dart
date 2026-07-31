@@ -2,6 +2,8 @@ import 'package:bookly_app/core/utils/service_locator.dart';
 import 'package:bookly_app/features/auth/presentation/views/forgot_password_view.dart';
 import 'package:bookly_app/features/auth/presentation/views/login_view.dart';
 import 'package:bookly_app/features/auth/presentation/views/register_view.dart';
+import 'package:bookly_app/features/favorites/data/repos/favorite_repo.dart';
+import 'package:bookly_app/features/favorites/presentation/manager/cubit/favorite_cubit.dart';
 import 'package:bookly_app/features/home/data/models/book_model.dart';
 import 'package:bookly_app/features/home/data/repos/home_repo.dart';
 import 'package:bookly_app/features/home/presentation/manager/similar_books_cubit/similar_books_cubit.dart';
@@ -37,20 +39,42 @@ abstract class AppRouter {
         builder: (context, state) => const ForgotPasswordView(),
       ),
 
-      GoRoute(path: kHomeView, builder: (context, state) => const HomeView()),
+      GoRoute(path: kHomeView, builder: (context, state) => MultiBlocProvider(
+          providers: [
+            // BlocProvider(
+            //   create: (context) => SimilarBooksCubit(getIt<HomeRepo>()),
+            // ),
+            BlocProvider(
+              create: (context) => FavoriteCubit(getIt<FavoriteRepo>()),
+            ),
+          ],
+          child: const HomeView(),
+        ),),
 
       GoRoute(
         path: kBookDetailsView,
-        builder: (context, state) => BlocProvider(
-          create: (context) => SimilarBooksCubit(getIt<HomeRepo>()),
+        builder: (context, state) => MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => SimilarBooksCubit(getIt<HomeRepo>()),
+            ),
+            BlocProvider(
+              create: (context) => FavoriteCubit(getIt<FavoriteRepo>()),
+            ),
+          ],
           child: BookDetailsView(bookModel: state.extra as BookModel),
         ),
       ),
 
       GoRoute(
         path: kSearchView,
-        builder: (context, state) => BlocProvider(
-          create: (context) => SearchCubit(getIt<SearchRepo>()),
+        builder: (context, state) => MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (context) => SearchCubit(getIt<SearchRepo>())),
+            BlocProvider(
+              create: (context) => FavoriteCubit(getIt<FavoriteRepo>()),
+            ),
+          ],
           child: const SearchView(),
         ),
       ),
