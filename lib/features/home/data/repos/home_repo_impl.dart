@@ -38,12 +38,12 @@ class HomeRepoImpl implements HomeRepo {
 
   @override
   Future<Either<ApiFailure, List<BookModel>>> fetchNewestBooks() async {
-    return _fetchBooks('volumes?q=subject:flutter&orderBy=newest&key=$apiKey');
+    return _fetchBooks('volumes?q=computer&orderBy=newest&maxResults=20&key=$apiKey');
   }
 
   @override
   Future<Either<ApiFailure, List<BookModel>>> fetchFeaturedBooks() async {
-    return _fetchBooks('volumes?q=subject:programming&key=$apiKey');
+    return _fetchBooks('volumes?q=programming&maxResults=20&key=$apiKey');
   }
 
   @override
@@ -51,7 +51,7 @@ class HomeRepoImpl implements HomeRepo {
     required String category,
   }) async {
     return _fetchBooks(
-      'volumes?q=subject:${Uri.encodeComponent(category)}&key=$apiKey',
+      'volumes?q=${Uri.encodeComponent(category)}&key=$apiKey',
     );
   }
 }

@@ -9,8 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class BookListViewItem extends StatelessWidget {
-  const BookListViewItem({super.key, required this.book});
+  const BookListViewItem({super.key, required this.book, required this.isFavorite, this.onFavoritePressed});
   final BookModel book;
+  final bool isFavorite;
+  final VoidCallback? onFavoritePressed;
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +26,18 @@ class BookListViewItem extends StatelessWidget {
           children: [
             Stack(
               children: [
-                CustomBookImage(imageUrl: book.thumbnail, aspectRatio: 2.5 / 4,),
+                CustomBookImage(imageUrl: book.thumbnail, aspectRatio: 2.5 / 4),
                 Positioned(
-                top: 6,
-                right: 6,
-                child: FavoriteButton(book: book, width: 26, height: 26, size: 14,),
-              ),
+                  top: 6,
+                  right: 6,
+                  child: FavoriteButton(
+                    width: 26,
+                    height: 26,
+                    size: 14,
+                    isFavorite: isFavorite,
+                    onPressed: onFavoritePressed,
+                  ),
+                ),
               ],
             ),
             const SizedBox(width: 20),
@@ -46,7 +54,12 @@ class BookListViewItem extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 3),
-                  Text(book.author, maxLines: 2, overflow: TextOverflow.ellipsis ,style: Styles.textStyle14),
+                  Text(
+                    book.author,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: Styles.textStyle14,
+                  ),
                   const SizedBox(height: 3),
                   Row(
                     children: [

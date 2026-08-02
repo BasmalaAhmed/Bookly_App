@@ -7,6 +7,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
   FavoriteCubit(this.favoriteRepo) : super(FavoriteInitial());
 
   final FavoriteRepo favoriteRepo;
+  final Set<String> _favoriteIds = {};
 
   Future<void> fetchFavoriteBooks() async {
     emit(FavoriteLoading());
@@ -14,10 +15,18 @@ class FavoriteCubit extends Cubit<FavoriteState> {
     final result = await favoriteRepo.fetchFavorites();
 
     result.fold(
-      (failure) => emit(FavoriteFailure(failure.errMessage)),
-      (books) => emit(FavoriteSuccess(books))
-      
-    );
+  (failure) {
+    _favoriteIds.clear();
+    emit(FavoriteFailure(failure.errMessage));
+  },
+  (books) {
+    _favoriteIds
+      ..clear()
+      ..addAll(books.map((book) => book.id));
+
+    emit(FavoriteSuccess(books));
+  },
+);
   }
 
   Future<void> addFavorite(BookModel book) async {
@@ -42,8 +51,15 @@ class FavoriteCubit extends Cubit<FavoriteState> {
     );
   }
 
-  Future<bool> isFavorite(String id) async {
-    final result = await favoriteRepo.isFavorite(id);
-    return result.fold((_) => false, (isFavorite) => isFavorite);
+  bool isFavorite(String id) {
+    return _favoriteIds.contains(id);
+  }
+
+  Future<void> toggleFavorite(BookModel book) async {
+    if(isFavorite(book.id)){
+      await removeFavorite(book.id);
+    } else {
+      await addFavorite(book);
+    }
   }
 }

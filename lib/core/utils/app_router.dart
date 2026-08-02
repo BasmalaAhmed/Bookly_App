@@ -4,8 +4,11 @@ import 'package:bookly_app/features/auth/presentation/views/login_view.dart';
 import 'package:bookly_app/features/auth/presentation/views/register_view.dart';
 import 'package:bookly_app/features/favorites/data/repos/favorite_repo.dart';
 import 'package:bookly_app/features/favorites/presentation/manager/cubit/favorite_cubit.dart';
+import 'package:bookly_app/features/favorites/presentation/views/favorite_view.dart';
 import 'package:bookly_app/features/home/data/models/book_model.dart';
 import 'package:bookly_app/features/home/data/repos/home_repo.dart';
+import 'package:bookly_app/features/home/presentation/manager/featured_books_cubit/featured_books_cubit.dart';
+import 'package:bookly_app/features/home/presentation/manager/newest_books_cubit/newest_books_cubit.dart';
 import 'package:bookly_app/features/home/presentation/manager/similar_books_cubit/similar_books_cubit.dart';
 import 'package:bookly_app/features/home/presentation/views/book_details_view.dart';
 import 'package:bookly_app/features/home/presentation/views/home_view.dart';
@@ -23,6 +26,7 @@ abstract class AppRouter {
   static const kHomeView = '/homeView';
   static const kBookDetailsView = '/bookDetailsView';
   static const kSearchView = '/searchView';
+  static const kFavoriteView = '/favoriteView';
   static final router = GoRouter(
     routes: [
       GoRoute(path: '/', builder: (context, state) => const SplashView()),
@@ -39,17 +43,25 @@ abstract class AppRouter {
         builder: (context, state) => const ForgotPasswordView(),
       ),
 
-      GoRoute(path: kHomeView, builder: (context, state) => MultiBlocProvider(
+      GoRoute(
+        path: kHomeView,
+        builder: (context, state) => MultiBlocProvider(
           providers: [
-            // BlocProvider(
-            //   create: (context) => SimilarBooksCubit(getIt<HomeRepo>()),
-            // ),
+            BlocProvider(
+              create: (context) =>
+                  FeaturedBooksCubit(getIt<HomeRepo>())..fetchFeaturedBooks(),
+            ),
+            BlocProvider(
+              create: (context) =>
+                  NewestBooksCubit(getIt<HomeRepo>())..fetchNewestBooks(),
+            ),
             BlocProvider(
               create: (context) => FavoriteCubit(getIt<FavoriteRepo>()),
             ),
           ],
           child: const HomeView(),
-        ),),
+        ),
+      ),
 
       GoRoute(
         path: kBookDetailsView,
@@ -76,6 +88,14 @@ abstract class AppRouter {
             ),
           ],
           child: const SearchView(),
+        ),
+      ),
+      GoRoute(
+        path: kFavoriteView,
+        builder: (context, state) => BlocProvider(
+          create: (_) =>
+              FavoriteCubit(getIt<FavoriteRepo>())..fetchFavoriteBooks(),
+          child: const FavoriteView(),
         ),
       ),
     ],

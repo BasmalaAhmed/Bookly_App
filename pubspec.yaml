@@ -38,6 +38,7 @@ dependencies:
   firebase_core: ^4.11.0
   flutter:
     sdk: flutter
+  flutter_animate: ^4.5.2
   flutter_bloc: ^9.1.1
   flutter_dotenv: ^6.0.1
   font_awesome_flutter: ^11.0.0

@@ -1,6 +1,7 @@
 import 'package:bookly_app/core/utils/app_router.dart';
 import 'package:bookly_app/core/utils/widgets/custom_error_widget.dart';
 import 'package:bookly_app/core/utils/widgets/loading_indicator.dart';
+import 'package:bookly_app/features/favorites/presentation/manager/cubit/favorite_cubit.dart';
 import 'package:bookly_app/features/favorites/presentation/widgets/favorite_button.dart';
 import 'package:bookly_app/features/home/presentation/manager/featured_books_cubit/featured_books_cubit.dart';
 import 'package:bookly_app/features/home/presentation/manager/featured_books_cubit/featured_books_state.dart';
@@ -18,6 +19,7 @@ class FeaturedBooksListView extends StatelessWidget {
     return BlocBuilder<FeaturedBooksCubit, FeaturedBooksState>(
       builder: (context, state) {
         if (state is FeaturedBooksSuccess) {
+          final favoriteCubit = context.watch<FavoriteCubit>();
           return SizedBox(
             height: size.height * 0.25,
             child: ListView.builder(
@@ -27,22 +29,31 @@ class FeaturedBooksListView extends StatelessWidget {
               itemCount: state.books.length,
               itemBuilder: (context, index) {
                 final book = state.books[index];
+                final isFavorite = favoriteCubit.isFavorite(
+                  book.id,
+                );
                 return Padding(
                   padding: const EdgeInsets.only(right: 16),
                   child: GestureDetector(
                     onTap: () {
-                      context.push(AppRouter.kBookDetailsView , extra: book);
+                      context.push(AppRouter.kBookDetailsView, extra: book);
                     },
                     child: Stack(
                       children: [
-                        CustomBookImage(
-                          imageUrl: book.thumbnail,
-                        ),
+                        CustomBookImage(imageUrl: book.thumbnail),
                         Positioned(
-                top: 6,
-                right: 6,
-                child: FavoriteButton(book: book, width: 38, height: 38, size: 18,),
-              ),
+                          top: 6,
+                          right: 6,
+                          child: FavoriteButton(
+                            width: 38,
+                            height: 38,
+                            size: 18,
+                            isFavorite: isFavorite,
+                            onPressed: () {
+                              context.read<FavoriteCubit>().toggleFavorite(book);
+                            },
+                          ),
+                        ),
                       ],
                     ),
                   ),

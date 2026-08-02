@@ -1,6 +1,7 @@
 import 'package:bookly_app/core/utils/styles.dart';
 import 'package:bookly_app/core/utils/widgets/custom_error_widget.dart';
 import 'package:bookly_app/core/utils/widgets/loading_indicator.dart';
+import 'package:bookly_app/features/favorites/presentation/manager/cubit/favorite_cubit.dart';
 import 'package:bookly_app/features/home/presentation/widgets/book_list_view_item.dart';
 import 'package:bookly_app/features/search/presentation/manager/cubit/search_cubit.dart';
 import 'package:bookly_app/features/search/presentation/manager/cubit/search_state.dart';
@@ -17,22 +18,35 @@ class SearchResultListView extends StatelessWidget {
         if (state is SearchFailure) {
           return CustomErrorMessage(errMessage: state.errMessage);
         } else if (state is SearchSuccess) {
+          final favoriteCubit = context.watch<FavoriteCubit>();
           if (state.books.isEmpty) {
-            return const Center(child: Text('No Books Found', style: Styles.textStyle16));
+            return const Center(
+              child: Text('No Books Found', style: Styles.textStyle16),
+            );
           }
           return ListView.builder(
             padding: EdgeInsets.zero,
 
             itemCount: state.books.length,
             itemBuilder: (context, index) {
+              final book = state.books[index];
+              final isFavorite = favoriteCubit.isFavorite(book.id);
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 14),
-                child: BookListViewItem(book: state.books[index]),
+                child: BookListViewItem(
+                  book: book,
+                  isFavorite: isFavorite,
+                  onFavoritePressed: () {
+                    context.read<FavoriteCubit>().toggleFavorite(book);
+                  },
+                ),
               );
             },
           );
         } else if (state is SearchInitial) {
-          return const Center(child: Text('Search for a book...', style: Styles.textStyle16));
+          return const Center(
+            child: Text('Search for a book...', style: Styles.textStyle16),
+          );
         } else {
           return const Center(child: LoadingIndicator());
         }
