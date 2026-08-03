@@ -3,6 +3,8 @@ import 'package:bookly_app/core/utils/app_router.dart';
 import 'package:bookly_app/core/utils/service_locator.dart';
 import 'package:bookly_app/features/auth/data/repos/auth_repo.dart';
 import 'package:bookly_app/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
+import 'package:bookly_app/features/favorites/data/repos/favorite_repo.dart';
+import 'package:bookly_app/features/favorites/presentation/manager/cubit/favorite_cubit.dart';
 import 'package:bookly_app/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -23,8 +25,14 @@ class BooklyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AuthCubit(getIt<AuthRepo>()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => AuthCubit(getIt<AuthRepo>())),
+        BlocProvider(
+          create: (context) =>
+              FavoriteCubit(getIt<FavoriteRepo>())..fetchFavoriteBooks(),
+        ),
+      ],
       child: MaterialApp.router(
         routerConfig: AppRouter.router,
         debugShowCheckedModeBanner: false,

@@ -1,12 +1,10 @@
 import 'package:bookly_app/core/utils/styles.dart';
 import 'package:bookly_app/core/utils/widgets/book_rating.dart';
-import 'package:bookly_app/features/favorites/presentation/manager/cubit/favorite_cubit.dart';
-import 'package:bookly_app/features/favorites/presentation/widgets/favorite_button.dart';
+import 'package:bookly_app/features/favorites/presentation/widgets/favorite_toggle_button.dart';
 import 'package:bookly_app/features/home/data/models/book_model.dart';
 import 'package:bookly_app/features/home/presentation/widgets/books_action.dart';
 import 'package:bookly_app/features/home/presentation/widgets/custom_book_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BookDetailsSection extends StatelessWidget {
   const BookDetailsSection({super.key, required this.book});
@@ -14,8 +12,6 @@ class BookDetailsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final favoriteCubit = context.watch<FavoriteCubit>();
-    final isFavorite = favoriteCubit.isFavorite(book.id);
     return Column(
       children: [
         Padding(
@@ -29,14 +25,11 @@ class BookDetailsSection extends StatelessWidget {
               Positioned(
                 top: 6,
                 right: 6,
-                child: FavoriteButton(
+                child: FavoriteToggleButton(
                   width: 32,
                   height: 32,
                   size: 20,
-                  isFavorite: isFavorite,
-                  onPressed: () {
-                    context.read<FavoriteCubit>().toggleFavorite(book);
-                  },
+                  book: book,
                 ),
               ),
             ],

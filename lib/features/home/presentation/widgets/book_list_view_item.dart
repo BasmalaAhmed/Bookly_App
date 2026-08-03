@@ -2,14 +2,19 @@ import 'package:bookly_app/constants.dart';
 import 'package:bookly_app/core/utils/app_router.dart';
 import 'package:bookly_app/core/utils/styles.dart';
 import 'package:bookly_app/core/utils/widgets/book_rating.dart';
-import 'package:bookly_app/features/favorites/presentation/widgets/favorite_button.dart';
+import 'package:bookly_app/features/favorites/presentation/widgets/favorite_toggle_button.dart';
 import 'package:bookly_app/features/home/data/models/book_model.dart';
 import 'package:bookly_app/features/home/presentation/widgets/custom_book_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class BookListViewItem extends StatelessWidget {
-  const BookListViewItem({super.key, required this.book, required this.isFavorite, this.onFavoritePressed});
+  const BookListViewItem({
+    super.key,
+    required this.book,
+    required this.isFavorite,
+    this.onFavoritePressed,
+  });
   final BookModel book;
   final bool isFavorite;
   final VoidCallback? onFavoritePressed;
@@ -30,12 +35,11 @@ class BookListViewItem extends StatelessWidget {
                 Positioned(
                   top: 6,
                   right: 6,
-                  child: FavoriteButton(
+                  child: FavoriteToggleButton(
                     width: 26,
                     height: 26,
                     size: 14,
-                    isFavorite: isFavorite,
-                    onPressed: onFavoritePressed,
+                    book: book,
                   ),
                 ),
               ],

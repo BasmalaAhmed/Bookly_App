@@ -37,7 +37,7 @@ class SearchResultListView extends StatelessWidget {
                   book: book,
                   isFavorite: isFavorite,
                   onFavoritePressed: () {
-                    context.read<FavoriteCubit>().toggleFavorite(book);
+                    favoriteCubit.toggleFavorite(book);
                   },
                 ),
               );

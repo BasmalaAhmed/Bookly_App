@@ -2,8 +2,6 @@ import 'package:bookly_app/core/utils/service_locator.dart';
 import 'package:bookly_app/features/auth/presentation/views/forgot_password_view.dart';
 import 'package:bookly_app/features/auth/presentation/views/login_view.dart';
 import 'package:bookly_app/features/auth/presentation/views/register_view.dart';
-import 'package:bookly_app/features/favorites/data/repos/favorite_repo.dart';
-import 'package:bookly_app/features/favorites/presentation/manager/cubit/favorite_cubit.dart';
 import 'package:bookly_app/features/favorites/presentation/views/favorite_view.dart';
 import 'package:bookly_app/features/home/data/models/book_model.dart';
 import 'package:bookly_app/features/home/data/repos/home_repo.dart';
@@ -55,9 +53,6 @@ abstract class AppRouter {
               create: (context) =>
                   NewestBooksCubit(getIt<HomeRepo>())..fetchNewestBooks(),
             ),
-            BlocProvider(
-              create: (context) => FavoriteCubit(getIt<FavoriteRepo>()),
-            ),
           ],
           child: const HomeView(),
         ),
@@ -70,9 +65,6 @@ abstract class AppRouter {
             BlocProvider(
               create: (context) => SimilarBooksCubit(getIt<HomeRepo>()),
             ),
-            BlocProvider(
-              create: (context) => FavoriteCubit(getIt<FavoriteRepo>()),
-            ),
           ],
           child: BookDetailsView(bookModel: state.extra as BookModel),
         ),
@@ -83,21 +75,14 @@ abstract class AppRouter {
         builder: (context, state) => MultiBlocProvider(
           providers: [
             BlocProvider(create: (context) => SearchCubit(getIt<SearchRepo>())),
-            BlocProvider(
-              create: (context) => FavoriteCubit(getIt<FavoriteRepo>()),
-            ),
           ],
           child: const SearchView(),
         ),
       ),
       GoRoute(
         path: kFavoriteView,
-        builder: (context, state) => BlocProvider(
-          create: (_) =>
-              FavoriteCubit(getIt<FavoriteRepo>())..fetchFavoriteBooks(),
-          child: const FavoriteView(),
+        builder: (context, state) => const FavoriteView(),
         ),
-      ),
     ],
   );
 }
