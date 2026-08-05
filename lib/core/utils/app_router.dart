@@ -10,6 +10,8 @@ import 'package:bookly_app/features/home/presentation/manager/newest_books_cubit
 import 'package:bookly_app/features/home/presentation/manager/similar_books_cubit/similar_books_cubit.dart';
 import 'package:bookly_app/features/home/presentation/views/book_details_view.dart';
 import 'package:bookly_app/features/home/presentation/views/home_view.dart';
+import 'package:bookly_app/features/main/presentation/views/main_view.dart';
+import 'package:bookly_app/features/profile/presentation/views/profile_view.dart';
 import 'package:bookly_app/features/search/data/repos/search_repo.dart';
 import 'package:bookly_app/features/search/presentation/manager/cubit/search_cubit.dart';
 import 'package:bookly_app/features/search/presentation/views/search_view.dart';
@@ -25,6 +27,7 @@ abstract class AppRouter {
   static const kBookDetailsView = '/bookDetailsView';
   static const kSearchView = '/searchView';
   static const kFavoriteView = '/favoriteView';
+  static const kProfileView = '/profileView';
   static final router = GoRouter(
     routes: [
       GoRoute(path: '/', builder: (context, state) => const SplashView()),
@@ -41,21 +44,64 @@ abstract class AppRouter {
         builder: (context, state) => const ForgotPasswordView(),
       ),
 
-      GoRoute(
-        path: kHomeView,
-        builder: (context, state) => MultiBlocProvider(
-          providers: [
-            BlocProvider(
-              create: (context) =>
-                  FeaturedBooksCubit(getIt<HomeRepo>())..fetchFeaturedBooks(),
-            ),
-            BlocProvider(
-              create: (context) =>
-                  NewestBooksCubit(getIt<HomeRepo>())..fetchNewestBooks(),
-            ),
-          ],
-          child: const HomeView(),
-        ),
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, navigationShell) {
+          return MainView(navigationShell: navigationShell);
+        },
+        branches: [
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: kHomeView,
+                builder: (context, state) => MultiBlocProvider(
+                  providers: [
+                    BlocProvider(
+                      create: (context) =>
+                          FeaturedBooksCubit(getIt<HomeRepo>())
+                            ..fetchFeaturedBooks(),
+                    ),
+                    BlocProvider(
+                      create: (context) =>
+                          NewestBooksCubit(getIt<HomeRepo>())
+                            ..fetchNewestBooks(),
+                    ),
+                  ],
+                  child: const HomeView(),
+                ),
+              ),
+            ],
+          ),
+
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: kSearchView,
+                builder: (context, state) => BlocProvider(
+                  create: (context) => SearchCubit(getIt<SearchRepo>()),
+                  child: const SearchView(),
+                ),
+              ),
+            ],
+          ),
+
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: kFavoriteView,
+                builder: (context, state) => const FavoriteView(),
+              ),
+            ],
+          ),
+
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: kProfileView,
+                builder: (context, state) => const ProfileView(),
+              ),
+            ],
+          ),
+        ],
       ),
 
       GoRoute(
@@ -69,20 +115,6 @@ abstract class AppRouter {
           child: BookDetailsView(bookModel: state.extra as BookModel),
         ),
       ),
-
-      GoRoute(
-        path: kSearchView,
-        builder: (context, state) => MultiBlocProvider(
-          providers: [
-            BlocProvider(create: (context) => SearchCubit(getIt<SearchRepo>())),
-          ],
-          child: const SearchView(),
-        ),
-      ),
-      GoRoute(
-        path: kFavoriteView,
-        builder: (context, state) => const FavoriteView(),
-        ),
     ],
   );
 }
