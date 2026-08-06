@@ -1,3 +1,4 @@
+import 'package:bookly_app/features/profile/presentation/views/widgets/edit_profile_bottom_sheet.dart';
 import 'package:bookly_app/features/profile/presentation/views/widgets/profile_menu_item.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -5,14 +6,17 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class ProfileMenuSection extends StatelessWidget {
   const ProfileMenuSection({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     const menuItems = [
-      (title: 'Edit Profile', icon: FontAwesomeIcons.solidUser),
-      (title: 'Notifications', icon: FontAwesomeIcons.solidBell),
-      (title: 'Settings', icon: FontAwesomeIcons.gear),
-      (title: 'About', icon: FontAwesomeIcons.circleInfo),
+      (title: 'Edit Profile', icon: FontAwesomeIcons.solidUser, action: 'edit'),
+      (
+        title: 'Notifications',
+        icon: FontAwesomeIcons.solidBell,
+        action: 'notifications',
+      ),
+      (title: 'Settings', icon: FontAwesomeIcons.gear, action: 'settings'),
+      (title: 'About', icon: FontAwesomeIcons.circleInfo, action: 'about'),
     ];
     return Column(
       children: [
@@ -23,7 +27,32 @@ class ProfileMenuSection extends StatelessWidget {
             child: ProfileMenuItem(
               title: item.title,
               icon: item.icon,
-              onTap: () {},
+              onTap: () {
+                switch (item.action) {
+                  case 'edit':
+                    showModalBottomSheet(
+                      context: context,
+                      sheetAnimationStyle: AnimationStyle(
+                        curve: Curves.easeOut,
+                        duration: const Duration(milliseconds: 300),
+                      ),
+                      useRootNavigator: true,
+                      isScrollControlled: true,
+                      backgroundColor: Colors.transparent,
+                      builder: (_) => const EditProfileBottomSheet(),
+                    );
+                    break;
+
+                  case 'notifications':
+                    break;
+
+                  case 'settings':
+                    break;
+
+                  case 'about':
+                    break;
+                }
+              },
             ),
           );
         }),
