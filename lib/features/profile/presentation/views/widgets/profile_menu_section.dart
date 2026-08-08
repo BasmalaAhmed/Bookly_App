@@ -1,10 +1,26 @@
+import 'dart:io';
+
 import 'package:bookly_app/features/profile/presentation/views/widgets/edit_profile_bottom_sheet.dart';
 import 'package:bookly_app/features/profile/presentation/views/widgets/profile_menu_item.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ProfileMenuSection extends StatelessWidget {
-  const ProfileMenuSection({super.key});
+  const ProfileMenuSection({
+    super.key,
+    required this.name,
+    required this.email,
+    required this.onProfileUpdated,
+  });
+
+  final String name;
+  final String email;
+  final void Function({
+    required String name,
+    required String email,
+    File? image,
+  })
+  onProfileUpdated;
 
   @override
   Widget build(BuildContext context) {
@@ -27,20 +43,33 @@ class ProfileMenuSection extends StatelessWidget {
             child: ProfileMenuItem(
               title: item.title,
               icon: item.icon,
-              onTap: () {
+              onTap: () async {
                 switch (item.action) {
                   case 'edit':
-                    showModalBottomSheet(
-                      context: context,
-                      sheetAnimationStyle: AnimationStyle(
-                        curve: Curves.easeOut,
-                        duration: const Duration(milliseconds: 300),
-                      ),
-                      useRootNavigator: true,
-                      isScrollControlled: true,
-                      backgroundColor: Colors.transparent,
-                      builder: (_) => const EditProfileBottomSheet(),
-                    );
+                    final result =
+                        await showModalBottomSheet<
+                          ({String name, String email, File? image})
+                        >(
+                          context: context,
+                          sheetAnimationStyle: AnimationStyle(
+                            curve: Curves.easeOut,
+                            duration: const Duration(milliseconds: 300),
+                          ),
+                          useRootNavigator: true,
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          builder: (_) =>
+                              EditProfileBottomSheet(name: name, email: email),
+                        );
+
+                    if (result != null) {
+                      onProfileUpdated(
+                        name: result.name,
+                        email: result.email,
+                        image: result.image,
+                      );
+                    }
+
                     break;
 
                   case 'notifications':

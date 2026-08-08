@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:bookly_app/constants.dart';
+import 'package:bookly_app/core/utils/validators.dart';
 import 'package:bookly_app/core/utils/widgets/custom_button.dart';
 import 'package:bookly_app/core/utils/widgets/custom_text_form_field.dart';
 import 'package:bookly_app/features/profile/presentation/views/widgets/draggable_handle.dart';
@@ -6,8 +9,43 @@ import 'package:bookly_app/features/profile/presentation/views/widgets/edit_prof
 import 'package:flutter/material.dart';
 import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
 
-class EditProfileBottomSheet extends StatelessWidget {
-  const EditProfileBottomSheet({super.key});
+class EditProfileBottomSheet extends StatefulWidget {
+  const EditProfileBottomSheet({
+    super.key,
+    required this.name,
+    required this.email,
+  });
+
+  final String name;
+  final String email;
+
+  @override
+  State<EditProfileBottomSheet> createState() => _EditProfileBottomSheetState();
+}
+
+class _EditProfileBottomSheetState extends State<EditProfileBottomSheet> {
+  final _formKey = GlobalKey<FormState>();
+
+  final _nameController = TextEditingController();
+
+  final _emailController = TextEditingController();
+
+  File? _selectedImage;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _nameController.text = widget.name;
+    _emailController.text = widget.email;
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,30 +73,49 @@ class EditProfileBottomSheet extends StatelessWidget {
               32 + MediaQuery.viewInsetsOf(context).bottom,
             ),
             child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const DraggableHandle(),
-                  const SizedBox(height: 20),
-                  const EditProfileImage(),
-                  const SizedBox(height: 24),
-                  CustomTextFormField(
-                    hintText: 'Enter Your Name',
-                    prefixIcon: Icons.person,
-                    textInputAction: TextInputAction.next,
-                  ),
-                  const SizedBox(height: 18),
-                  CustomTextFormField(
-                    hintText: 'Enter Your Email',
-                    prefixIcon: Icons.email,
-                    textInputAction: TextInputAction.done,
-                  ),
-                  const SizedBox(height: 32),
-                  CustomButton(
-                    onPressed: () {},
-                    child: const Text('Save Changes'),
-                  ),
-                ],
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const DraggableHandle(),
+                    const SizedBox(height: 20),
+                    EditProfileImage(
+                      onImageSelected: (image) {
+                        _selectedImage = image;
+                      },
+                    ),
+                    const SizedBox(height: 24),
+                    CustomTextFormField(
+                      hintText: 'Enter Your Name',
+                      prefixIcon: Icons.person,
+                      textInputAction: TextInputAction.next,
+                      controller: _nameController,
+                      validator: Validators.validateUsername,
+                    ),
+                    const SizedBox(height: 18),
+                    CustomTextFormField(
+                      hintText: 'Enter Your Email',
+                      prefixIcon: Icons.email,
+                      textInputAction: TextInputAction.done,
+                      controller: _emailController,
+                      validator: Validators.validateEmail,
+                    ),
+                    const SizedBox(height: 32),
+                    CustomButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          Navigator.pop(context, (
+                            name: _nameController.text.trim(),
+                            email: _emailController.text.trim(),
+                            image: _selectedImage,
+                          ));
+                        }
+                      },
+                      child: const Text('Save Changes'),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

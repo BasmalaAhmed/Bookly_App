@@ -43,7 +43,7 @@ class ProfileMenuItem extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Row(
                   children: [
-                    FaIcon(icon, color: iconColor, size: 20),
+                    FaIcon(icon, color: itemColor, size: 20),
                     const SizedBox(width: 20),
                     Text(
                       title,
