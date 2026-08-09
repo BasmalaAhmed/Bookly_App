@@ -56,4 +56,9 @@ class AuthRepoImpl implements AuthRepo {
     final auth = FirebaseAuth.instance;
     await auth.sendPasswordResetEmail(email: email);
   }
+
+  @override
+  Future<void> logout() async {
+    await FirebaseAuth.instance.signOut();
+  }
 }

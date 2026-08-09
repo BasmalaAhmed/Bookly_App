@@ -52,4 +52,17 @@ class AuthCubit extends Cubit<AuthState> {
       emit(AuthFailure("Something went wrong!"));
     }
   }
+
+  Future<void> logout() async {
+    emit(AuthLoading());
+
+    try {
+      await authRepo.logout();
+      emit(LogoutSuccess());
+    } on FirebaseAuthException catch (ex) {
+      emit(AuthFailure(FirebaseFailure.fromFirebaseAuthException(ex).errMessage));
+    } catch (e) {
+      emit(AuthFailure('Something went wrong!'));
+    }
+  }
 }

@@ -15,3 +15,5 @@ final class AuthFailure extends AuthState {
 
   AuthFailure(this.errMessage);
 }
+
+final class LogoutSuccess extends AuthState {}

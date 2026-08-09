@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bookly_app/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
 import 'package:bookly_app/features/profile/presentation/manager/profile_cubit/profile_cubit.dart';
 import 'package:bookly_app/features/profile/presentation/manager/profile_cubit/profile_state.dart';
 import 'package:bookly_app/features/profile/presentation/views/widgets/edit_profile_bottom_sheet.dart';
@@ -81,7 +82,9 @@ class ProfileMenuSection extends StatelessWidget {
           isLogOut: true,
           icon: FontAwesomeIcons.anglesLeft,
           iconColor: Colors.redAccent,
-          onTap: () {},
+          onTap: () {
+            context.read<AuthCubit>().logout();
+          },
         ),
       ],
     );
