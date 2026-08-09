@@ -5,6 +5,8 @@ import 'package:bookly_app/features/favorites/data/repos/favorite_repo.dart';
 import 'package:bookly_app/features/favorites/data/repos/favorite_repo_impl.dart';
 import 'package:bookly_app/features/home/data/repos/home_repo.dart';
 import 'package:bookly_app/features/home/data/repos/home_repo_impl.dart';
+import 'package:bookly_app/features/profile/data/repos/profile_repo.dart';
+import 'package:bookly_app/features/profile/data/repos/profile_repo_impl.dart';
 import 'package:bookly_app/features/search/data/repos/search_repo.dart';
 import 'package:bookly_app/features/search/data/repos/search_repo_impl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -16,7 +18,7 @@ final getIt = GetIt.instance;
 void setupServiceLocator() {
   getIt.registerSingleton<ApiService>(ApiService(Dio()));
   getIt.registerSingleton<HomeRepo>(HomeRepoImpl(getIt<ApiService>()));
-  getIt.registerSingleton<AuthRepo>(AuthRepoImpl());
+
   getIt.registerSingleton<SearchRepo>(SearchRepoImpl(getIt<ApiService>()));
   getIt.registerSingleton<FirebaseFirestore>(FirebaseFirestore.instance);
   getIt.registerSingleton<FirebaseAuth>(FirebaseAuth.instance);
@@ -25,5 +27,12 @@ void setupServiceLocator() {
       firestore: getIt<FirebaseFirestore>(),
       auth: getIt<FirebaseAuth>(),
     ),
+  );
+
+  getIt.registerSingleton<ProfileRepo>(
+    ProfileRepoImpl(firestore: getIt<FirebaseFirestore>()),
+  );
+  getIt.registerSingleton<AuthRepo>(
+    AuthRepoImpl(profileRepo: getIt<ProfileRepo>()),
   );
 }

@@ -1,26 +1,17 @@
 import 'dart:io';
 
+import 'package:bookly_app/features/profile/presentation/manager/profile_cubit/profile_cubit.dart';
+import 'package:bookly_app/features/profile/presentation/manager/profile_cubit/profile_state.dart';
 import 'package:bookly_app/features/profile/presentation/views/widgets/edit_profile_bottom_sheet.dart';
 import 'package:bookly_app/features/profile/presentation/views/widgets/profile_menu_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ProfileMenuSection extends StatelessWidget {
-  const ProfileMenuSection({
-    super.key,
-    required this.name,
-    required this.email,
-    required this.onProfileUpdated,
-  });
+  const ProfileMenuSection({super.key, required this.onImageUpdated});
 
-  final String name;
-  final String email;
-  final void Function({
-    required String name,
-    required String email,
-    File? image,
-  })
-  onProfileUpdated;
+  final void Function(File image) onImageUpdated;
 
   @override
   Widget build(BuildContext context) {
@@ -46,28 +37,28 @@ class ProfileMenuSection extends StatelessWidget {
               onTap: () async {
                 switch (item.action) {
                   case 'edit':
-                    final result =
-                        await showModalBottomSheet<
-                          ({String name, String email, File? image})
-                        >(
-                          context: context,
-                          sheetAnimationStyle: AnimationStyle(
-                            curve: Curves.easeOut,
-                            duration: const Duration(milliseconds: 300),
-                          ),
-                          useRootNavigator: true,
-                          isScrollControlled: true,
-                          backgroundColor: Colors.transparent,
-                          builder: (_) =>
-                              EditProfileBottomSheet(name: name, email: email),
-                        );
+                    final state = context.read<ProfileCubit>().state;
+                    if (state is! ProfileSuccess) {
+                      return;
+                    }
+                    final profileCubit = context.read<ProfileCubit>();
+                    final image = await showModalBottomSheet<File?>(
+                      context: context,
+                      sheetAnimationStyle: AnimationStyle(
+                        curve: Curves.easeOut,
+                        duration: const Duration(milliseconds: 300),
+                      ),
+                      useRootNavigator: true,
+                      isScrollControlled: true,
+                      backgroundColor: Colors.transparent,
+                      builder: (_) => BlocProvider.value(
+                        value: profileCubit,
+                        child: EditProfileBottomSheet(name: state.name),
+                      ),
+                    );
 
-                    if (result != null) {
-                      onProfileUpdated(
-                        name: result.name,
-                        email: result.email,
-                        image: result.image,
-                      );
+                    if (image != null) {
+                      onImageUpdated(image);
                     }
 
                     break;

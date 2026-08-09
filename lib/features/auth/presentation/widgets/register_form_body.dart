@@ -110,6 +110,7 @@ class _RegisterFormBodyState extends State<RegisterFormBody> {
                             context.read<AuthCubit>().registerUser(
                               email: emailController.text.trim(),
                               password: passwordController.text,
+                              name: usernameController.text,
                             );
                           }
                         },

@@ -1,7 +1,11 @@
 import 'package:bookly_app/features/auth/data/repos/auth_repo.dart';
+import 'package:bookly_app/features/profile/data/repos/profile_repo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthRepoImpl implements AuthRepo {
+  final ProfileRepo profileRepo;
+
+  AuthRepoImpl({required this.profileRepo});
   @override
   Future<void> loginUser({
     required String email,
@@ -24,6 +28,7 @@ class AuthRepoImpl implements AuthRepo {
 
   @override
   Future<void> registerUser({
+    required String name,
     required String email,
     required String password,
   }) async {
@@ -32,7 +37,17 @@ class AuthRepoImpl implements AuthRepo {
       email: email,
       password: password,
     );
-    await userCredential.user?.sendEmailVerification();
+    final user = userCredential.user;
+    if (user == null) {
+      throw FirebaseAuthException(
+        code: 'user-creation-failed',
+        message: 'Failed to create user.',
+      );
+    }
+
+    await profileRepo.createProfile(uid: user.uid, name: name);
+
+    await user.sendEmailVerification();
     await auth.signOut();
   }
 

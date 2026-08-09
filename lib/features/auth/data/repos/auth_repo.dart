@@ -1,5 +1,6 @@
 abstract class AuthRepo {
   Future<void> registerUser({
+    required String name,
     required String email,
     required String password,
   });
