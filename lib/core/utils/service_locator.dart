@@ -33,6 +33,6 @@ void setupServiceLocator() {
     ProfileRepoImpl(firestore: getIt<FirebaseFirestore>()),
   );
   getIt.registerSingleton<AuthRepo>(
-    AuthRepoImpl(profileRepo: getIt<ProfileRepo>()),
+    AuthRepoImpl(profileRepo: getIt<ProfileRepo>(), auth: getIt<FirebaseAuth>(),),
   );
 }
