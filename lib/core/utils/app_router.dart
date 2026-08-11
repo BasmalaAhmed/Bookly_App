@@ -11,11 +11,14 @@ import 'package:bookly_app/features/home/presentation/manager/similar_books_cubi
 import 'package:bookly_app/features/home/presentation/views/book_details_view.dart';
 import 'package:bookly_app/features/home/presentation/views/home_view.dart';
 import 'package:bookly_app/features/main/presentation/views/main_view.dart';
+import 'package:bookly_app/features/profile/data/repos/profile_repo.dart';
+import 'package:bookly_app/features/profile/presentation/manager/profile_cubit/profile_cubit.dart';
 import 'package:bookly_app/features/profile/presentation/views/profile_view.dart';
 import 'package:bookly_app/features/search/data/repos/search_repo.dart';
 import 'package:bookly_app/features/search/presentation/manager/cubit/search_cubit.dart';
 import 'package:bookly_app/features/search/presentation/views/search_view.dart';
 import 'package:bookly_app/features/splash/presentation/views/splash_view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -97,7 +100,13 @@ abstract class AppRouter {
             routes: [
               GoRoute(
                 path: kProfileView,
-                builder: (context, state) => const ProfileView(),
+                builder: (context, state) => BlocProvider(
+                  create: (context) => ProfileCubit(
+                    profileRepo: getIt<ProfileRepo>(),
+                    auth: getIt<FirebaseAuth>(),
+                  )..fetchProfile(),
+                  child: const ProfileView(),
+                ),
               ),
             ],
           ),

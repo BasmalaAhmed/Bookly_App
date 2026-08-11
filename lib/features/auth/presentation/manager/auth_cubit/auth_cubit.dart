@@ -65,4 +65,19 @@ class AuthCubit extends Cubit<AuthState> {
       emit(AuthFailure('Something went wrong!'));
     }
   }
+
+  Future<void> checkAuthStatus() async {
+    emit(AuthLoading());
+
+    try {
+      final isLoggedIn = await authRepo.isUserLoggedIn();
+      if(isLoggedIn){
+        emit(LoginSuccess());
+      } else {
+        emit(AuthInitial());
+      }
+    } catch (e) {
+      emit(AuthFailure('Something went wrong!'));
+    }
+  }
 }

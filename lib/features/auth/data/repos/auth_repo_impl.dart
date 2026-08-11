@@ -59,4 +59,12 @@ class AuthRepoImpl implements AuthRepo {
   Future<void> logout() async {
     await auth.signOut();
   }
+
+  @override
+  Future<bool> isUserLoggedIn() async {
+    await auth.currentUser?.reload();
+    final user = auth.currentUser;
+
+    return user != null && user.emailVerified;
+  }
 }
