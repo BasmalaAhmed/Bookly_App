@@ -18,10 +18,16 @@ class ProfileRepoImpl implements ProfileRepo {
 
   @override
   Future<Map<String, dynamic>> getProfile({required String uid}) async {
-    final doc = await firestore.collection('users').doc(uid).get();
+    final docRef = firestore.collection('users').doc(uid);
+    final doc = await docRef.get();
 
     if (!doc.exists) {
-      throw Exception('Profile not found.');
+      final data = {
+        'name' : '',
+        'photoUrl' : null,
+      };
+      await docRef.set(data);
+      return data;
     }
 
     return doc.data()!;
