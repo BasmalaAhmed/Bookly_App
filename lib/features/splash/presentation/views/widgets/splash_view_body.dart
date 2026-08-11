@@ -2,6 +2,7 @@ import 'package:bookly_app/core/utils/app_router.dart';
 import 'package:bookly_app/core/utils/assets.dart';
 import 'package:bookly_app/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
 import 'package:bookly_app/features/auth/presentation/manager/auth_cubit/auth_state.dart';
+import 'package:bookly_app/features/favorites/presentation/manager/cubit/favorite_cubit.dart';
 import 'package:bookly_app/features/splash/presentation/views/widgets/sliding_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -78,13 +79,18 @@ class _SplashViewBodyState extends State<SplashViewBody>
     _tryNavigate();
   }
 
-  void _tryNavigate() {
+  void _tryNavigate() async {
     if (!_splashFinished || _authState == null || !mounted) {
       return;
     }
 
     if (_authState is LoginSuccess) {
+      context.read<FavoriteCubit>().fetchFavoriteBooks();
+
+      if (!mounted) return;
+
       context.go(AppRouter.kHomeView);
+
     } else if (_authState is AuthInitial) {
       context.go(AppRouter.kLoginView);
     }

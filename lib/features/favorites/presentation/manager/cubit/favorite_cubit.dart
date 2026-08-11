@@ -8,6 +8,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
 
   final FavoriteRepo favoriteRepo;
   final Set<String> _favoriteIds = {};
+  final Set<String> _togglingIds = {};
 
   Future<void> fetchFavoriteBooks() async {
     emit(FavoriteLoading());
@@ -41,6 +42,8 @@ class FavoriteCubit extends Cubit<FavoriteState> {
         final currentBooks = List<BookModel>.from(
           (state as FavoriteSuccess).books,
         );
+
+        currentBooks.removeWhere((b) => b.id == book.id);
 
         currentBooks.add(book);
 
@@ -78,10 +81,18 @@ class FavoriteCubit extends Cubit<FavoriteState> {
   }
 
   Future<void> toggleFavorite(BookModel book) async {
-    if (isFavorite(book.id)) {
-      await removeFavorite(book.id);
-    } else {
-      await addFavorite(book);
+    if (_togglingIds.contains(book.id)) return;
+
+    _togglingIds.add(book.id);
+
+    try {
+      if (isFavorite(book.id)) {
+        await removeFavorite(book.id);
+      } else {
+        await addFavorite(book);
+      }
+    } finally {
+      _togglingIds.remove(book.id);
     }
   }
 }

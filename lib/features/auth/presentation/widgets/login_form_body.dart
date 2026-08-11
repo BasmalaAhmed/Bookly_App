@@ -9,6 +9,7 @@ import 'package:bookly_app/core/utils/widgets/loading_indicator.dart';
 import 'package:bookly_app/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
 import 'package:bookly_app/features/auth/presentation/manager/auth_cubit/auth_state.dart';
 import 'package:bookly_app/core/utils/widgets/custom_redirect_text.dart';
+import 'package:bookly_app/features/favorites/presentation/manager/cubit/favorite_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -37,8 +38,12 @@ class _LoginFormBodyState extends State<LoginFormBody> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
       child: BlocConsumer<AuthCubit, AuthState>(
-        listener: (context, state) {
+        listener: (context, state) async {
           if (state is LoginSuccess) {
+            await context.read<FavoriteCubit>().fetchFavoriteBooks();
+
+            if (!context.mounted) return;
+
             showSnackBar(context, 'User Logged In Successfully');
             context.go(AppRouter.kHomeView);
           } else if (state is AuthFailure) {
@@ -58,7 +63,7 @@ class _LoginFormBodyState extends State<LoginFormBody> {
                   controller: emailController,
                   validator: Validators.validateEmail,
                 ),
-                const SizedBox(height: 16,),
+                const SizedBox(height: 16),
                 CustomTextFormField(
                   hintText: 'Password',
                   prefixIcon: Icons.lock_outlined,

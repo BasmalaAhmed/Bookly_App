@@ -1,4 +1,5 @@
 import 'package:bookly_app/features/favorites/presentation/manager/cubit/favorite_cubit.dart';
+import 'package:bookly_app/features/favorites/presentation/widgets/favorite_button.dart';
 import 'package:bookly_app/features/home/data/models/book_model.dart';
 import 'package:bookly_app/features/home/presentation/widgets/book_list_view_item.dart';
 import 'package:flutter/material.dart';
@@ -42,8 +43,13 @@ class _AnimatedFavoriteBookItemState extends State<AnimatedFavoriteBookItem> {
         curve: Curves.easeInOut,
         child: BookListViewItem(
           book: widget.book,
-          isFavorite: true,
-          onFavoritePressed: _removeBook,
+          favoriteButton: FavoriteButton(
+            width: 26,
+            height: 26,
+            size: 14,
+            isFavorite: true,
+            onPressed: _removeBook,
+          ),
         ),
       ),
     );

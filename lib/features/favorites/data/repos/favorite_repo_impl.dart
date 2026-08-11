@@ -13,9 +13,15 @@ class FavoriteRepoImpl implements FavoriteRepo {
   FavoriteRepoImpl({required this.firestore, required this.auth});
 
   CollectionReference<Map<String, dynamic>> get _favoritesCollection {
-    final userId = auth.currentUser!.uid;
+    final user = auth.currentUser;
 
-    return firestore.collection('users').doc(userId).collection('favorites');
+    if (user == null) {
+      throw FirebaseException(
+        plugin: 'firebase_auth',
+        code: 'user-not-authenticated',
+      );
+    }
+    return firestore.collection('users').doc(user.uid).collection('favorites');
   }
 
   @override

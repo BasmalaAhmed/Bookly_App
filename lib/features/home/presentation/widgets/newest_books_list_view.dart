@@ -1,6 +1,5 @@
 import 'package:bookly_app/core/utils/widgets/custom_error_widget.dart';
 import 'package:bookly_app/core/utils/widgets/loading_indicator.dart';
-import 'package:bookly_app/features/favorites/presentation/manager/cubit/favorite_cubit.dart';
 import 'package:bookly_app/features/home/presentation/manager/newest_books_cubit/newest_books_cubit.dart';
 import 'package:bookly_app/features/home/presentation/manager/newest_books_cubit/newest_books_state.dart';
 import 'package:bookly_app/features/home/presentation/widgets/book_list_view_item.dart';
@@ -15,22 +14,14 @@ class NewestBooksListView extends StatelessWidget {
     return BlocBuilder<NewestBooksCubit, NewestBooksState>(
       builder: (context, state) {
         if (state is NewestBooksSuccess) {
-          final favoriteCubit = context.watch<FavoriteCubit>();
           final books = state.books;
           return SliverList(
             delegate: SliverChildBuilderDelegate((context, index) {
               final book = books[index];
-              final isFavorite = favoriteCubit.isFavorite(
-                book.id,
-              );
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 15),
                 child: BookListViewItem(
                   book: book,
-                  isFavorite: isFavorite,
-                  onFavoritePressed: () {
-                    favoriteCubit.toggleFavorite(book);
-                  },
                 ),
               );
             }, childCount: books.length),

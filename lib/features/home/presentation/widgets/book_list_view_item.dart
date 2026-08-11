@@ -11,13 +11,10 @@ import 'package:go_router/go_router.dart';
 class BookListViewItem extends StatelessWidget {
   const BookListViewItem({
     super.key,
-    required this.book,
-    required this.isFavorite,
-    this.onFavoritePressed,
+    required this.book, this.favoriteButton,
   });
   final BookModel book;
-  final bool isFavorite;
-  final VoidCallback? onFavoritePressed;
+  final Widget? favoriteButton;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +32,7 @@ class BookListViewItem extends StatelessWidget {
                 Positioned(
                   top: 6,
                   right: 6,
-                  child: FavoriteToggleButton(
+                  child: favoriteButton ?? FavoriteToggleButton(
                     width: 26,
                     height: 26,
                     size: 14,
