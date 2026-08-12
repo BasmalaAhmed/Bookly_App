@@ -26,10 +26,10 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
-        if(state is LogoutSuccess){
+        if (state is LogoutSuccess) {
           context.go(AppRouter.kLoginView);
         }
-        if (state is AuthFailure){
+        if (state is AuthFailure) {
           showSnackBar(context, state.errMessage);
         }
       },
@@ -40,6 +40,13 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
             BlocBuilder<ProfileCubit, ProfileState>(
               builder: (context, state) {
                 if (state is ProfileLoading) {
+                  if (state.name != null && state.email != null) {
+                    return ProfileHeader(
+                      name: state.name!,
+                      email: state.email!,
+                      image: _profileImage,
+                    );
+                  }
                   return const LoadingIndicator();
                 }
                 if (state is ProfileSuccess) {

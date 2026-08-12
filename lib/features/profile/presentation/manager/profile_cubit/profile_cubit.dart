@@ -35,13 +35,22 @@ class ProfileCubit extends Cubit<ProfileState> {
     }
   }
 
-  Future<void> updateProfile({required String name,}) async {
+  Future<void> updateProfile({required String name}) async {
     final currentState = state;
+
     if (currentState is! ProfileSuccess) return;
-    emit(ProfileLoading());
+
+    emit(
+      ProfileLoading(
+        name: currentState.name,
+        email: currentState.email,
+        photoUrl: currentState.photoUrl,
+      ),
+    );
 
     try {
       final user = auth.currentUser;
+
       if (user == null) {
         emit(ProfileFailure('No authenticated user found.'));
         return;
