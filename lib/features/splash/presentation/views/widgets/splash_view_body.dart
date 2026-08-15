@@ -1,7 +1,7 @@
 import 'package:bookly_app/core/utils/app_router.dart';
-import 'package:bookly_app/core/utils/assets.dart';
 import 'package:bookly_app/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
 import 'package:bookly_app/features/auth/presentation/manager/auth_cubit/auth_state.dart';
+import 'package:bookly_app/features/auth/presentation/widgets/logo_widget.dart';
 import 'package:bookly_app/features/favorites/presentation/manager/cubit/favorite_cubit.dart';
 import 'package:bookly_app/features/splash/presentation/views/widgets/sliding_text.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +49,7 @@ class _SplashViewBodyState extends State<SplashViewBody>
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Image.asset(AssetsData.logo),
+          const LogoWidget(scale: 1.1),
           const SizedBox(height: 4),
           SlidingText(slidingAnimation: slidingAnimation),
         ],

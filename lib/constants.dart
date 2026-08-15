@@ -8,5 +8,5 @@ const Color kErrorBorderColor = Colors.red;
 const Color kButtonColor = Color(0xFF8B5CF6);
 const Color kTextButtonColor = Color(0xFFA78BFA);
 const String kGTSectraFine = 'GT Sectra Fine';
-const Color kRatingStar = Color(0xFFFFDD4F);
-const Color kRatingCount = Color(0xFF707070);
+const Color kRatingStar = Color(0xFFE6C63F);
+const Color kGreyColor = Color(0xFF707070);

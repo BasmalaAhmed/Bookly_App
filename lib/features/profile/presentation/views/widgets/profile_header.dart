@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bookly_app/constants.dart';
 import 'package:bookly_app/core/utils/styles.dart';
 import 'package:flutter/material.dart';
 
@@ -35,7 +36,7 @@ class ProfileHeader extends StatelessWidget {
               style: Styles.textStyle20.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 4),
-            Text(email, style: Styles.textStyle14),
+            Text(email, style: Styles.textStyle14.copyWith(color: kGreyColor)),
           ],
         ),
       ],

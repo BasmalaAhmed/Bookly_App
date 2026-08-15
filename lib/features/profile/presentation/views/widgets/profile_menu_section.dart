@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bookly_app/core/utils/app_router.dart';
 import 'package:bookly_app/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
 import 'package:bookly_app/features/profile/presentation/manager/profile_cubit/profile_cubit.dart';
 import 'package:bookly_app/features/profile/presentation/manager/profile_cubit/profile_state.dart';
@@ -8,6 +9,7 @@ import 'package:bookly_app/features/profile/presentation/views/widgets/profile_m
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 
 class ProfileMenuSection extends StatelessWidget {
   const ProfileMenuSection({super.key, required this.onImageUpdated});
@@ -68,6 +70,7 @@ class ProfileMenuSection extends StatelessWidget {
                     break;
 
                   case 'settings':
+                    context.push(AppRouter.kSettingsView);
                     break;
 
                   case 'about':

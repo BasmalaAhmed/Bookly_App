@@ -1,4 +1,6 @@
-import 'package:bookly_app/constants.dart';
+import 'package:bookly_app/core/theme/app_theme.dart';
+import 'package:bookly_app/core/theme/theme_cubit.dart';
+import 'package:bookly_app/core/theme/widgets/app_background.dart';
 import 'package:bookly_app/core/utils/app_router.dart';
 import 'package:bookly_app/core/utils/service_locator.dart';
 import 'package:bookly_app/features/auth/data/repos/auth_repo.dart';
@@ -10,7 +12,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,23 +28,23 @@ class BooklyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (context) => AuthCubit(getIt<AuthRepo>()),
-        ),
-        BlocProvider(
-          create: (context) =>
-              FavoriteCubit(getIt<FavoriteRepo>()),
-        ),
+        BlocProvider(create: (context) => AuthCubit(getIt<AuthRepo>())),
+        BlocProvider(create: (context) => FavoriteCubit(getIt<FavoriteRepo>())),
+        BlocProvider(create: (context) => ThemeCubit()),
       ],
-      child: MaterialApp.router(
-        routerConfig: AppRouter.router,
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData.dark().copyWith(
-          scaffoldBackgroundColor: kBackgroundColor,
-          textTheme: GoogleFonts.montserratTextTheme(
-            ThemeData.dark().textTheme,
-          ),
-        ),
+      child: BlocBuilder<ThemeCubit, ThemeMode>(
+        builder: (context, themeMode) {
+          return MaterialApp.router(
+            routerConfig: AppRouter.router,
+            debugShowCheckedModeBanner: false,
+            theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
+            themeMode: themeMode,
+            builder: (context , child) {
+              return AppBackground(child: child!);
+            },
+          );
+        },
       ),
     );
   }

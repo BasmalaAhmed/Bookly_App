@@ -1,4 +1,3 @@
-import 'package:bookly_app/constants.dart';
 import 'package:bookly_app/core/utils/styles.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +18,7 @@ class CustomRedirectText extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(text, style: Styles.textStyle12.copyWith(color: kHintTextColor)),
+        Text(text, style: Styles.textStyle12),
         TextButton(
           onPressed: onPressed,
           style: TextButton.styleFrom(
@@ -31,7 +30,6 @@ class CustomRedirectText extends StatelessWidget {
             textButton,
             style: Styles.textStyle14.copyWith(
               fontWeight: FontWeight.w700,
-              color: kTextButtonColor,
             ),
           ),
         ),

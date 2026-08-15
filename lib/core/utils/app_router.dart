@@ -17,6 +17,7 @@ import 'package:bookly_app/features/profile/presentation/views/profile_view.dart
 import 'package:bookly_app/features/search/data/repos/search_repo.dart';
 import 'package:bookly_app/features/search/presentation/manager/cubit/search_cubit.dart';
 import 'package:bookly_app/features/search/presentation/views/search_view.dart';
+import 'package:bookly_app/features/settings/presentation/views/settings_view.dart';
 import 'package:bookly_app/features/splash/presentation/views/splash_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,6 +32,7 @@ abstract class AppRouter {
   static const kSearchView = '/searchView';
   static const kFavoriteView = '/favoriteView';
   static const kProfileView = '/profileView';
+  static const kSettingsView = '/settingsView';
   static final router = GoRouter(
     routes: [
       GoRoute(path: '/', builder: (context, state) => const SplashView()),
@@ -123,6 +125,11 @@ abstract class AppRouter {
           ],
           child: BookDetailsView(bookModel: state.extra as BookModel),
         ),
+      ),
+
+      GoRoute(
+        path: kSettingsView,
+        builder: (context, state) => const SettingsView(),
       ),
     ],
   );

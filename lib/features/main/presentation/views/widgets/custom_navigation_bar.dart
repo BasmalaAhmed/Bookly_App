@@ -16,7 +16,7 @@ class CustomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const navigationItems = [
-      (FontAwesomeIcons.house, 'Home'),
+      (FontAwesomeIcons.solidHouse, 'Home'),
       (FontAwesomeIcons.magnifyingGlass, 'Search'),
       (FontAwesomeIcons.solidHeart, 'Favorites'),
       (FontAwesomeIcons.solidUser, 'Profile'),

@@ -1,5 +1,6 @@
-import 'package:bookly_app/core/utils/assets.dart';
+import 'package:bookly_app/features/auth/presentation/widgets/logo_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CustomAppBar extends StatelessWidget {
   const CustomAppBar({super.key});
@@ -8,7 +9,13 @@ class CustomAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Image.asset(AssetsData.logo, scale: 4),
+        LogoWidget(scale: 4,),
+        const Spacer(),
+        IconButton(
+          onPressed: () {},
+          tooltip: 'Cart',
+          icon: const FaIcon(FontAwesomeIcons.cartShopping, size: 20),
+        ),
       ],
     );
   }

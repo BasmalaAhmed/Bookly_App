@@ -1,3 +1,4 @@
+import 'package:bookly_app/core/theme/app_glass_theme.dart';
 import 'package:bookly_app/core/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -21,16 +22,24 @@ class ProfileMenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final itemColor = iconColor ?? Colors.white;
-    final backgroundColor = Colors.white.withValues(alpha: 0.02);
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final itemColor = iconColor ?? theme.colorScheme.onSurface;
+    final backgroundColor = isDark
+        ? Colors.white.withValues(alpha: 0.02)
+        : Colors.white.withValues(alpha: 0.42);
+    final borderColor = isDark
+        ? const Color(0XFFA78BFA).withValues(alpha: 0.45)
+        : const Color(0XFFA78BFA).withValues(alpha: 0.30);
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        splashColor: Colors.white.withValues(alpha: .08),
+        splashColor: theme.colorScheme.onSurface.withValues(alpha: 0.08),
         highlightColor: Colors.transparent,
         borderRadius: BorderRadius.circular(16),
         onTap: onTap,
         child: LiquidGlassLayer(
+          settings: AppGlassTheme.settings(context),
           child: LiquidGlass(
             shape: LiquidRoundedRectangle(borderRadius: 16),
             child: Container(
@@ -38,6 +47,7 @@ class ProfileMenuItem extends StatelessWidget {
               decoration: BoxDecoration(
                 color: backgroundColor,
                 borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: borderColor, width: 0.8),
               ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -53,10 +63,10 @@ class ProfileMenuItem extends StatelessWidget {
                     const Spacer(),
                     (isLogOut)
                         ? const SizedBox.shrink()
-                        : const FaIcon(
+                        : FaIcon(
                             FontAwesomeIcons.angleRight,
+                            color: theme.colorScheme.onSurfaceVariant,
                             size: 16,
-                            color: Colors.white54,
                           ),
                   ],
                 ),

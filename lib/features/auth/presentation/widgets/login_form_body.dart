@@ -1,4 +1,3 @@
-import 'package:bookly_app/constants.dart';
 import 'package:bookly_app/core/utils/app_router.dart';
 import 'package:bookly_app/core/utils/helpers.dart';
 import 'package:bookly_app/core/utils/styles.dart';
@@ -87,7 +86,6 @@ class _LoginFormBodyState extends State<LoginFormBody> {
                     child: Text(
                       'Forgot Password?',
                       style: Styles.textStyle14.copyWith(
-                        color: kHintTextColor,
                         fontWeight: FontWeight.w600,
                       ),
                     ),

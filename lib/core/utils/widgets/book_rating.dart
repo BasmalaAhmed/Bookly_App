@@ -1,6 +1,7 @@
 import 'package:bookly_app/constants.dart';
 import 'package:bookly_app/core/utils/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class BookRating extends StatelessWidget {
   const BookRating({
@@ -18,11 +19,11 @@ class BookRating extends StatelessWidget {
     return Row(
       mainAxisAlignment: mainAxisAlignment,
       children: [
-        const Icon(Icons.star_rate_rounded, color: kRatingStar, size: 22),
+        const FaIcon(FontAwesomeIcons.solidStar, color: kRatingStar, size: 14),
         const SizedBox(width: 3),
         Text(rating, style: Styles.textStyle16),
         const SizedBox(width: 4),
-        Text('($ratingCount)', style: Styles.textStyle14.copyWith(color: Colors.grey)),
+        Text('($ratingCount)', style: Styles.textStyle14.copyWith(color: kGreyColor)),
       ],
     );
   }

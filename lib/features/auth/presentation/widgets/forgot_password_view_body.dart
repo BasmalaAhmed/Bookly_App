@@ -1,7 +1,7 @@
 import 'package:bookly_app/constants.dart';
-import 'package:bookly_app/core/utils/assets.dart';
 import 'package:bookly_app/core/utils/styles.dart';
 import 'package:bookly_app/features/auth/presentation/widgets/forgot_password_form_body.dart';
+import 'package:bookly_app/features/auth/presentation/widgets/logo_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
 
@@ -15,7 +15,7 @@ class ForgotPasswordViewBody extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(height: size.height * 0.15),
-          Image.asset(AssetsData.logo, scale: 1.1),
+          const LogoWidget(scale: 1.4,),
           SizedBox(height: size.height * 0.06),
           Text(
             'Forgot Password?',
@@ -27,7 +27,7 @@ class ForgotPasswordViewBody extends StatelessWidget {
             child: Text(
               "Enter your email address and we'll send you a password reset link.",
               textAlign: TextAlign.center,
-              style: Styles.textStyle14.copyWith(color: kHintTextColor),
+              style: Styles.textStyle14.copyWith(color: kGreyColor),
             ),
           ),
           SizedBox(height: size.height * 0.04),

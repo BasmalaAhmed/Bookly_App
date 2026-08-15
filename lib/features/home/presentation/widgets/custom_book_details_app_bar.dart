@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 class CustomBookDetailsAppBar extends StatelessWidget {
@@ -14,12 +15,12 @@ class CustomBookDetailsAppBar extends StatelessWidget {
             context.pop();
           },
           tooltip: 'Close',
-          icon: const Icon(Icons.close_outlined, color: Colors.white),
+          icon: const FaIcon(FontAwesomeIcons.xmark, size: 20),
         ),
         IconButton(
           onPressed: () {},
           tooltip: 'Cart',
-          icon: const Icon(Icons.shopping_cart_outlined, color: Colors.white),
+          icon: const FaIcon(FontAwesomeIcons.cartShopping, size: 20),
         ),
       ],
     );

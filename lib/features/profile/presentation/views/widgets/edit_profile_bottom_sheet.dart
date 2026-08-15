@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:bookly_app/constants.dart';
 import 'package:bookly_app/core/utils/validators.dart';
 import 'package:bookly_app/core/utils/widgets/custom_button.dart';
 import 'package:bookly_app/core/utils/widgets/custom_text_form_field.dart';
@@ -50,11 +49,7 @@ class _EditProfileBottomSheetState extends State<EditProfileBottomSheet> {
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [Color(0xFF2A0A47), kBackgroundColor],
-        ),
+        
       ),
       child: LiquidGlassLayer(
         child: LiquidGlass(
