@@ -25,7 +25,7 @@ void showCustomDialog({
         insetPadding: const EdgeInsets.symmetric(horizontal: 50),
         backgroundColor: isDark
             ? kBackgroundColor.withValues(alpha: 0.6)
-            : kEnabledBorderColor.withValues(alpha: 0.4),
+            : kEnabledBorderColor.withValues(alpha: 0.6),
         child: LiquidGlassLayer(
           child: LiquidGlass(
             shape: LiquidRoundedRectangle(borderRadius: 12),
@@ -54,7 +54,8 @@ void showCustomDialog({
                     message,
                     style: Styles.textStyle14.copyWith(
                       height: 1.5,
-                      color: isDark ? kHintTextColor : Colors.white,
+                      fontWeight: FontWeight.w500,
+                      color: isDark ? kHintTextColor : Colors.black.withValues(alpha : 0.6),
                     ),
                     textAlign: TextAlign.center,
                   ),

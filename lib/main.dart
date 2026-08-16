@@ -18,11 +18,15 @@ Future<void> main() async {
   await dotenv.load(fileName: '.env');
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   setupServiceLocator();
-  runApp(const BooklyApp());
+  final themeCubit = ThemeCubit();
+  await themeCubit.loadTheme();
+  runApp(BooklyApp(themeCubit: themeCubit));
 }
 
 class BooklyApp extends StatelessWidget {
-  const BooklyApp({super.key});
+  const BooklyApp({super.key, required this.themeCubit});
+
+  final ThemeCubit themeCubit;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +34,7 @@ class BooklyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => AuthCubit(getIt<AuthRepo>())),
         BlocProvider(create: (context) => FavoriteCubit(getIt<FavoriteRepo>())),
-        BlocProvider(create: (context) => ThemeCubit()),
+        BlocProvider.value(value: themeCubit),
       ],
       child: BlocBuilder<ThemeCubit, ThemeMode>(
         builder: (context, themeMode) {
@@ -40,7 +44,7 @@ class BooklyApp extends StatelessWidget {
             theme: AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,
             themeMode: themeMode,
-            builder: (context , child) {
+            builder: (context, child) {
               return AppBackground(child: child!);
             },
           );
