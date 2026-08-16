@@ -3,29 +3,34 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ThemeCubit extends Cubit<ThemeMode> {
-  ThemeCubit() : super(ThemeMode.light);
+  ThemeCubit() : super(ThemeMode.system);
 
   static const String _themeKey = 'theme_mode';
 
-  Future <void> loadTheme() async {
+  Future<void> loadTheme() async {
     final prefs = await SharedPreferences.getInstance();
 
     final savedTheme = prefs.getString(_themeKey);
 
-    if (savedTheme == 'dark'){
-      emit(ThemeMode.dark);
-    } else {
-      emit(ThemeMode.light);
+    switch (savedTheme) {
+      case 'light':
+        emit(ThemeMode.light);
+        break;
+
+      case 'dark':
+        emit(ThemeMode.dark);
+        break;
+
+      default:
+        emit(ThemeMode.system);
     }
   }
 
-  Future <void> toggleTheme() async {
-    final newTheme = state == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
+  Future<void> setTheme(ThemeMode themeMode) async {
+    emit(themeMode);
 
-    emit(newTheme);
+    final prefs = await SharedPreferences.getInstance();
 
-    final prefs = await SharedPreferences.getInstance(); 
-
-    await prefs.setString(_themeKey, newTheme == ThemeMode.dark ? 'dark' : 'light' ,);
+    await prefs.setString(_themeKey, themeMode.name);
   }
 }

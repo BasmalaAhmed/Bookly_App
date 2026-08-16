@@ -7,8 +7,8 @@ abstract class AppTheme {
     brightness: Brightness.dark,
     scaffoldBackgroundColor: Colors.transparent,
     colorScheme: const ColorScheme.dark(
-      primary: kButtonColor,
-      secondary: kFocusedBorderColor,
+      primary: kFocusedBorderColor,
+      secondary: kButtonColor,
       surface: Color(0XFF211035),
       onSurface: Colors.white,
       error: Colors.red,
