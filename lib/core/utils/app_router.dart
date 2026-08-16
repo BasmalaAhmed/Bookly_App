@@ -39,14 +39,14 @@ abstract class AppRouter {
 
       GoRoute(
         path: kRegisterView,
-        builder: (context, state) => const RegisterView(),
+        pageBuilder: (context, state) => const NoTransitionPage(child: RegisterView()),
       ),
 
-      GoRoute(path: kLoginView, builder: (context, state) => const LoginView()),
+      GoRoute(path: kLoginView, pageBuilder: (context, state) => const NoTransitionPage(child: LoginView())),
 
       GoRoute(
         path: kForgotPasswordView,
-        builder: (context, state) => const ForgotPasswordView(),
+        pageBuilder: (context, state) => const NoTransitionPage(child: ForgotPasswordView()),
       ),
 
       StatefulShellRoute.indexedStack(
