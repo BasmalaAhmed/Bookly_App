@@ -1,4 +1,3 @@
-import 'package:bookly_app/constants.dart';
 import 'package:bookly_app/core/utils/app_router.dart';
 import 'package:bookly_app/core/utils/styles.dart';
 import 'package:bookly_app/core/utils/widgets/book_rating.dart';
@@ -51,7 +50,7 @@ class BookListViewItem extends StatelessWidget {
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: Styles.textStyle20.copyWith(
-                      fontFamily: kGTSectraFine,
+                      fontFamily: 'GT Sectra Fine',
                     ),
                   ),
                   const SizedBox(height: 3),
@@ -60,8 +59,8 @@ class BookListViewItem extends StatelessWidget {
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: Styles.textStyle14.copyWith(
-                      color: kGreyColor,
-                    ),
+                      color: Colors.grey
+                    )
                   ),
                   const SizedBox(height: 3),
                   Row(

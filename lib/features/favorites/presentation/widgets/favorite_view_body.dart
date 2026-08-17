@@ -1,4 +1,3 @@
-import 'package:bookly_app/constants.dart';
 import 'package:bookly_app/core/utils/styles.dart';
 import 'package:bookly_app/features/favorites/presentation/manager/cubit/favorite_cubit.dart';
 import 'package:bookly_app/features/favorites/presentation/manager/cubit/favorite_state.dart';
@@ -36,7 +35,7 @@ class FavoriteViewBody extends StatelessWidget {
                       final count = state.books.length;
                       return Text(
                         '$count ${count == 1 ? 'Book' : 'Books'}',
-                        style: Styles.textStyle16.copyWith(color: kGreyColor),
+                        style: Styles.textStyle16.copyWith(color: Colors.grey),
                       );
                     }
                     if (state is FavoriteLoading) {

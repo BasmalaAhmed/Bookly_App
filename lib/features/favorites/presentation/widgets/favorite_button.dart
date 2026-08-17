@@ -1,4 +1,3 @@
-import 'package:bookly_app/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
@@ -21,6 +20,7 @@ class FavoriteButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return LiquidGlassLayer(
       child: LiquidGlass(
         shape: LiquidOval(),
@@ -30,12 +30,12 @@ class FavoriteButton extends StatelessWidget {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             border: Border.all(
-              color: kBackgroundColor.withValues(alpha: 0.4),
+              color: colorScheme.outline.withValues(alpha: 0.4),
               width: 0.8,
             ),
             boxShadow: [
               BoxShadow(
-                color: kFocusedBorderColor.withValues(alpha: 0.6),
+                color: colorScheme.outline.withValues(alpha: 0.6),
                 blurRadius: 6,
                 offset: Offset(0, 2),
               ),
@@ -67,7 +67,7 @@ class FavoriteButton extends StatelessWidget {
                     : FontAwesomeIcons.heart,
                 key: ValueKey(isFavorite),
                 size: isFavorite ? size : size - 2,
-                color: isFavorite ? Colors.red : kBackgroundColor,
+                color: isFavorite ? Colors.red : colorScheme.onSecondary,
               ),
             ),
           ),

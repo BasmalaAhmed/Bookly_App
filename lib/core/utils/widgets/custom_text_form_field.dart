@@ -1,4 +1,3 @@
-import 'package:bookly_app/constants.dart';
 import 'package:bookly_app/core/utils/styles.dart';
 import 'package:flutter/material.dart';
 
@@ -44,6 +43,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return TextFormField(
       onTapOutside: (_) {
         FocusScope.of(context).unfocus();
@@ -54,11 +54,11 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       textInputAction: widget.textInputAction,
       keyboardType: widget.keyboardType,
       obscureText: widget.isPassword && obscureText,
-      style: Styles.textStyle16,
+      style: Styles.textStyle16.copyWith(fontWeight: FontWeight.w600),
       decoration: InputDecoration(
         hintText: widget.hintText,
-        hintStyle: Styles.textStyle16.copyWith(color: kHintTextColor),
-        prefixIcon: Icon(widget.prefixIcon, color: kHintTextColor),
+        hintStyle: Styles.textStyle16.copyWith(color: colorScheme.onSurfaceVariant),
+        prefixIcon: Icon(widget.prefixIcon, color: colorScheme.onSurface),
         suffixIcon: widget.isPassword
             ? IconButton(
               focusNode: _suffixFocusNode,
@@ -71,15 +71,15 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                   (obscureText)
                       ? Icons.visibility_off_outlined
                       : Icons.visibility_outlined,
-                  color: kHintTextColor,
+                  color: colorScheme.onSurfaceVariant,
                 ),
               )
             : null,
-        border: _buildBorder(kEnabledBorderColor),
-        enabledBorder: _buildBorder(kEnabledBorderColor),
-        focusedBorder: _buildBorder(kFocusedBorderColor),
-        errorBorder: _buildBorder(kErrorBorderColor),
-        focusedErrorBorder: _buildBorder(kErrorBorderColor),
+        border: _buildBorder(colorScheme.outline),
+        enabledBorder: _buildBorder(colorScheme.outline),
+        focusedBorder: _buildBorder(colorScheme.primary),
+        errorBorder: _buildBorder(colorScheme.error),
+        focusedErrorBorder: _buildBorder(colorScheme.error),
       ),
     );
   }

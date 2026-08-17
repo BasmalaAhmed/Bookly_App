@@ -1,4 +1,3 @@
-import 'package:bookly_app/constants.dart';
 import 'package:bookly_app/core/utils/styles.dart';
 import 'package:bookly_app/core/utils/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
@@ -16,16 +15,14 @@ void showCustomDialog({
   required String buttonTitle,
   required VoidCallback onPressed,
 }) {
-  final isDark = Theme.of(context).brightness == Brightness.dark;
+  final colorScheme = Theme.of(context).colorScheme;
   showDialog(
     context: context,
     barrierDismissible: false,
     builder: (dialogContext) {
       return Dialog(
         insetPadding: const EdgeInsets.symmetric(horizontal: 50),
-        backgroundColor: isDark
-            ? kBackgroundColor.withValues(alpha: 0.6)
-            : kEnabledBorderColor.withValues(alpha: 0.6),
+        backgroundColor: colorScheme.outlineVariant.withValues(alpha: 0.6),
         child: LiquidGlassLayer(
           child: LiquidGlass(
             shape: LiquidRoundedRectangle(borderRadius: 12),
@@ -55,7 +52,7 @@ void showCustomDialog({
                     style: Styles.textStyle14.copyWith(
                       height: 1.5,
                       fontWeight: FontWeight.w500,
-                      color: isDark ? kHintTextColor : Colors.black.withValues(alpha : 0.6),
+                      // color: isDark ? colorScheme.onSurfaceVariant : colorScheme.onPrimary,
                     ),
                     textAlign: TextAlign.center,
                   ),

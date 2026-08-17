@@ -66,7 +66,7 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                 },
               ),
               const SizedBox(height: 18),
-              Divider(color: Colors.white.withValues(alpha: 0.18)),
+              Divider(),
               const SizedBox(height: 24),
               ProfileMenuSection(
                 onImageUpdated: (image) {

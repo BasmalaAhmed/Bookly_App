@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:bookly_app/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
@@ -35,6 +34,7 @@ class _EditProfileImageState extends State<EditProfileImage> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Stack(
       children: [
         CircleAvatar(
@@ -51,19 +51,19 @@ class _EditProfileImageState extends State<EditProfileImage> {
             child: Container(
               width: 32,
               height: 32,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: kButtonColor,
+                color: colorScheme.secondary,
                 boxShadow: [
                   BoxShadow(
                     blurRadius: 2,
                     spreadRadius: 1.5,
-                    color: kBackgroundColor,
+                    color: colorScheme.shadow,
                   ),
                 ],
               ),
               child: const Center(
-                child: FaIcon(FontAwesomeIcons.penFancy, size: 16),
+                child: FaIcon(FontAwesomeIcons.penFancy, size: 16, color: Colors.white,),
               ),
             ),
           ),

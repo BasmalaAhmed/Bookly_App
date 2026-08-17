@@ -1,4 +1,3 @@
-import 'package:bookly_app/constants.dart';
 import 'package:bookly_app/core/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -20,6 +19,7 @@ class NavigationBarItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -32,14 +32,14 @@ class NavigationBarItem extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             color: isSelected
-                ? kButtonColor.withValues(alpha: 0.18)
+                ? colorScheme.secondary.withValues(alpha: 0.18)
                 : Colors.transparent,
             boxShadow: isSelected
                 ? [
                     BoxShadow(
                       blurRadius: 2,
                       spreadRadius: 2,
-                      color: kButtonColor.withValues(alpha: 0.25),
+                      color: colorScheme.secondary.withValues(alpha: 0.25),
                     ),
                     BoxShadow(
                       blurRadius: 4,
@@ -56,7 +56,7 @@ class NavigationBarItem extends StatelessWidget {
                 scale: isSelected ? 1.1 : 1,
                 child: FaIcon(
                   icon,
-                  color: isSelected ? Colors.white : kEnabledBorderColor,
+                  color: isSelected ? Colors.white : colorScheme.outline,
                   size: isSelected ? 25 : 22,
                 ),
               ),

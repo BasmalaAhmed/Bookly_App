@@ -1,4 +1,3 @@
-import 'package:bookly_app/constants.dart';
 import 'package:bookly_app/core/utils/styles.dart';
 import 'package:bookly_app/features/auth/presentation/widgets/forgot_password_form_body.dart';
 import 'package:bookly_app/features/auth/presentation/widgets/logo_widget.dart';
@@ -27,7 +26,7 @@ class ForgotPasswordViewBody extends StatelessWidget {
             child: Text(
               "Enter your email address and we'll send you a password reset link.",
               textAlign: TextAlign.center,
-              style: Styles.textStyle14.copyWith(color: kGreyColor),
+              style: Styles.textStyle14.copyWith(color: Colors.grey),
             ),
           ),
           SizedBox(height: size.height * 0.04),

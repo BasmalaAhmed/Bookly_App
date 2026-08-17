@@ -25,9 +25,6 @@ class ProfileMenuItem extends StatelessWidget {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
     final itemColor = iconColor ?? theme.colorScheme.onSurface;
-    final backgroundColor = isDark
-        ? Colors.white.withValues(alpha: 0.02)
-        : Colors.white.withValues(alpha: 0.42);
     final borderColor = isDark
         ? const Color(0XFFA78BFA).withValues(alpha: 0.45)
         : const Color(0XFFA78BFA).withValues(alpha: 0.30);
@@ -45,7 +42,6 @@ class ProfileMenuItem extends StatelessWidget {
             child: Container(
               height: 60,
               decoration: BoxDecoration(
-                color: backgroundColor,
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(color: borderColor, width: 0.8),
               ),

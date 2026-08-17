@@ -1,4 +1,3 @@
-import 'package:bookly_app/constants.dart';
 import 'package:bookly_app/core/utils/styles.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +13,7 @@ class CustomSearchTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return TextField(
       onTapOutside: (_) {
         FocusScope.of(context).unfocus();
@@ -26,20 +26,20 @@ class CustomSearchTextField extends StatelessWidget {
       style: Styles.textStyle16,
       decoration: InputDecoration(
         hintText: 'Search',
-        hintStyle: Styles.textStyle16.copyWith(color: kHintTextColor),
+        hintStyle: Styles.textStyle16.copyWith(color: colorScheme.onSurfaceVariant),
         suffixIcon: IconButton(
           onPressed: onSearch,
-          icon: const Icon(
+          icon: Icon(
             Icons.search_outlined,
             size: 30,
-            color: kHintTextColor,
+            color: colorScheme.onSurfaceVariant,
           ),
         ),
-        border: _customBorder(kEnabledBorderColor),
-        enabledBorder: _customBorder(kEnabledBorderColor),
-        focusedBorder: _customBorder(kFocusedBorderColor),
-        errorBorder: _customBorder(kErrorBorderColor),
-        focusedErrorBorder: _customBorder(kErrorBorderColor),
+        border: _customBorder(colorScheme.outline),
+        enabledBorder: _customBorder(colorScheme.outline),
+        focusedBorder: _customBorder(colorScheme.primary),
+        errorBorder: _customBorder(colorScheme.error),
+        focusedErrorBorder: _customBorder(colorScheme.error),
       ),
     );
   }

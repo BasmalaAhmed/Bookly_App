@@ -49,7 +49,7 @@ class _EditProfileBottomSheetState extends State<EditProfileBottomSheet> {
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
-        
+        color: Theme.of(context).colorScheme.onSurfaceVariant.withValues(alpha: 0.2)
       ),
       child: LiquidGlassLayer(
         child: LiquidGlass(
