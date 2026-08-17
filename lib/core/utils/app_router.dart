@@ -20,6 +20,7 @@ import 'package:bookly_app/features/search/presentation/views/search_view.dart';
 import 'package:bookly_app/features/settings/presentation/views/settings_view.dart';
 import 'package:bookly_app/features/splash/presentation/views/splash_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -33,45 +34,60 @@ abstract class AppRouter {
   static const kFavoriteView = '/favoriteView';
   static const kProfileView = '/profileView';
   static const kSettingsView = '/settingsView';
+
   static final router = GoRouter(
     routes: [
-      GoRoute(path: '/', builder: (context, state) => const SplashView()),
+      GoRoute(
+        path: '/',
+        pageBuilder: (context, state) =>
+            _noTransitionPage(child: const SplashView()),
+      ),
 
       GoRoute(
         path: kRegisterView,
-        pageBuilder: (context, state) => const NoTransitionPage(child: RegisterView()),
+        pageBuilder: (context, state) =>
+            _noTransitionPage(child: const RegisterView()),
       ),
 
-      GoRoute(path: kLoginView, pageBuilder: (context, state) => const NoTransitionPage(child: LoginView())),
+      GoRoute(
+        path: kLoginView,
+        pageBuilder: (context, state) =>
+            _noTransitionPage(child: const LoginView()),
+      ),
 
       GoRoute(
         path: kForgotPasswordView,
-        pageBuilder: (context, state) => const NoTransitionPage(child: ForgotPasswordView()),
+        pageBuilder: (context, state) =>
+            _noTransitionPage(child: const ForgotPasswordView()),
       ),
 
       StatefulShellRoute.indexedStack(
-        builder: (context, state, navigationShell) {
-          return MainView(navigationShell: navigationShell);
+        pageBuilder: (context, state, navigationShell) {
+          return _noTransitionPage(
+            child: MainView(navigationShell: navigationShell),
+          );
         },
         branches: [
           StatefulShellBranch(
             routes: [
               GoRoute(
                 path: kHomeView,
-                builder: (context, state) => MultiBlocProvider(
-                  providers: [
-                    BlocProvider(
-                      create: (context) =>
-                          FeaturedBooksCubit(getIt<HomeRepo>())
-                            ..fetchFeaturedBooks(),
-                    ),
-                    BlocProvider(
-                      create: (context) =>
-                          NewestBooksCubit(getIt<HomeRepo>())
-                            ..fetchNewestBooks(),
-                    ),
-                  ],
-                  child: const HomeView(),
+                pageBuilder: (context, state) => _noTransitionPage(
+                  child: MultiBlocProvider(
+                    providers: [
+                      BlocProvider(
+                        create: (context) =>
+                            FeaturedBooksCubit(getIt<HomeRepo>())
+                              ..fetchFeaturedBooks(),
+                      ),
+                      BlocProvider(
+                        create: (context) =>
+                            NewestBooksCubit(getIt<HomeRepo>())
+                              ..fetchNewestBooks(),
+                      ),
+                    ],
+                    child: const HomeView(),
+                  ),
                 ),
               ),
             ],
@@ -81,9 +97,11 @@ abstract class AppRouter {
             routes: [
               GoRoute(
                 path: kSearchView,
-                builder: (context, state) => BlocProvider(
-                  create: (context) => SearchCubit(getIt<SearchRepo>()),
-                  child: const SearchView(),
+                pageBuilder: (context, state) => _noTransitionPage(
+                  child: BlocProvider(
+                    create: (context) => SearchCubit(getIt<SearchRepo>()),
+                    child: const SearchView(),
+                  ),
                 ),
               ),
             ],
@@ -93,7 +111,8 @@ abstract class AppRouter {
             routes: [
               GoRoute(
                 path: kFavoriteView,
-                builder: (context, state) => const FavoriteView(),
+                pageBuilder: (context, state) =>
+                    _noTransitionPage(child: const FavoriteView()),
               ),
             ],
           ),
@@ -102,12 +121,14 @@ abstract class AppRouter {
             routes: [
               GoRoute(
                 path: kProfileView,
-                builder: (context, state) => BlocProvider(
-                  create: (context) => ProfileCubit(
-                    profileRepo: getIt<ProfileRepo>(),
-                    auth: getIt<FirebaseAuth>(),
-                  )..fetchProfile(),
-                  child: const ProfileView(),
+                pageBuilder: (context, state) => _noTransitionPage(
+                  child: BlocProvider(
+                    create: (context) => ProfileCubit(
+                      profileRepo: getIt<ProfileRepo>(),
+                      auth: getIt<FirebaseAuth>(),
+                    )..fetchProfile(),
+                    child: const ProfileView(),
+                  ),
                 ),
               ),
             ],
@@ -117,20 +138,27 @@ abstract class AppRouter {
 
       GoRoute(
         path: kBookDetailsView,
-        builder: (context, state) => MultiBlocProvider(
-          providers: [
-            BlocProvider(
-              create: (context) => SimilarBooksCubit(getIt<HomeRepo>()),
-            ),
-          ],
-          child: BookDetailsView(bookModel: state.extra as BookModel),
+        pageBuilder: (context, state) => _noTransitionPage(
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => SimilarBooksCubit(getIt<HomeRepo>()),
+              ),
+            ],
+            child: BookDetailsView(bookModel: state.extra as BookModel),
+          ),
         ),
       ),
 
       GoRoute(
         path: kSettingsView,
-        builder: (context, state) => const SettingsView(),
+        pageBuilder: (context, state) =>
+            _noTransitionPage(child: const SettingsView()),
       ),
     ],
   );
+
+  static Page<void> _noTransitionPage({required Widget child}) {
+    return NoTransitionPage<void>(child: child);
+  }
 }
