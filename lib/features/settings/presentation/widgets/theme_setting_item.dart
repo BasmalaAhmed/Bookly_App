@@ -30,6 +30,7 @@ class ThemeSettingItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('Appearance', style: Styles.textStyle18),
+        const SizedBox(height: 16),
         ThemeOptionTile(
           title: 'Light',
           icon: FontAwesomeIcons.circleHalfStroke,

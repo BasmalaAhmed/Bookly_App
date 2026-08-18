@@ -7,6 +7,11 @@ abstract class Styles {
     fontFamily: 'GT Sectra Fine',
   );
 
+  // static const textStyle24 = TextStyle(
+  //   fontSize: 24,
+  //   fontWeight: FontWeight.normal,
+  // );
+
   static const textStyle20 = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.normal,

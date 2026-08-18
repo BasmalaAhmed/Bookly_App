@@ -1,4 +1,6 @@
 import 'package:bookly_app/core/utils/service_locator.dart';
+import 'package:bookly_app/features/auth/data/repos/auth_repo.dart';
+import 'package:bookly_app/features/auth/presentation/manager/cubit/change_email_cubit.dart';
 import 'package:bookly_app/features/auth/presentation/views/forgot_password_view.dart';
 import 'package:bookly_app/features/auth/presentation/views/login_view.dart';
 import 'package:bookly_app/features/auth/presentation/views/register_view.dart';
@@ -17,6 +19,7 @@ import 'package:bookly_app/features/profile/presentation/views/profile_view.dart
 import 'package:bookly_app/features/search/data/repos/search_repo.dart';
 import 'package:bookly_app/features/search/presentation/manager/cubit/search_cubit.dart';
 import 'package:bookly_app/features/search/presentation/views/search_view.dart';
+import 'package:bookly_app/features/settings/presentation/views/change_email_view.dart';
 import 'package:bookly_app/features/settings/presentation/views/settings_view.dart';
 import 'package:bookly_app/features/splash/presentation/views/splash_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -34,6 +37,7 @@ abstract class AppRouter {
   static const kFavoriteView = '/favoriteView';
   static const kProfileView = '/profileView';
   static const kSettingsView = '/settingsView';
+  static const kChangeEmailView = '/changeEmailView';
 
   static final router = GoRouter(
     routes: [
@@ -154,6 +158,16 @@ abstract class AppRouter {
         path: kSettingsView,
         pageBuilder: (context, state) =>
             _noTransitionPage(child: const SettingsView()),
+      ),
+
+      GoRoute(
+        path: kChangeEmailView,
+        pageBuilder: (context, state) => _noTransitionPage(
+          child: BlocProvider(
+            create: (context) => ChangeEmailCubit(getIt<AuthRepo>()),
+            child: const ChangeEmailView(),
+          ),
+        ),
       ),
     ],
   );

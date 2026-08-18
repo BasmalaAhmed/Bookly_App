@@ -13,15 +13,24 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final getIt = GetIt.instance;
-void setupServiceLocator() {
+Future<void> setupServiceLocator() async {
+  final prefs = await SharedPreferences.getInstance();
+
+  getIt.registerSingleton<SharedPreferences>(prefs);
+
   getIt.registerSingleton<ApiService>(ApiService(Dio()));
+
   getIt.registerSingleton<HomeRepo>(HomeRepoImpl(getIt<ApiService>()));
 
   getIt.registerSingleton<SearchRepo>(SearchRepoImpl(getIt<ApiService>()));
+
   getIt.registerSingleton<FirebaseFirestore>(FirebaseFirestore.instance);
+
   getIt.registerSingleton<FirebaseAuth>(FirebaseAuth.instance);
+
   getIt.registerSingleton<FavoriteRepo>(
     FavoriteRepoImpl(
       firestore: getIt<FirebaseFirestore>(),
@@ -32,7 +41,12 @@ void setupServiceLocator() {
   getIt.registerSingleton<ProfileRepo>(
     ProfileRepoImpl(firestore: getIt<FirebaseFirestore>()),
   );
+
   getIt.registerSingleton<AuthRepo>(
-    AuthRepoImpl(profileRepo: getIt<ProfileRepo>(), auth: getIt<FirebaseAuth>(),),
+    AuthRepoImpl(
+      profileRepo: getIt<ProfileRepo>(),
+      auth: getIt<FirebaseAuth>(),
+      prefs: getIt<SharedPreferences>(),
+    ),
   );
 }

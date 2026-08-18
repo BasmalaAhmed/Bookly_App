@@ -5,14 +5,22 @@ abstract class AuthRepo {
     required String password,
   });
 
-  Future<void> loginUser({
-    required String email,
+  Future<void> loginUser({required String email, required String password});
+
+  Future<void> resetPassword({required String email});
+
+  Future<String?> getCurrentUserEmail();
+
+  Future<void> changeEmail({
+    required String newEmail,
     required String password,
   });
 
-  Future<void> resetPassword({
-    required String email,
-  });
+  Future<void> savePendingEmail(String email);
+
+  Future<String?> getPendingEmail();
+
+  Future<void> clearPendingEmail();
 
   Future<void> logout();
 

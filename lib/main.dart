@@ -17,7 +17,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: '.env');
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  setupServiceLocator();
+  await setupServiceLocator();
   final themeCubit = ThemeCubit();
   await themeCubit.loadTheme();
   runApp(BooklyApp(themeCubit: themeCubit));
