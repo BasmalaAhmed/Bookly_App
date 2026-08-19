@@ -32,6 +32,14 @@ class SettingsViewBody extends StatelessWidget {
                 context.push(AppRouter.kChangeEmailView);
               },
             ),
+            const SizedBox(height: 24),
+            ProfileMenuItem(
+              title: 'Change Password',
+              icon: FontAwesomeIcons.lock,
+              onTap: () {
+                context.push(AppRouter.kChangePasswordView);
+              },
+            ),
           ],
         ),
       ),

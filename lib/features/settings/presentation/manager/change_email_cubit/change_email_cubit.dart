@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:bookly_app/core/errors/firebase_failure.dart';
 import 'package:bookly_app/features/auth/data/repos/auth_repo.dart';
-import 'package:bookly_app/features/auth/presentation/manager/cubit/change_email_state.dart';
+import 'package:bookly_app/features/settings/presentation/manager/change_email_cubit/change_email_state.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class ChangeEmailCubit extends Cubit<ChangeEmailState> {

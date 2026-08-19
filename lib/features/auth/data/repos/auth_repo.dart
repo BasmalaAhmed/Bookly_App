@@ -22,6 +22,11 @@ abstract class AuthRepo {
 
   Future<void> clearPendingEmail();
 
+  Future<void> changePassword({
+    required String currentPassword,
+    required String newPassword,
+  });
+
   Future<void> logout();
 
   Future<bool> isUserLoggedIn();

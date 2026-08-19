@@ -141,6 +141,29 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
+  Future<void> changePassword({
+    required String currentPassword,
+    required String newPassword,
+  }) async {
+    final user = auth.currentUser;
+    if (user == null || user.email == null) {
+      throw FirebaseAuthException(
+        code: 'user-not-found',
+        message: 'No authenticated user found.',
+      );
+    }
+
+    final credential = EmailAuthProvider.credential(
+      email: user.email!,
+      password: currentPassword,
+    );
+
+    await user.reauthenticateWithCredential(credential);
+
+    await user.updatePassword(newPassword);
+  }
+
+  @override
   Future<void> logout() async {
     await auth.signOut();
   }
