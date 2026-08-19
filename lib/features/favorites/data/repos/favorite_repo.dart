@@ -7,4 +7,5 @@ abstract class FavoriteRepo {
   Future<Either<Failure, void>> removeFavorite(String bookId);
   Future<Either<Failure, List<BookModel>>> fetchFavorites();
   Future<Either<Failure, bool>> isFavorite(String bookId);
+  Future<void> deleteAllFavorites();
 }

@@ -1,5 +1,6 @@
 import 'package:bookly_app/features/profile/data/repos/profile_repo.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ProfileRepoImpl implements ProfileRepo {
   final FirebaseFirestore firestore;
@@ -40,5 +41,17 @@ class ProfileRepoImpl implements ProfileRepo {
   }) async {
     
     await firestore.collection('users').doc(uid).update({'name' : name,});
+  }
+
+  @override
+  Future<void> deleteProfile({
+    required String uid,
+  }) async {
+    final user = FirebaseAuth.instance.currentUser;
+
+    if(user == null){
+      throw FirebaseException(plugin: 'firebase_auth', code: 'user-not-found');
+    }
+    await firestore.collection('users').doc(uid).delete();
   }
 }

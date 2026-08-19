@@ -47,6 +47,7 @@ Future<void> setupServiceLocator() async {
       profileRepo: getIt<ProfileRepo>(),
       auth: getIt<FirebaseAuth>(),
       prefs: getIt<SharedPreferences>(),
+      favoriteRepo: getIt<FavoriteRepo>(),
     ),
   );
 }

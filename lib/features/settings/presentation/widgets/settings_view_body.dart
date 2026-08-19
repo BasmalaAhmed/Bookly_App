@@ -40,6 +40,14 @@ class SettingsViewBody extends StatelessWidget {
                 context.push(AppRouter.kChangePasswordView);
               },
             ),
+            const SizedBox(height: 24),
+            ProfileMenuItem(
+              title: 'Delete Account',
+              icon: FontAwesomeIcons.circleXmark,
+              onTap: () {
+                context.push(AppRouter.kDeleteAccountView);
+              },
+            ),
           ],
         ),
       ),

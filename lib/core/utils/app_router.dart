@@ -20,8 +20,10 @@ import 'package:bookly_app/features/search/data/repos/search_repo.dart';
 import 'package:bookly_app/features/search/presentation/manager/cubit/search_cubit.dart';
 import 'package:bookly_app/features/search/presentation/views/search_view.dart';
 import 'package:bookly_app/features/settings/presentation/manager/change_password_cubit/change_password_cubit.dart';
+import 'package:bookly_app/features/settings/presentation/manager/delete_account_cubit/delete_account_cubit.dart';
 import 'package:bookly_app/features/settings/presentation/views/change_email_view.dart';
 import 'package:bookly_app/features/settings/presentation/views/change_password_view.dart';
+import 'package:bookly_app/features/settings/presentation/views/delete_account_view.dart';
 import 'package:bookly_app/features/settings/presentation/views/settings_view.dart';
 import 'package:bookly_app/features/splash/presentation/views/splash_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -41,6 +43,7 @@ abstract class AppRouter {
   static const kSettingsView = '/settingsView';
   static const kChangeEmailView = '/changeEmailView';
   static const kChangePasswordView = '/changePasswordView';
+  static const kDeleteAccountView = '/deleteAccountView';
 
   static final router = GoRouter(
     routes: [
@@ -179,6 +182,16 @@ abstract class AppRouter {
           child: BlocProvider(
             create: (context) => ChangePasswordCubit(getIt<AuthRepo>()),
             child: const ChangePasswordView(),
+          ),
+        ),
+      ),
+
+      GoRoute(
+        path: kDeleteAccountView,
+        pageBuilder: (context, state) => _noTransitionPage(
+          child: BlocProvider(
+            create: (context) => DeleteAccountCubit(getIt<AuthRepo>()),
+            child: const DeleteAccountView(),
           ),
         ),
       ),

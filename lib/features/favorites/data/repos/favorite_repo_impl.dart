@@ -77,4 +77,21 @@ class FavoriteRepoImpl implements FavoriteRepo {
       return left(FirestoreFailure('Something went wrong. Please try again.'));
     }
   }
+
+  @override
+  Future<void> deleteAllFavorites() async {
+    try {
+      final snapshot = await _favoritesCollection.get();
+      if (snapshot.docs.isEmpty) return;
+      final batch = firestore.batch();
+      for (final doc in snapshot.docs) {
+        batch.delete(doc.reference);
+      }
+      await batch.commit();
+    } on FirebaseException catch (e) {
+      throw FirestoreFailure.fromFirebaseException(e);
+    } catch (e) {
+      throw FirestoreFailure('Something went wrong. Please try again.');
+    }
+  }
 }

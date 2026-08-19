@@ -1,4 +1,5 @@
 import 'package:bookly_app/features/auth/data/repos/auth_repo.dart';
+import 'package:bookly_app/features/favorites/data/repos/favorite_repo.dart';
 import 'package:bookly_app/features/profile/data/repos/profile_repo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -7,11 +8,13 @@ class AuthRepoImpl implements AuthRepo {
   final ProfileRepo profileRepo;
   final FirebaseAuth auth;
   final SharedPreferences prefs;
+  final FavoriteRepo favoriteRepo;
 
   AuthRepoImpl({
     required this.profileRepo,
     required this.auth,
     required this.prefs,
+    required this.favoriteRepo,
   });
   @override
   Future<void> loginUser({
@@ -161,6 +164,29 @@ class AuthRepoImpl implements AuthRepo {
     await user.reauthenticateWithCredential(credential);
 
     await user.updatePassword(newPassword);
+  }
+
+  @override
+  Future<void> deleteAccount({required String password}) async {
+    final user = auth.currentUser;
+
+    if (user == null || user.email == null) {
+      throw FirebaseAuthException(
+        code: 'user-not-found',
+        message: 'No authenticated user found.',
+      );
+    }
+
+    final credential = EmailAuthProvider.credential(
+      email: user.email!,
+      password: password,
+    );
+    await user.reauthenticateWithCredential(credential);
+
+    await favoriteRepo.deleteAllFavorites();
+    await profileRepo.deleteProfile(uid: user.uid);
+    
+    await user.delete();
   }
 
   @override

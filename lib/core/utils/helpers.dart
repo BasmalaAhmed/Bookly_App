@@ -14,8 +14,14 @@ void showCustomDialog({
   required String message,
   required String buttonTitle,
   required VoidCallback onPressed,
+  Color? color,
+  FaIcon icon = const FaIcon(FontAwesomeIcons.envelopeCircleCheck, size: 42),
+  bool showCancel = false,
+  String cancelTitle = 'Cancel',
+  bool isDelete = false,
 }) {
   final colorScheme = Theme.of(context).colorScheme;
+  final buttonColor = color ?? colorScheme.secondary;
   showDialog(
     context: context,
     barrierDismissible: false,
@@ -31,13 +37,7 @@ void showCustomDialog({
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  CircleAvatar(
-                    radius: 36,
-                    child: const FaIcon(
-                      FontAwesomeIcons.envelopeCircleCheck,
-                      size: 42,
-                    ),
-                  ),
+                  CircleAvatar(radius: 36, backgroundColor: isDelete ? colorScheme.onError : colorScheme.primary ,child: icon),
                   const SizedBox(height: 16),
                   Text(
                     title,
@@ -52,23 +52,62 @@ void showCustomDialog({
                     style: Styles.textStyle14.copyWith(
                       height: 1.5,
                       fontWeight: FontWeight.w500,
-                      // color: isDark ? colorScheme.onSurfaceVariant : colorScheme.onPrimary,
                     ),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 18),
-                  CustomButton(
-                    onPressed: () {
-                      Navigator.pop(dialogContext);
-                      onPressed();
-                    },
-                    child: Text(
-                      buttonTitle,
-                      style: Styles.textStyle16.copyWith(
-                        fontWeight: FontWeight.bold,
+                  if (showCancel)
+                    Row(
+                      children: [
+                        Expanded(
+                          child: SizedBox(
+                            height: 50,
+                            child: OutlinedButton(
+                              onPressed: () {
+                                Navigator.pop(dialogContext);
+                              },
+                              
+                              child: Text(
+                                cancelTitle,
+                                style: Styles.textStyle16.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: CustomButton(
+                            onPressed: () {
+                              Navigator.pop(dialogContext);
+                              onPressed();
+                            },
+                            color: buttonColor,
+                            child: Text(
+                              buttonTitle,
+                              style: Styles.textStyle16.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  else
+                    CustomButton(
+                      onPressed: () {
+                        Navigator.pop(dialogContext);
+                        onPressed();
+                      },
+                      color: buttonColor,
+                      child: Text(
+                        buttonTitle,
+                        style: Styles.textStyle16.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                  ),
                 ],
               ),
             ),

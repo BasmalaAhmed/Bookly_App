@@ -12,4 +12,8 @@ abstract class ProfileRepo {
     required String uid,
     required String name,
   });
+
+  Future<void> deleteProfile({
+    required String uid,
+  });
 }
