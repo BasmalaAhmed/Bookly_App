@@ -5,6 +5,8 @@ import 'package:bookly_app/features/favorites/data/repos/favorite_repo.dart';
 import 'package:bookly_app/features/favorites/data/repos/favorite_repo_impl.dart';
 import 'package:bookly_app/features/home/data/repos/home_repo.dart';
 import 'package:bookly_app/features/home/data/repos/home_repo_impl.dart';
+import 'package:bookly_app/features/notifications/data/repos/notification_repo.dart';
+import 'package:bookly_app/features/notifications/data/repos/notification_repo_impl.dart';
 import 'package:bookly_app/features/profile/data/repos/profile_repo.dart';
 import 'package:bookly_app/features/profile/data/repos/profile_repo_impl.dart';
 import 'package:bookly_app/features/search/data/repos/search_repo.dart';
@@ -40,6 +42,13 @@ Future<void> setupServiceLocator() async {
 
   getIt.registerSingleton<ProfileRepo>(
     ProfileRepoImpl(firestore: getIt<FirebaseFirestore>()),
+  );
+
+  getIt.registerSingleton<NotificationRepo>(
+    NotificationRepoImpl(
+      firestore: getIt<FirebaseFirestore>(),
+      auth: getIt<FirebaseAuth>(),
+    ),
   );
 
   getIt.registerSingleton<AuthRepo>(

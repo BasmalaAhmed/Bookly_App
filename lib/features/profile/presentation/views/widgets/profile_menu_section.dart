@@ -2,9 +2,11 @@ import 'dart:io';
 
 import 'package:bookly_app/core/utils/app_router.dart';
 import 'package:bookly_app/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
+import 'package:bookly_app/features/notifications/presentation/manager/notification_settings_cubit/notification_settings_cubit.dart';
 import 'package:bookly_app/features/profile/presentation/manager/profile_cubit/profile_cubit.dart';
 import 'package:bookly_app/features/profile/presentation/manager/profile_cubit/profile_state.dart';
 import 'package:bookly_app/features/profile/presentation/views/widgets/edit_profile_bottom_sheet.dart';
+import 'package:bookly_app/features/profile/presentation/views/widgets/notification_bottom_sheet.dart';
 import 'package:bookly_app/features/profile/presentation/views/widgets/profile_menu_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -67,6 +69,23 @@ class ProfileMenuSection extends StatelessWidget {
                     break;
 
                   case 'notifications':
+                    final notificationSettingsCubit = context
+                        .read<NotificationSettingsCubit>();
+                    await showModalBottomSheet(
+                      context: context,
+                      sheetAnimationStyle: AnimationStyle(
+                        curve: Curves.easeOut,
+                        duration: const Duration(milliseconds: 300),
+                      ),
+                      useRootNavigator: true,
+                      isScrollControlled: true,
+                      backgroundColor: Colors.transparent,
+                      builder: (_) => BlocProvider.value(
+                        value: notificationSettingsCubit,
+                        child: const NotificationBottomSheet(),
+                      ),
+                    );
+
                     break;
 
                   case 'settings':

@@ -1,5 +1,7 @@
 import 'package:bookly_app/core/utils/service_locator.dart';
 import 'package:bookly_app/features/auth/data/repos/auth_repo.dart';
+import 'package:bookly_app/features/notifications/data/repos/notification_repo.dart';
+import 'package:bookly_app/features/notifications/presentation/manager/notification_settings_cubit/notification_settings_cubit.dart';
 import 'package:bookly_app/features/settings/presentation/manager/change_email_cubit/change_email_cubit.dart';
 import 'package:bookly_app/features/auth/presentation/views/forgot_password_view.dart';
 import 'package:bookly_app/features/auth/presentation/views/login_view.dart';
@@ -132,11 +134,20 @@ abstract class AppRouter {
               GoRoute(
                 path: kProfileView,
                 pageBuilder: (context, state) => _noTransitionPage(
-                  child: BlocProvider(
-                    create: (context) => ProfileCubit(
-                      profileRepo: getIt<ProfileRepo>(),
-                      auth: getIt<FirebaseAuth>(),
-                    )..fetchProfile(),
+                  child: MultiBlocProvider(
+                    providers: [
+                      BlocProvider(
+                        create: (context) => ProfileCubit(
+                          profileRepo: getIt<ProfileRepo>(),
+                          auth: getIt<FirebaseAuth>(),
+                        )..fetchProfile(),
+                      ),
+                      BlocProvider(
+                        create: (context) =>
+                            NotificationSettingsCubit(getIt<NotificationRepo>())
+                              ..getNotificationsEnabled(),
+                      ),
+                    ],
                     child: const ProfileView(),
                   ),
                 ),
