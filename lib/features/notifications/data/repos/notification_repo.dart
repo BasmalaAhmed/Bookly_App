@@ -15,4 +15,6 @@ abstract class NotificationRepo {
   Future<void> markAllAsRead();
 
   Future<void> deleteNotification(String notificationId);
+
+  Future<void> saveFcmToken(String token);
 }

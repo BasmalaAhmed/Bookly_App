@@ -1,5 +1,7 @@
+import 'package:bookly_app/core/services/notification_service.dart';
 import 'package:bookly_app/core/utils/app_router.dart';
 import 'package:bookly_app/core/utils/helpers.dart';
+import 'package:bookly_app/core/utils/service_locator.dart';
 import 'package:bookly_app/core/utils/styles.dart';
 import 'package:bookly_app/core/utils/validators.dart';
 import 'package:bookly_app/core/utils/widgets/custom_button.dart';
@@ -40,6 +42,8 @@ class _LoginFormBodyState extends State<LoginFormBody> {
         listener: (context, state) async {
           if (state is LoginSuccess) {
             await context.read<FavoriteCubit>().fetchFavoriteBooks();
+
+            await getIt<NotificationService>().syncFcmToken();
 
             if (!context.mounted) return;
 

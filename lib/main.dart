@@ -1,3 +1,4 @@
+import 'package:bookly_app/core/services/notification_service.dart';
 import 'package:bookly_app/core/theme/app_theme.dart';
 import 'package:bookly_app/core/theme/theme_cubit.dart';
 import 'package:bookly_app/core/theme/widgets/app_background.dart';
@@ -18,6 +19,7 @@ Future<void> main() async {
   await dotenv.load(fileName: '.env');
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await setupServiceLocator();
+  await getIt<NotificationService>().initialize();
   final themeCubit = ThemeCubit();
   await themeCubit.loadTheme();
   runApp(BooklyApp(themeCubit: themeCubit));
@@ -32,7 +34,10 @@ class BooklyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => AuthCubit(getIt<AuthRepo>())),
+        BlocProvider(
+          create: (context) =>
+              AuthCubit(getIt<AuthRepo>(), getIt<NotificationService>()),
+        ),
         BlocProvider(create: (context) => FavoriteCubit(getIt<FavoriteRepo>())),
         BlocProvider.value(value: themeCubit),
       ],

@@ -1,12 +1,14 @@
 import 'package:bloc/bloc.dart';
 import 'package:bookly_app/core/errors/firebase_failure.dart';
+import 'package:bookly_app/core/services/notification_service.dart';
 import 'package:bookly_app/features/auth/presentation/manager/auth_cubit/auth_state.dart';
 import 'package:bookly_app/features/auth/data/repos/auth_repo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   final AuthRepo authRepo;
-  AuthCubit(this.authRepo) : super(AuthInitial());
+  final NotificationService notificationService;
+  AuthCubit(this.authRepo, this.notificationService) : super(AuthInitial());
 
   Future<void> registerUser({
     required String name,
@@ -33,17 +35,16 @@ class AuthCubit extends Cubit<AuthState> {
     emit(AuthLoading());
     try {
       await authRepo.loginUser(email: email, password: password);
+
+      await notificationService.syncFcmToken();
+
       emit(LoginSuccess());
     } on FirebaseAuthException catch (ex) {
       if (ex.code == 'invalid-credential') {
         final pendingEmail = await authRepo.getPendingEmail();
 
         if (email.trim() == pendingEmail) {
-          emit(
-            AuthFailure(
-              'Please verify your new email before logging in.',
-            ),
-          );
+          emit(AuthFailure('Please verify your new email before logging in.'));
           return;
         }
       }
@@ -108,6 +109,7 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       final isLoggedIn = await authRepo.isUserLoggedIn();
       if (isLoggedIn) {
+        await notificationService.syncFcmToken();
         emit(LoginSuccess());
       } else {
         emit(AuthInitial());

@@ -1,4 +1,5 @@
-import 'package:bookly_app/core/utils/api_service.dart';
+import 'package:bookly_app/core/services/api_service.dart';
+import 'package:bookly_app/core/services/notification_service.dart';
 import 'package:bookly_app/features/auth/data/repos/auth_repo.dart';
 import 'package:bookly_app/features/auth/data/repos/auth_repo_impl.dart';
 import 'package:bookly_app/features/favorites/data/repos/favorite_repo.dart';
@@ -49,6 +50,10 @@ Future<void> setupServiceLocator() async {
       firestore: getIt<FirebaseFirestore>(),
       auth: getIt<FirebaseAuth>(),
     ),
+  );
+
+  getIt.registerSingleton<NotificationService>(
+    NotificationService(getIt<NotificationRepo>()),
   );
 
   getIt.registerSingleton<AuthRepo>(

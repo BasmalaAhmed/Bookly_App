@@ -88,4 +88,11 @@ class NotificationRepoImpl implements NotificationRepo {
   Future<void> deleteNotification(String notificationId) async {
     await _notificationsCollection.doc(notificationId).delete();
   }
+
+  @override
+  Future<void> saveFcmToken(String token) async {
+    await _userDocument.set({
+      'fcmToken' : token,
+    }, SetOptions(merge: true),);
+  }
 }
