@@ -47,7 +47,10 @@ abstract class AppRouter {
   static const kChangePasswordView = '/changePasswordView';
   static const kDeleteAccountView = '/deleteAccountView';
 
+  static final navigatorKey = GlobalKey<NavigatorState>();
+
   static final router = GoRouter(
+    navigatorKey: navigatorKey,
     routes: [
       GoRoute(
         path: '/',
@@ -211,5 +214,15 @@ abstract class AppRouter {
 
   static Page<void> _noTransitionPage({required Widget child}) {
     return NoTransitionPage<void>(child: child);
+  }
+
+  static Future<void> openBookById(String bookId) async {
+    final result = await getIt<HomeRepo>().fetchBookById(bookId);
+
+    result.fold((failure) => null, (book) {
+      final context = navigatorKey.currentContext;
+      if (context == null) return;
+      context.push(kBookDetailsView, extra: book);
+    });
   }
 }

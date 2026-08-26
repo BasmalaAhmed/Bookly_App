@@ -54,4 +54,20 @@ class HomeRepoImpl implements HomeRepo {
       'volumes?q=${Uri.encodeComponent(category)}&key=$apiKey',
     );
   }
+
+  @override
+  Future<Either<ApiFailure, BookModel>> fetchBookById(String bookId) async {
+    try {
+      if (apiKey == null || apiKey!.isEmpty){
+        return left(ApiFailure('API key is missing.'));
+      }
+      final response = await apiService.fetchBooks(endpoint: 'volumes/$bookId?key=$apiKey',);
+      return right(BookModel.fromJson(response));
+    } catch (e) {
+      if (e is DioException) {
+        return left(ApiFailure.fromDioException(e));
+      }
+      return left(ApiFailure(e.toString()));
+    }
+  }
 }

@@ -8,6 +8,7 @@ class NotificationModel {
   final DateTime createdAt;
   final bool isRead;
   final NotificationType type;
+  final String? bookId;
 
   NotificationModel({
     required this.id,
@@ -15,7 +16,8 @@ class NotificationModel {
     required this.message,
     required this.createdAt,
     required this.isRead,
-    required this.type,
+    required this.type, 
+    this.bookId,
   });
 
   factory NotificationModel.fromMap(String id, Map<String, dynamic> map) {
@@ -29,6 +31,7 @@ class NotificationModel {
         (type) => type.name == map['type'],
         orElse: () => NotificationType.general,
       ),
+      bookId: map['bookId'],
     );
   }
 
@@ -39,6 +42,7 @@ class NotificationModel {
       'createdAt': Timestamp.fromDate(createdAt),
       'isRead': isRead,
       'type': type.name,
+      'bookId': bookId,
     };
   }
 }
