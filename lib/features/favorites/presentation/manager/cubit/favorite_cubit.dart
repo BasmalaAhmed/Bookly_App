@@ -2,11 +2,16 @@ import 'package:bloc/bloc.dart';
 import 'package:bookly_app/features/favorites/data/repos/favorite_repo.dart';
 import 'package:bookly_app/features/favorites/presentation/manager/cubit/favorite_state.dart';
 import 'package:bookly_app/features/home/data/models/book_model.dart';
+import 'package:bookly_app/features/notifications/data/models/notification_model.dart';
+import 'package:bookly_app/features/notifications/data/models/notification_type.dart';
+import 'package:bookly_app/features/notifications/data/repos/notification_repo.dart';
 
 class FavoriteCubit extends Cubit<FavoriteState> {
-  FavoriteCubit(this.favoriteRepo) : super(FavoriteInitial());
+  FavoriteCubit(this.favoriteRepo, this.notificationRepo)
+    : super(FavoriteInitial());
 
   final FavoriteRepo favoriteRepo;
+  final NotificationRepo notificationRepo;
   final Set<String> _favoriteIds = {};
   final Set<String> _togglingIds = {};
 
@@ -50,6 +55,8 @@ class FavoriteCubit extends Cubit<FavoriteState> {
         _favoriteIds.add(book.id);
 
         emit(FavoriteSuccess(currentBooks));
+
+        _notifyFavoriteAdded(book);
       },
     );
   }
@@ -93,6 +100,24 @@ class FavoriteCubit extends Cubit<FavoriteState> {
       }
     } finally {
       _togglingIds.remove(book.id);
+    }
+  }
+
+  Future<void> _notifyFavoriteAdded(BookModel book) async {
+    try {
+      await notificationRepo.createNotification(
+        NotificationModel(
+          id: '',
+          title: 'Added to favorites',
+          message: '"${book.title}" was added to your favorites.',
+          createdAt: DateTime.now(),
+          isRead: false,
+          type: NotificationType.favorite,
+          bookId: book.id,
+        ),
+      );
+    } catch (e) {
+      print('Failed to create favorite notification : $e');
     }
   }
 }

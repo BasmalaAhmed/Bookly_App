@@ -62,9 +62,10 @@ class NotificationRepoImpl implements NotificationRepo {
 
   @override
   Future<void> createNotification(NotificationModel notification) async {
-    await _notificationsCollection
-        .doc(notification.id)
-        .set(notification.toMap());
+    final docRef = notification.id.isEmpty
+        ? _notificationsCollection.doc()
+        : _notificationsCollection.doc(notification.id);
+    await docRef.set(notification.toMap());
   }
 
   @override
@@ -91,8 +92,6 @@ class NotificationRepoImpl implements NotificationRepo {
 
   @override
   Future<void> saveFcmToken(String token) async {
-    await _userDocument.set({
-      'fcmToken' : token,
-    }, SetOptions(merge: true),);
+    await _userDocument.set({'fcmToken': token}, SetOptions(merge: true));
   }
 }

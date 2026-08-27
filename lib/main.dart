@@ -8,6 +8,7 @@ import 'package:bookly_app/features/auth/data/repos/auth_repo.dart';
 import 'package:bookly_app/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
 import 'package:bookly_app/features/favorites/data/repos/favorite_repo.dart';
 import 'package:bookly_app/features/favorites/presentation/manager/cubit/favorite_cubit.dart';
+import 'package:bookly_app/features/notifications/data/repos/notification_repo.dart';
 import 'package:bookly_app/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,10 @@ class BooklyApp extends StatelessWidget {
           create: (context) =>
               AuthCubit(getIt<AuthRepo>(), getIt<NotificationService>()),
         ),
-        BlocProvider(create: (context) => FavoriteCubit(getIt<FavoriteRepo>())),
+        BlocProvider(
+          create: (context) =>
+              FavoriteCubit(getIt<FavoriteRepo>(), getIt<NotificationRepo>()),
+        ),
         BlocProvider.value(value: themeCubit),
       ],
       child: BlocBuilder<ThemeCubit, ThemeMode>(
