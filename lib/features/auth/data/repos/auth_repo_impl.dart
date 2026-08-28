@@ -1,5 +1,6 @@
 import 'package:bookly_app/features/auth/data/repos/auth_repo.dart';
 import 'package:bookly_app/features/favorites/data/repos/favorite_repo.dart';
+import 'package:bookly_app/features/notifications/data/repos/notification_repo.dart';
 import 'package:bookly_app/features/profile/data/repos/profile_repo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,12 +10,14 @@ class AuthRepoImpl implements AuthRepo {
   final FirebaseAuth auth;
   final SharedPreferences prefs;
   final FavoriteRepo favoriteRepo;
+  final NotificationRepo notificationRepo;
 
   AuthRepoImpl({
     required this.profileRepo,
     required this.auth,
     required this.prefs,
     required this.favoriteRepo,
+    required this.notificationRepo,
   });
   @override
   Future<void> loginUser({
@@ -46,11 +49,6 @@ class AuthRepoImpl implements AuthRepo {
           message: 'Please verify your email before logging in.',
         );
       }
-
-      throw FirebaseAuthException(
-        code: 'email-not-verified',
-        message: 'Please verify your email before logging in.',
-      );
     }
 
     if (email == pendingEmail) {
@@ -184,8 +182,9 @@ class AuthRepoImpl implements AuthRepo {
     await user.reauthenticateWithCredential(credential);
 
     await favoriteRepo.deleteAllFavorites();
+    await notificationRepo.deleteAllNotifications();
     await profileRepo.deleteProfile(uid: user.uid);
-    
+
     await user.delete();
   }
 

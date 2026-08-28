@@ -1,3 +1,4 @@
+import 'package:bookly_app/core/errors/firestore_failure.dart';
 import 'package:bookly_app/features/notifications/data/models/notification_model.dart';
 import 'package:bookly_app/features/notifications/data/repos/notification_repo.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -88,6 +89,23 @@ class NotificationRepoImpl implements NotificationRepo {
   @override
   Future<void> deleteNotification(String notificationId) async {
     await _notificationsCollection.doc(notificationId).delete();
+  }
+
+  @override
+  Future<void> deleteAllNotifications() async {
+    try {
+      final snapshot = await _notificationsCollection.get();
+      if(snapshot.docs.isEmpty) return;
+      final batch = firestore.batch();
+      for(final doc in snapshot.docs){
+        batch.delete(doc.reference);
+      }
+      await batch.commit();
+    } on FirebaseException catch (e) {
+      throw FirestoreFailure.fromFirebaseException(e);
+    }catch (e) {
+      throw FirestoreFailure('Something went wrong. Please try again.');
+    }
   }
 
   @override

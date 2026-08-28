@@ -11,19 +11,15 @@ class FeaturedBooksCubit extends Cubit<FeaturedBooksState> {
   final HomeRepo homeRepo;
 
   Future<void> fetchFeaturedBooks() async {
-    debugPrint("fetchFeaturedBooks called");
     emit(FeaturedBooksLoading());
     
       final result = await homeRepo.fetchFeaturedBooks();
-      debugPrint(result.toString());
 
       result.fold(
         (failure) {
-          debugPrint("FeaturedBooksCubit created");
           emit(FeaturedBooksFailure(failure.errMessage));
         },
         (books) {
-          debugPrint("Books count: ${books.length}");
           emit(FeaturedBooksSuccess(books));
         },
       );

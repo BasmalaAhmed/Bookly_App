@@ -5,6 +5,7 @@ import 'package:bookly_app/features/home/data/models/book_model.dart';
 import 'package:bookly_app/features/notifications/data/models/notification_model.dart';
 import 'package:bookly_app/features/notifications/data/models/notification_type.dart';
 import 'package:bookly_app/features/notifications/data/repos/notification_repo.dart';
+import 'package:flutter/material.dart';
 
 class FavoriteCubit extends Cubit<FavoriteState> {
   FavoriteCubit(this.favoriteRepo, this.notificationRepo)
@@ -117,7 +118,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
         ),
       );
     } catch (e) {
-      print('Failed to create favorite notification : $e');
+      debugPrint('Failed to create favorite notification : $e');
     }
   }
 }

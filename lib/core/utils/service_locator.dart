@@ -42,7 +42,7 @@ Future<void> setupServiceLocator() async {
   );
 
   getIt.registerSingleton<ProfileRepo>(
-    ProfileRepoImpl(firestore: getIt<FirebaseFirestore>()),
+    ProfileRepoImpl(firestore: getIt<FirebaseFirestore>(), auth: getIt<FirebaseAuth>()),
   );
 
   getIt.registerSingleton<NotificationRepo>(
@@ -62,6 +62,7 @@ Future<void> setupServiceLocator() async {
       auth: getIt<FirebaseAuth>(),
       prefs: getIt<SharedPreferences>(),
       favoriteRepo: getIt<FavoriteRepo>(),
+      notificationRepo: getIt<NotificationRepo>(),
     ),
   );
 }

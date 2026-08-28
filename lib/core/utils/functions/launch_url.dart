@@ -7,11 +7,29 @@ Future<void> launchCustomUrl(BuildContext context, String? url) async {
     showSnackBar(context, 'Link is not available');
     return;
   }
-  final uri = Uri.parse(url);
+  Uri? uri;
 
-  if (await canLaunchUrl(uri)) {
-    await launchUrl(uri, mode: LaunchMode.externalApplication,);
-  } else {
-    showSnackBar(context, 'Unable to open this link');
+  try {
+    uri = Uri.parse(url);
+  } catch (_) {
+    if(context.mounted){
+      showSnackBar(context, 'Invalid link');
+    }
+    return;
+  }
+
+  try {
+    final canLaunch = await canLaunchUrl(uri);
+    if(!context.mounted) return;
+
+    if(canLaunch){
+      await launchUrl(uri, mode: LaunchMode.externalApplication,);
+    } else {
+      showSnackBar(context, 'Unable to open this link');
+    }
+  } catch (_) {
+    if(context.mounted) {
+      showSnackBar(context, 'Unable to open this link');
+    }
   }
 }

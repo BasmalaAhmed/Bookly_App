@@ -4,7 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class ProfileRepoImpl implements ProfileRepo {
   final FirebaseFirestore firestore;
-  ProfileRepoImpl({required this.firestore,});
+  final FirebaseAuth auth;
+  ProfileRepoImpl({required this.firestore, required this.auth});
 
   @override
   Future<void> createProfile({
@@ -23,10 +24,7 @@ class ProfileRepoImpl implements ProfileRepo {
     final doc = await docRef.get();
 
     if (!doc.exists) {
-      final data = {
-        'name' : '',
-        'photoUrl' : null,
-      };
+      final data = {'name': '', 'photoUrl': null};
       await docRef.set(data);
       return data;
     }
@@ -39,17 +37,14 @@ class ProfileRepoImpl implements ProfileRepo {
     required String uid,
     required String name,
   }) async {
-    
-    await firestore.collection('users').doc(uid).update({'name' : name,});
+    await firestore.collection('users').doc(uid).update({'name': name});
   }
 
   @override
-  Future<void> deleteProfile({
-    required String uid,
-  }) async {
-    final user = FirebaseAuth.instance.currentUser;
+  Future<void> deleteProfile({required String uid}) async {
+    final user = auth.currentUser;
 
-    if(user == null){
+    if (user == null) {
       throw FirebaseException(plugin: 'firebase_auth', code: 'user-not-found');
     }
     await firestore.collection('users').doc(uid).delete();
