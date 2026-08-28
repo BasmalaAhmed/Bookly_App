@@ -1,4 +1,5 @@
 import 'package:bookly_app/core/utils/service_locator.dart';
+import 'package:bookly_app/features/about/presentation/views/about_view.dart';
 import 'package:bookly_app/features/auth/data/repos/auth_repo.dart';
 import 'package:bookly_app/features/notifications/data/repos/notification_repo.dart';
 import 'package:bookly_app/features/notifications/presentation/manager/notification_settings_cubit/notification_settings_cubit.dart';
@@ -48,6 +49,7 @@ abstract class AppRouter {
   static const kChangePasswordView = '/changePasswordView';
   static const kDeleteAccountView = '/deleteAccountView';
   static const kNotificationsView = '/notificationsView';
+  static const kAboutView = '/aboutView';
 
   static final navigatorKey = GlobalKey<NavigatorState>();
 
@@ -216,6 +218,13 @@ abstract class AppRouter {
         path: kNotificationsView,
         pageBuilder: (context, state) => _noTransitionPage(
           child: const NotificationsView(),
+        ),
+      ),
+
+      GoRoute(
+        path: kAboutView,
+        pageBuilder: (context, state) => _noTransitionPage(
+          child: const AboutView(),
         ),
       ),
     ],

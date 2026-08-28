@@ -93,6 +93,7 @@ class ProfileMenuSection extends StatelessWidget {
                     break;
 
                   case 'about':
+                    context.push(AppRouter.kAboutView);
                     break;
                 }
               },
