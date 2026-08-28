@@ -17,4 +17,6 @@ abstract class NotificationRepo {
   Future<void> deleteNotification(String notificationId);
 
   Future<void> saveFcmToken(String token);
+
+  Stream<List<NotificationModel>> watchNotifications();
 }

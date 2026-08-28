@@ -6,9 +6,11 @@ import 'package:bookly_app/core/utils/app_router.dart';
 import 'package:bookly_app/core/utils/service_locator.dart';
 import 'package:bookly_app/features/auth/data/repos/auth_repo.dart';
 import 'package:bookly_app/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
+import 'package:bookly_app/features/auth/presentation/manager/auth_cubit/auth_state.dart';
 import 'package:bookly_app/features/favorites/data/repos/favorite_repo.dart';
 import 'package:bookly_app/features/favorites/presentation/manager/cubit/favorite_cubit.dart';
 import 'package:bookly_app/features/notifications/data/repos/notification_repo.dart';
+import 'package:bookly_app/features/notifications/presentation/manager/notification_cubit/notification_cubit.dart';
 import 'package:bookly_app/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -43,21 +45,31 @@ class BooklyApp extends StatelessWidget {
           create: (context) =>
               FavoriteCubit(getIt<FavoriteRepo>(), getIt<NotificationRepo>()),
         ),
+        BlocProvider(
+          create: (context) => NotificationCubit(getIt<NotificationRepo>()),
+        ),
         BlocProvider.value(value: themeCubit),
       ],
-      child: BlocBuilder<ThemeCubit, ThemeMode>(
-        builder: (context, themeMode) {
-          return MaterialApp.router(
-            routerConfig: AppRouter.router,
-            debugShowCheckedModeBanner: false,
-            theme: AppTheme.lightTheme,
-            darkTheme: AppTheme.darkTheme,
-            themeMode: themeMode,
-            builder: (context, child) {
-              return AppBackground(child: child!);
-            },
-          );
+      child: BlocListener<AuthCubit, AuthState>(
+        listener: (context, state) {
+          if(state is LoginSuccess){
+            context.read<NotificationCubit>().watchNotifications();
+          }
         },
+        child: BlocBuilder<ThemeCubit, ThemeMode>(
+          builder: (context, themeMode) {
+            return MaterialApp.router(
+              routerConfig: AppRouter.router,
+              debugShowCheckedModeBanner: false,
+              theme: AppTheme.lightTheme,
+              darkTheme: AppTheme.darkTheme,
+              themeMode: themeMode,
+              builder: (context, child) {
+                return AppBackground(child: child!);
+              },
+            );
+          },
+        ),
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:bookly_app/core/utils/app_router.dart';
 import 'package:bookly_app/core/utils/styles.dart';
 import 'package:bookly_app/core/utils/widgets/loading_indicator.dart';
 import 'package:bookly_app/features/notifications/presentation/manager/notification_cubit/notification_cubit.dart';
@@ -73,7 +74,18 @@ class NotificationsViewBody extends StatelessWidget {
 
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 12),
-                      child: NotificationItem(notification: notification),
+                      child: NotificationItem(notification: notification, 
+                      onTap: () async {
+                        if(!notification.isRead){
+                          context.read<NotificationCubit>().markAsRead(notification.id);
+                        }
+
+                        final bookId = notification.bookId;
+                        
+                        if(bookId != null && bookId.isNotEmpty){
+                          await AppRouter.openBookById(bookId);
+                        }
+                      },),
                     );
                   },
                 );

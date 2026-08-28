@@ -1,7 +1,6 @@
 import 'package:bookly_app/core/utils/service_locator.dart';
 import 'package:bookly_app/features/auth/data/repos/auth_repo.dart';
 import 'package:bookly_app/features/notifications/data/repos/notification_repo.dart';
-import 'package:bookly_app/features/notifications/presentation/manager/notification_cubit/notification_cubit.dart';
 import 'package:bookly_app/features/notifications/presentation/manager/notification_settings_cubit/notification_settings_cubit.dart';
 import 'package:bookly_app/features/notifications/presentation/views/notifications_view.dart';
 import 'package:bookly_app/features/settings/presentation/manager/change_email_cubit/change_email_cubit.dart';
@@ -216,10 +215,7 @@ abstract class AppRouter {
       GoRoute(
         path: kNotificationsView,
         pageBuilder: (context, state) => _noTransitionPage(
-          child: BlocProvider(
-            create: (context) => NotificationCubit(getIt<NotificationRepo>())..fetchNotifications(),
-            child: const NotificationsView(),
-          ),
+          child: const NotificationsView(),
         ),
       ),
     ],

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:bookly_app/features/notifications/data/models/notification_model.dart';
 import 'package:bookly_app/features/notifications/data/repos/notification_repo.dart';
@@ -5,7 +7,30 @@ import 'package:bookly_app/features/notifications/presentation/manager/notificat
 
 class NotificationCubit extends Cubit<NotificationState> {
   final NotificationRepo notificationRepo;
+
+  StreamSubscription<List<NotificationModel>>? _notificationsSubscription;
   NotificationCubit(this.notificationRepo) : super(NotificationInitial());
+
+  void watchNotifications() {
+    emit(NotificationLoading());
+
+    _notificationsSubscription?.cancel();
+
+    _notificationsSubscription = notificationRepo.watchNotifications().listen(
+      (notifications) {
+        emit(NotificationSuccess(notifications));
+      },
+      onError: (_) {
+        emit(NotificationFailure('Something went wrong. Please try again.'));
+      },
+    );
+  }
+
+  @override
+  Future<void> close() {
+    _notificationsSubscription?.cancel();
+    return super.close();
+  }
 
   Future<void> fetchNotifications() async {
     emit(NotificationLoading());
@@ -22,7 +47,7 @@ class NotificationCubit extends Cubit<NotificationState> {
   Future<void> createNotification(NotificationModel notification) async {
     try {
       await notificationRepo.createNotification(notification);
-      await fetchNotifications();
+      // await fetchNotifications();
     } catch (e) {
       emit(NotificationFailure('Failed to create notification.'));
     }
@@ -32,7 +57,7 @@ class NotificationCubit extends Cubit<NotificationState> {
     try {
       await notificationRepo.markAsRead(notificationId);
 
-      await fetchNotifications();
+      // await fetchNotifications();
     } catch (e) {
       emit(NotificationFailure('Failed to update notification.'));
     }
@@ -42,7 +67,7 @@ class NotificationCubit extends Cubit<NotificationState> {
     try {
       await notificationRepo.markAllAsRead();
 
-      await fetchNotifications();
+      // await fetchNotifications();
     } catch (e) {
       emit(NotificationFailure('Failed to update notification.'));
     }
@@ -52,7 +77,7 @@ class NotificationCubit extends Cubit<NotificationState> {
     try {
       await notificationRepo.deleteNotification(notificationId);
 
-      await fetchNotifications();
+      // await fetchNotifications();
     } catch (e) {
       emit(NotificationFailure('Failed to delete notification.'));
     }

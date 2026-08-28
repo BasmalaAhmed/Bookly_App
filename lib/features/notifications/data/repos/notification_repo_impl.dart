@@ -94,4 +94,16 @@ class NotificationRepoImpl implements NotificationRepo {
   Future<void> saveFcmToken(String token) async {
     await _userDocument.set({'fcmToken': token}, SetOptions(merge: true));
   }
+
+  @override
+  Stream<List<NotificationModel>> watchNotifications() {
+    return _notificationsCollection
+        .orderBy('createdAt', descending: true)
+        .snapshots()
+        .map(
+          (snapshot) => snapshot.docs
+              .map((doc) => NotificationModel.fromMap(doc.id, doc.data()))
+              .toList(),
+        );
+  }
 }
