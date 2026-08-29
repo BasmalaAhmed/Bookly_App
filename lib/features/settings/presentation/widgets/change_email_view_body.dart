@@ -9,6 +9,7 @@ import 'package:bookly_app/features/settings/presentation/manager/change_email_c
 import 'package:bookly_app/features/settings/presentation/manager/change_email_cubit/change_email_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 class ChangeEmailViewBody extends StatefulWidget {
@@ -102,7 +103,7 @@ class _ChangeEmailViewBodyState extends State<ChangeEmailViewBody> {
 
               CustomTextFormField(
                 hintText: 'Enter your new email',
-                prefixIcon: Icons.email_outlined,
+                prefixIcon: FontAwesomeIcons.envelope,
                 keyboardType: TextInputType.emailAddress,
                 textInputAction: TextInputAction.next,
                 controller: _emailController,
@@ -113,7 +114,7 @@ class _ChangeEmailViewBodyState extends State<ChangeEmailViewBody> {
 
               CustomTextFormField(
                 hintText: 'Enter your password',
-                prefixIcon: Icons.lock_outline,
+                prefixIcon: FontAwesomeIcons.lock,
                 isPassword: true,
                 textInputAction: TextInputAction.done,
                 controller: _passwordController,

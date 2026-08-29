@@ -52,7 +52,7 @@ class BooklyApp extends StatelessWidget {
       ],
       child: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
-          if(state is LoginSuccess){
+          if (state is LoginSuccess) {
             context.read<NotificationCubit>().watchNotifications();
           }
         },

@@ -9,6 +9,7 @@ import 'package:bookly_app/features/settings/presentation/manager/change_passwor
 import 'package:bookly_app/features/settings/presentation/manager/change_password_cubit/change_password_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 class ChangePasswordViewBody extends StatefulWidget {
@@ -79,7 +80,7 @@ class _ChangePasswordViewBodyState extends State<ChangePasswordViewBody> {
               const SizedBox(height: 32),
               CustomTextFormField(
                 hintText: 'Enter your current password',
-                prefixIcon: Icons.lock_outline,
+                prefixIcon: FontAwesomeIcons.lock,
                 isPassword: true,
                 textInputAction: TextInputAction.next,
                 controller: _currentPasswordController,
@@ -90,7 +91,7 @@ class _ChangePasswordViewBodyState extends State<ChangePasswordViewBody> {
 
               CustomTextFormField(
                 hintText: 'New Password',
-                prefixIcon: Icons.lock_outline,
+                prefixIcon: FontAwesomeIcons.lock,
                 isPassword: true,
                 textInputAction: TextInputAction.next,
                 controller: _newPasswordController,
@@ -101,7 +102,7 @@ class _ChangePasswordViewBodyState extends State<ChangePasswordViewBody> {
 
               CustomTextFormField(
                 hintText: 'Confirm New Password',
-                prefixIcon: Icons.lock_outline,
+                prefixIcon: FontAwesomeIcons.lock,
                 isPassword: true,
                 textInputAction: TextInputAction.done,
                 controller: _confirmNewPasswordController,

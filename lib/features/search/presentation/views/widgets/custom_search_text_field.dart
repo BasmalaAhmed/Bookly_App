@@ -1,5 +1,6 @@
 import 'package:bookly_app/core/utils/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CustomSearchTextField extends StatelessWidget {
   const CustomSearchTextField({
@@ -29,8 +30,8 @@ class CustomSearchTextField extends StatelessWidget {
         hintStyle: Styles.textStyle16.copyWith(color: colorScheme.onSurfaceVariant),
         suffixIcon: IconButton(
           onPressed: onSearch,
-          icon: Icon(
-            Icons.search_outlined,
+          icon: FaIcon(
+            FontAwesomeIcons.magnifyingGlass,
             size: 30,
             color: colorScheme.onSurfaceVariant,
           ),

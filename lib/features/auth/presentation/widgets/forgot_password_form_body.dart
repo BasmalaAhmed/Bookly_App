@@ -9,6 +9,7 @@ import 'package:bookly_app/features/auth/presentation/manager/auth_cubit/auth_st
 import 'package:bookly_app/core/utils/widgets/custom_redirect_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 class ForgotPasswordFormBody extends StatefulWidget {
@@ -57,7 +58,7 @@ class _ForgotPasswordFormBodyState extends State<ForgotPasswordFormBody> {
               children: [
                 CustomTextFormField(
                   hintText: 'Email',
-                  prefixIcon: Icons.mail_outlined,
+                  prefixIcon: FontAwesomeIcons.envelope,
                   keyboardType: TextInputType.emailAddress,
                   textInputAction: TextInputAction.done,
                   controller: emailController,

@@ -47,7 +47,6 @@ class NotificationCubit extends Cubit<NotificationState> {
   Future<void> createNotification(NotificationModel notification) async {
     try {
       await notificationRepo.createNotification(notification);
-      // await fetchNotifications();
     } catch (e) {
       emit(NotificationFailure('Failed to create notification.'));
     }
@@ -57,7 +56,6 @@ class NotificationCubit extends Cubit<NotificationState> {
     try {
       await notificationRepo.markAsRead(notificationId);
 
-      // await fetchNotifications();
     } catch (e) {
       emit(NotificationFailure('Failed to update notification.'));
     }
@@ -67,7 +65,6 @@ class NotificationCubit extends Cubit<NotificationState> {
     try {
       await notificationRepo.markAllAsRead();
 
-      // await fetchNotifications();
     } catch (e) {
       emit(NotificationFailure('Failed to update notification.'));
     }
@@ -77,7 +74,6 @@ class NotificationCubit extends Cubit<NotificationState> {
     try {
       await notificationRepo.deleteNotification(notificationId);
 
-      // await fetchNotifications();
     } catch (e) {
       emit(NotificationFailure('Failed to delete notification.'));
     }

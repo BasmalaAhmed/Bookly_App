@@ -13,6 +13,7 @@ import 'package:bookly_app/core/utils/widgets/custom_redirect_text.dart';
 import 'package:bookly_app/features/favorites/presentation/manager/cubit/favorite_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginFormBody extends StatefulWidget {
@@ -60,7 +61,7 @@ class _LoginFormBodyState extends State<LoginFormBody> {
               children: [
                 CustomTextFormField(
                   hintText: 'Email',
-                  prefixIcon: Icons.mail_outlined,
+                  prefixIcon: FontAwesomeIcons.envelope,
                   keyboardType: TextInputType.emailAddress,
                   textInputAction: TextInputAction.next,
                   controller: emailController,
@@ -69,7 +70,7 @@ class _LoginFormBodyState extends State<LoginFormBody> {
                 const SizedBox(height: 16),
                 CustomTextFormField(
                   hintText: 'Password',
-                  prefixIcon: Icons.lock_outlined,
+                  prefixIcon: FontAwesomeIcons.lock,
                   isPassword: true,
                   textInputAction: TextInputAction.done,
                   controller: passwordController,

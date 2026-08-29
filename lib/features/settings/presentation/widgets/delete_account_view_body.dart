@@ -84,7 +84,7 @@ class _DeleteAccountViewBodyState extends State<DeleteAccountViewBody> {
               const SizedBox(height: 16),
               CustomTextFormField(
                 hintText: 'Enter your current password',
-                prefixIcon: Icons.lock_outline,
+                prefixIcon: FontAwesomeIcons.lock,
                 isPassword: true,
                 textInputAction: TextInputAction.done,
                 controller: _passwordController,

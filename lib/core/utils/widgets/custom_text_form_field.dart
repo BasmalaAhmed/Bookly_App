@@ -1,5 +1,6 @@
 import 'package:bookly_app/core/utils/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CustomTextFormField extends StatefulWidget {
   const CustomTextFormField({
@@ -14,7 +15,7 @@ class CustomTextFormField extends StatefulWidget {
   });
 
   final String hintText;
-  final IconData prefixIcon;
+  final FaIconData prefixIcon;
   final bool isPassword;
   final TextInputType? keyboardType;
   final TextInputAction? textInputAction;
@@ -58,7 +59,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       decoration: InputDecoration(
         hintText: widget.hintText,
         hintStyle: Styles.textStyle16.copyWith(color: colorScheme.onSurfaceVariant),
-        prefixIcon: Icon(widget.prefixIcon, color: colorScheme.onSurface),
+        prefixIcon: FaIcon(widget.prefixIcon, color: colorScheme.onSurface),
         suffixIcon: widget.isPassword
             ? IconButton(
               focusNode: _suffixFocusNode,
@@ -67,10 +68,10 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                     obscureText = !obscureText;
                   });
                 },
-                icon: Icon(
+                icon: FaIcon(
                   (obscureText)
-                      ? Icons.visibility_off_outlined
-                      : Icons.visibility_outlined,
+                      ? FontAwesomeIcons.eyeSlash
+                      : FontAwesomeIcons.eye,
                   color: colorScheme.onSurfaceVariant,
                 ),
               )

@@ -1,5 +1,6 @@
 import 'package:bookly_app/core/utils/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CustomErrorMessage extends StatelessWidget {
   const CustomErrorMessage({super.key, required this.errMessage});
@@ -11,7 +12,7 @@ class CustomErrorMessage extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.error_outline, size: 40, color: Colors.redAccent),
+          FaIcon(FontAwesomeIcons.circleExclamation, size: 40, color: Colors.redAccent),
           SizedBox(height: 12),
           Text(
             errMessage,

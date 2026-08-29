@@ -8,6 +8,7 @@ import 'package:bookly_app/features/profile/presentation/views/widgets/draggable
 import 'package:bookly_app/features/profile/presentation/views/widgets/edit_profile_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
 
 class EditProfileBottomSheet extends StatefulWidget {
@@ -77,7 +78,7 @@ class _EditProfileBottomSheetState extends State<EditProfileBottomSheet> {
                     const SizedBox(height: 24),
                     CustomTextFormField(
                       hintText: 'Enter Your Name',
-                      prefixIcon: Icons.person,
+                      prefixIcon: FontAwesomeIcons.user,
                       textInputAction: TextInputAction.done,
                       controller: _nameController,
                       validator: Validators.validateUsername,

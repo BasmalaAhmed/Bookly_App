@@ -9,6 +9,7 @@ import 'package:bookly_app/features/auth/presentation/manager/auth_cubit/auth_st
 import 'package:bookly_app/core/utils/widgets/custom_redirect_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 class RegisterFormBody extends StatefulWidget {
@@ -64,7 +65,7 @@ class _RegisterFormBodyState extends State<RegisterFormBody> {
               children: [
                 CustomTextFormField(
                   hintText: 'Username',
-                  prefixIcon: Icons.person_2_outlined,
+                  prefixIcon: FontAwesomeIcons.user,
                   textInputAction: TextInputAction.next,
                   controller: usernameController,
                   validator: Validators.validateUsername,
@@ -72,7 +73,7 @@ class _RegisterFormBodyState extends State<RegisterFormBody> {
                 const SizedBox(height: 16),
                 CustomTextFormField(
                   hintText: 'Email',
-                  prefixIcon: Icons.mail_outlined,
+                  prefixIcon: FontAwesomeIcons.envelope,
                   keyboardType: TextInputType.emailAddress,
                   textInputAction: TextInputAction.next,
                   controller: emailController,
@@ -81,7 +82,7 @@ class _RegisterFormBodyState extends State<RegisterFormBody> {
                 const SizedBox(height: 16),
                 CustomTextFormField(
                   hintText: 'Password',
-                  prefixIcon: Icons.lock_outlined,
+                  prefixIcon: FontAwesomeIcons.lock,
                   isPassword: true,
                   textInputAction: TextInputAction.next,
                   controller: passwordController,
@@ -90,7 +91,7 @@ class _RegisterFormBodyState extends State<RegisterFormBody> {
                 const SizedBox(height: 16),
                 CustomTextFormField(
                   hintText: 'Confirm Password',
-                  prefixIcon: Icons.lock_outlined,
+                  prefixIcon: FontAwesomeIcons.lock,
                   isPassword: true,
                   textInputAction: TextInputAction.done,
                   controller: confirmPasswordController,
