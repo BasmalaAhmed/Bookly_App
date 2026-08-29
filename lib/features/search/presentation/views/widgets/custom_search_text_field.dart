@@ -32,7 +32,7 @@ class CustomSearchTextField extends StatelessWidget {
           onPressed: onSearch,
           icon: FaIcon(
             FontAwesomeIcons.magnifyingGlass,
-            size: 30,
+            size: 24,
             color: colorScheme.onSurfaceVariant,
           ),
         ),

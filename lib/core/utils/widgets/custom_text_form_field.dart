@@ -59,7 +59,10 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       decoration: InputDecoration(
         hintText: widget.hintText,
         hintStyle: Styles.textStyle16.copyWith(color: colorScheme.onSurfaceVariant),
-        prefixIcon: FaIcon(widget.prefixIcon, color: colorScheme.onSurface),
+        prefixIcon: Padding(
+          padding: const EdgeInsets.all(16),
+          child: FaIcon(widget.prefixIcon, color: colorScheme.onSurface, size: 22,),
+        ),
         suffixIcon: widget.isPassword
             ? IconButton(
               focusNode: _suffixFocusNode,
@@ -73,6 +76,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                       ? FontAwesomeIcons.eyeSlash
                       : FontAwesomeIcons.eye,
                   color: colorScheme.onSurfaceVariant,
+                  size: 22,
                 ),
               )
             : null,
