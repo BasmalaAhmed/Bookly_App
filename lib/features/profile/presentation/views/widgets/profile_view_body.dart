@@ -35,45 +35,47 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
       },
       child: Padding(
         padding: const EdgeInsets.fromLTRB(20, 24, 20, 0),
-        child: Column(
-          children: [
-            BlocBuilder<ProfileCubit, ProfileState>(
-              builder: (context, state) {
-                if (state is ProfileLoading) {
-                  if (state.name != null && state.email != null) {
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              BlocBuilder<ProfileCubit, ProfileState>(
+                builder: (context, state) {
+                  if (state is ProfileLoading) {
+                    if (state.name != null && state.email != null) {
+                      return ProfileHeader(
+                        name: state.name!,
+                        email: state.email!,
+                        image: _profileImage,
+                      );
+                    }
+                    return const LoadingIndicator();
+                  }
+                  if (state is ProfileSuccess) {
                     return ProfileHeader(
-                      name: state.name!,
-                      email: state.email!,
+                      name: state.name,
+                      email: state.email,
                       image: _profileImage,
                     );
                   }
-                  return const LoadingIndicator();
-                }
-                if (state is ProfileSuccess) {
-                  return ProfileHeader(
-                    name: state.name,
-                    email: state.email,
-                    image: _profileImage,
-                  );
-                }
-                if (state is ProfileFailure) {
-                  return Text(state.message);
-                }
-    
-                return const SizedBox.shrink();
-              },
-            ),
-            const SizedBox(height: 18),
-            Divider(),
-            const SizedBox(height: 24),
-            ProfileMenuSection(
-              onImageUpdated: (image) {
-                setState(() {
-                  _profileImage = image;
-                });
-              },
-            ),
-          ],
+                  if (state is ProfileFailure) {
+                    return Text(state.message);
+                  }
+              
+                  return const SizedBox.shrink();
+                },
+              ),
+              const SizedBox(height: 18),
+              Divider(),
+              const SizedBox(height: 24),
+              ProfileMenuSection(
+                onImageUpdated: (image) {
+                  setState(() {
+                    _profileImage = image;
+                  });
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
