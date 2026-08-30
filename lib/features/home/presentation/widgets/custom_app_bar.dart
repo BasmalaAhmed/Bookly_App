@@ -15,7 +15,7 @@ class CustomAppBar extends StatelessWidget {
     return Row(
       children: [
         LogoWidget(scale: 4),
-        const Spacer(flex: 12),
+        const Spacer(),
         BlocBuilder<NotificationCubit, NotificationState>(
           builder: (context, state) {
             final unreadCount = state is NotificationSuccess
@@ -63,12 +63,6 @@ class CustomAppBar extends StatelessWidget {
               ],
             );
           },
-        ),
-        const Spacer(flex: 1),
-        IconButton(
-          onPressed: () {},
-          tooltip: 'Cart',
-          icon: const FaIcon(FontAwesomeIcons.cartShopping, size: 20),
         ),
       ],
     );
